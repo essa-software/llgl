@@ -1,0 +1,4 @@
+add_llgl_test(CoreRenderer)
+target_link_libraries(llgl-testCoreRenderer Renderer)
+add_llgl_test(SimpleRenderer)
+target_link_libraries(llgl-testSimpleRenderer Renderer)
