@@ -4,7 +4,6 @@ set(SOURCES
     FFPRenderer.cpp
     Renderer.cpp
     Transform.cpp
-    View.cpp
 )
 add_llgl_library(Renderer renderer)
-target_link_libraries(Renderer Window)
+target_link_libraries(Renderer Window OpenGL)

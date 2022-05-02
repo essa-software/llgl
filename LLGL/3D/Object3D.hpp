@@ -22,13 +22,19 @@ public:
 
     Transform& transform() { return m_transform; }
     Transform const& transform() const { return m_transform; }
+
+    RendererConfig& renderer_config() { return m_renderer_config; }
+    RendererConfig const& renderer_config() const { return m_renderer_config; }
  
 private:
     virtual void render(Renderer& renderer) const override;
 
     std::vector<Vertex> m_vertexes;
+    std::vector<Vertex> m_normal_vertexes;
     Transform m_transform;
+    RendererConfig m_renderer_config;
     mutable opengl::VAO m_vao;
+    mutable opengl::VAO m_normals_vao;
     mutable bool m_needs_update { true };
 };
 

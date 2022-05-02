@@ -90,8 +90,11 @@ private:
 namespace shaders
 {
 
-// Emulates FFP for OpenGL >3.2
+// Basic shader, with no lighting etc.
 Shader& basic_330_core();
+
+// Shade smooth lighting (single light source)
+Shader& shade_smooth();
 
 }
 

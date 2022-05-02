@@ -14,9 +14,9 @@ public:
 
     void move(Vector3f vector);
 
-    // FIXME: This assumes rotation by Y axis. Allow another axises.
-    // (Angle is in radians)
-    void rotate(float angle);
+    // Angle is in radians.
+    void rotate_x(float angle);
+    void rotate_y(float angle);
 
     Matrix4x4f matrix() const { return m_matrix; }
 

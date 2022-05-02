@@ -1,9 +1,9 @@
 #pragma once
 
-#include "View.hpp"
 #include <LLGL/Core/Vertex.hpp>
 #include <LLGL/OpenGL/Texture.hpp>
 #include <LLGL/OpenGL/Vertex.hpp>
+#include <LLGL/OpenGL/View.hpp>
 #include <span>
 
 namespace llgl
@@ -30,13 +30,15 @@ class Renderer
 {
 public:
     Renderer(Window& window)
-    : m_window(window) {}
+        : m_window(window)
+    {
+    }
 
     virtual void begin_draw(RendererConfig config) = 0;
     virtual void add_vertexes(std::span<Vertex const> vertexes) = 0;
     void add_vertexes(std::initializer_list<Vertex> vertexes)
     {
-        add_vertexes(std::span{vertexes});
+        add_vertexes(std::span { vertexes });
     }
     virtual void end_draw() = 0;
     virtual void apply_view(View const&) = 0;
@@ -53,7 +55,10 @@ class DrawScope
 {
 public:
     DrawScope(Renderer& renderer, RendererConfig config)
-    : m_renderer(renderer) { renderer.begin_draw(std::move(config)); }
+        : m_renderer(renderer)
+    {
+        renderer.begin_draw(std::move(config));
+    }
 
     ~DrawScope() { m_renderer.end_draw(); }
 

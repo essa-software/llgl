@@ -1,5 +1,6 @@
 function(add_llgl_library TARGET_NAME LIB_NAME)
-    add_library(${TARGET_NAME} SHARED ${SOURCES})
+    add_library(${TARGET_NAME} ${SOURCES})
+    add_library(LLGL::${TARGET_NAME} ALIAS ${TARGET_NAME})
     set_target_properties(${TARGET_NAME} PROPERTIES OUTPUT_NAME "llgl-${LIB_NAME}")
     target_include_directories(${TARGET_NAME} PUBLIC
         $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}>

@@ -131,7 +131,7 @@ std::optional<Vertex> ObjLoader::read_vertex(std::istream& in)
         return {};
     }
     // TODO: Store normals in Vertex
-    return Vertex{m_vertexes[vertex - 1], Colors::white, m_tex_coords[tex_coord - 1], m_normals[tex_coord - 1]};
+    return Vertex{m_vertexes[vertex - 1], Colors::white, m_tex_coords[tex_coord - 1], m_normals[normal - 1]};
 }
 
 }

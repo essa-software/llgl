@@ -9,7 +9,7 @@ message("found SDL2")
 add_subdirectory(LLGL)
 
 install(FILES cmake/LLGLConfig.cmake DESTINATION lib/cmake/llgl)
-install(DIRECTORY LLGL DESTINATION include FILES_MATCHING PATTERN "*.h" PATTERN "*.inl")
-install(EXPORT llgl DESTINATION lib/cmake/llgl)
+install(DIRECTORY LLGL/ DESTINATION include/LLGL FILES_MATCHING PATTERN "*.hpp" PATTERN "*.inl")
+install(EXPORT llgl DESTINATION lib/cmake/llgl NAMESPACE LLGL::)
 
 add_subdirectory(Tests)

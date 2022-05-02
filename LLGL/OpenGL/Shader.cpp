@@ -156,6 +156,49 @@ Shader& basic_330_core()
     {
         static char const* VERTEX_SHADER = R"~~~(
 #version 410 core
+
+layout(location=1) in vec4 position;
+layout(location=2) in vec4 color;
+layout(location=3) in vec2 texCoord;
+layout(location=4) in vec3 normal;
+out vec4 f_color;
+uniform mat4 projectionMatrix;
+uniform mat4 modelviewMatrix;
+
+void main()
+{
+    mat4 matrix = projectionMatrix * modelviewMatrix;
+    f_color = color;
+    gl_Position = matrix * position;
+}
+)~~~";
+        static char const* FRAGMENT_SHADER = R"~~~(
+#version 410 core
+
+in vec4 f_color;
+
+void main()
+{
+    // TODO: Textures
+    gl_FragColor = f_color;
+}
+)~~~";
+        auto objects = {
+            ShaderObject{VERTEX_SHADER, ShaderObject::Vertex},
+            ShaderObject{FRAGMENT_SHADER, ShaderObject::Fragment}
+        };
+        shader = std::make_unique<Shader>(objects, AttributeMapping{1,2,3,4});
+    }
+    return *shader;
+}
+
+Shader& shade_flat()
+{
+    static std::unique_ptr<Shader> shader;
+    if(!shader)
+    {
+        static char const* VERTEX_SHADER = R"~~~(
+#version 410 core
 layout(location=1) in vec4 position;
 layout(location=2) in vec4 color;
 layout(location=3) in vec2 texCoord;
@@ -169,12 +212,13 @@ uniform mat4 modelviewMatrix;
 
 void main()
 {
-    f_position = vec3(modelviewMatrix * position); // model
-    f_normal = mat3(transpose(inverse(modelviewMatrix))) * normal;
+    mat4 matrix = projectionMatrix * modelviewMatrix;
+    f_position = vec3(position);
+    f_normal = normal;
     f_color = color;
     f_texCoord = texCoord;
     
-    gl_Position = projectionMatrix * vec4(f_position, 1.0); // view
+    gl_Position = matrix * vec4(f_position, 1.0);
 }
 )~~~";
         static char const* FRAGMENT_SHADER = R"~~~(
@@ -185,28 +229,23 @@ in vec2 f_texCoord;
 in vec3 f_normal;
 uniform sampler2D texture;
 uniform bool textureSet;
-// 11
+uniform mat4 modelviewMatrix;
+
+uniform vec3 lightColor;
+uniform vec3 lightPos;
+
 void main()
 {
-    vec3 lightColor = vec3(1, 1, 1);
-    vec3 lightPos = vec3(0, 0, -10);
-    vec3 viewPos = vec3(0, 0, 0);
+    vec3 lightPosVS = vec3(inverse(modelviewMatrix) * lightPos);
 
-    float ambientStrength = 0.1;
+    float ambientStrength = 0.2; // TODO: Make it configurable
     vec3 ambient = ambientStrength * lightColor;
   	
     // diffuse 
     vec3 norm = normalize(f_normal);
-    vec3 lightDir = normalize(lightPos - f_position);
+    vec3 lightDir = normalize(lightPosVS - f_position);
     float diff = max(dot(norm, lightDir), 0.0);
     vec3 diffuse = diff * lightColor;
-    
-    // specular
-    float specularStrength = 0.5;
-    vec3 viewDir = normalize(viewPos - f_position);
-    vec3 reflectDir = reflect(-lightDir, norm);  
-    float spec = pow(max(dot(viewDir, reflectDir), 0.0), 32);
-    vec3 specular = specularStrength * spec * lightColor;  
         
     vec3 result = (ambient + diffuse) * vec3(f_color);
     gl_FragColor = vec4(result, 1.0);
@@ -220,7 +259,6 @@ void main()
     }
     return *shader;
 }
-
 }
 
 }
