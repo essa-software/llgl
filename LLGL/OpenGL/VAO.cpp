@@ -33,7 +33,7 @@ VAO::VAO(VAO&& other)
 
 VAO& VAO::operator=(VAO&& other)
 {
-    if(this == &other)
+    if (this == &other)
         return *this;
     m_vertex_array_id = std::exchange(other.m_vertex_array_id, 0);
     m_vertex_buffer_id = std::exchange(other.m_vertex_buffer_id, 0);
@@ -43,12 +43,12 @@ VAO& VAO::operator=(VAO&& other)
 
 VAO::~VAO()
 {
-    if(m_vertex_buffer_id)
+    if (m_vertex_buffer_id)
     {
         glDeleteBuffers(1, &m_vertex_buffer_id);
         handle_error();
     }
-    if(m_vertex_array_id)
+    if (m_vertex_array_id)
     {
         glDeleteVertexArrays(1, &m_vertex_array_id);
         handle_error();
@@ -57,13 +57,13 @@ VAO::~VAO()
 
 void VAO::load_vertexes(AttributeMapping attribute_mapping, std::span<Vertex const> vertexes)
 {
-    if(m_vertex_array_id == 0)
+    if (m_vertex_array_id == 0)
     {
         glGenVertexArrays(1, &m_vertex_array_id);
         handle_error();
     }
     bind();
-    if(!m_vertex_buffer_id)
+    if (!m_vertex_buffer_id)
     {
         glGenBuffers(1, &m_vertex_buffer_id);
         handle_error();
@@ -83,13 +83,13 @@ void VAO::load_vertexes(AttributeMapping attribute_mapping, std::span<Vertex con
     handle_error();
     glBufferData(GL_ARRAY_BUFFER, vertexes.size() * sizeof(Vertex), vertexes.data(), GL_STATIC_DRAW);
     handle_error();
-    glVertexAttribPointer(attribute_mapping.position, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, position)); //x,y
+    glVertexAttribPointer(attribute_mapping.position, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, position)); // x,y
     handle_error();
-    glVertexAttribPointer(attribute_mapping.color, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, color)); //x,y
+    glVertexAttribPointer(attribute_mapping.color, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, color)); // x,y
     handle_error();
-    glVertexAttribPointer(attribute_mapping.tex_coord, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, tex_coord)); //x,y
+    glVertexAttribPointer(attribute_mapping.tex_coord, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, tex_coord)); // x,y
     handle_error();
-    glVertexAttribPointer(attribute_mapping.normal, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, normal)); //x,y
+    glVertexAttribPointer(attribute_mapping.normal, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, normal)); // x,y
     handle_error();
 
     m_size = vertexes.size();
@@ -111,12 +111,13 @@ void VAO::draw(PrimitiveType primitive_type) const
 
 void VAO::draw(Renderer& renderer, RendererConfig const& config) const
 {
-    opengl::ShaderScope scope{*config.shader};
+    assert(config.shader);
+    opengl::ShaderScope scope { *config.shader };
     scope.set_uniform("projectionMatrix", renderer.view().matrix());
     scope.set_uniform("modelviewMatrix", config.modelview_matrix);
 
     DelayedInit<opengl::TextureBinder> binder;
-    if(config.texture)
+    if (config.texture)
     {
         binder.construct(*config.texture);
         scope.set_uniform("texture", opengl::ShaderScope::CurrentTexture);

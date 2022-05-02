@@ -12,7 +12,7 @@ public:
     explicit Transform(Matrix4x4f matrix = Matrix4x4f::identity())
     : m_matrix(matrix) {}
 
-    void move(Vector3f vector);
+    void translate(Vector3f vector);
 
     // Angle is in radians.
     void rotate_x(float angle);

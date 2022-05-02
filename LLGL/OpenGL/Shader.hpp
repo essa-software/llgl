@@ -1,8 +1,9 @@
 #pragma once
 
-
 #include <GL/glew.h>
+#include <LLGL/Core/Color.hpp>
 #include <LLGL/Core/Matrix.hpp>
+#include <LLGL/Core/Vector3.hpp>
 #include <span>
 #include <string>
 
@@ -73,15 +74,25 @@ private:
 class ShaderScope
 {
 public:
-    ShaderScope(Shader const& shader) : m_shader(shader)
-    { shader.bind(); }
-    ~ShaderScope() { /*Not applicable since OpenGL 3.2*/ }
+    ShaderScope(Shader const& shader)
+        : m_shader(shader)
+    {
+        shader.bind();
+    }
+    ~ShaderScope()
+    { /*Not applicable since OpenGL 3.2*/
+    }
 
     int uniform_location(std::string const&);
     void set_uniform(std::string const&, Matrix4x4f);
-    enum CurrentTextureTag { CurrentTexture };
+    enum CurrentTextureTag
+    {
+        CurrentTexture
+    };
     void set_uniform(std::string const&, CurrentTextureTag);
     void set_uniform(std::string const&, bool);
+    void set_uniform(std::string const&, Vector3f);
+    void set_uniform(std::string const&, Colorf);
 
 private:
     Shader const& m_shader;
@@ -93,8 +104,8 @@ namespace shaders
 // Basic shader, with no lighting etc.
 Shader& basic_330_core();
 
-// Shade smooth lighting (single light source)
-Shader& shade_smooth();
+// Shade flat lighting (single light source)
+Shader& shade_flat();
 
 }
 

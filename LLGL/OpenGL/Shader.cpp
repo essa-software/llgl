@@ -11,14 +11,14 @@ namespace llgl::opengl
 {
 
 ShaderObject::ShaderObject(std::string const& source, Type type)
-: m_type(type)
+    : m_type(type)
 {
     ensure_glew();
     // TODO: Check if shader type is supported
 
     m_id = glCreateShader(static_cast<GLenum>(type));
     handle_error();
-    
+
     char const* sources[] = {
         source.c_str()
     };
@@ -33,10 +33,10 @@ ShaderObject::ShaderObject(std::string const& source, Type type)
     GLint success = 0;
     glGetShaderiv(m_id, GL_COMPILE_STATUS, &success);
     handle_error();
-    if(!success)
+    if (!success)
     {
-	    GLint max_length = 0;
-	    glGetShaderiv(m_id, GL_INFO_LOG_LENGTH, &max_length);
+        GLint max_length = 0;
+        glGetShaderiv(m_id, GL_INFO_LOG_LENGTH, &max_length);
         handle_error();
         std::string error_message;
         error_message.resize(max_length);
@@ -58,12 +58,12 @@ ShaderObject::~ShaderObject()
 }
 
 Shader::Shader(std::span<ShaderObject const> shader_objects, AttributeMapping attribute_mapping)
-: m_attribute_mapping(attribute_mapping)
+    : m_attribute_mapping(attribute_mapping)
 {
     std::cout << "Shader: Linking " << shader_objects.size() << " shader objects" << std::endl;
     m_id = glCreateProgram();
     handle_error();
-    for(auto& shader_object : shader_objects)
+    for (auto& shader_object : shader_objects)
     {
         assert(shader_object.valid());
         glAttachShader(m_id, shader_object.id());
@@ -75,10 +75,10 @@ Shader::Shader(std::span<ShaderObject const> shader_objects, AttributeMapping at
     handle_error();
     GLint success = 0;
     glGetProgramiv(m_id, GL_LINK_STATUS, &success);
-    if(!success)
+    if (!success)
     {
-	    GLint max_length = 0;
-	    glGetProgramiv(m_id, GL_INFO_LOG_LENGTH, &max_length);
+        GLint max_length = 0;
+        glGetProgramiv(m_id, GL_INFO_LOG_LENGTH, &max_length);
         handle_error();
         std::string error_message;
         error_message.resize(max_length);
@@ -90,7 +90,7 @@ Shader::Shader(std::span<ShaderObject const> shader_objects, AttributeMapping at
         return;
     }
 
-    for(auto& shader_object : shader_objects)
+    for (auto& shader_object : shader_objects)
     {
         glDetachShader(m_id, shader_object.id());
         handle_error();
@@ -105,7 +105,7 @@ Shader::~Shader()
 {
     glDeleteProgram(m_id);
     handle_error();
-    if(s_current_shader == this)
+    if (s_current_shader == this)
         s_current_shader = nullptr;
 }
 
@@ -146,13 +146,25 @@ void ShaderScope::set_uniform(std::string const& name, bool value)
     glUniform1i(uniform_location(name), value);
 }
 
+void ShaderScope::set_uniform(std::string const& name, Vector3f vec)
+{
+    ErrorHandler handler;
+    glUniform3f(uniform_location(name), vec.x, vec.y, vec.z);
+}
+
+void ShaderScope::set_uniform(std::string const& name, Colorf color)
+{
+    ErrorHandler handler;
+    glUniform4f(uniform_location(name), color.r, color.g, color.b, color.a);
+}
+
 namespace shaders
 {
 
 Shader& basic_330_core()
 {
     static std::unique_ptr<Shader> shader;
-    if(!shader)
+    if (!shader)
     {
         static char const* VERTEX_SHADER = R"~~~(
 #version 410 core
@@ -184,10 +196,10 @@ void main()
 }
 )~~~";
         auto objects = {
-            ShaderObject{VERTEX_SHADER, ShaderObject::Vertex},
-            ShaderObject{FRAGMENT_SHADER, ShaderObject::Fragment}
+            ShaderObject { VERTEX_SHADER, ShaderObject::Vertex },
+            ShaderObject { FRAGMENT_SHADER, ShaderObject::Fragment }
         };
-        shader = std::make_unique<Shader>(objects, AttributeMapping{1,2,3,4});
+        shader = std::make_unique<Shader>(objects, AttributeMapping { 1, 2, 3, 4 });
     }
     return *shader;
 }
@@ -195,7 +207,7 @@ void main()
 Shader& shade_flat()
 {
     static std::unique_ptr<Shader> shader;
-    if(!shader)
+    if (!shader)
     {
         static char const* VERTEX_SHADER = R"~~~(
 #version 410 core
@@ -231,31 +243,30 @@ uniform sampler2D texture;
 uniform bool textureSet;
 uniform mat4 modelviewMatrix;
 
-uniform vec3 lightColor;
 uniform vec3 lightPos;
+uniform vec4 lightColor;
 
 void main()
 {
-    vec3 lightPosVS = vec3(inverse(modelviewMatrix) * lightPos);
-
+    vec3 lightPosVS = vec3(inverse(modelviewMatrix) * vec4(lightPos, 1));
     float ambientStrength = 0.2; // TODO: Make it configurable
-    vec3 ambient = ambientStrength * lightColor;
+    vec4 ambient = ambientStrength * lightColor;
   	
     // diffuse 
     vec3 norm = normalize(f_normal);
     vec3 lightDir = normalize(lightPosVS - f_position);
     float diff = max(dot(norm, lightDir), 0.0);
-    vec3 diffuse = diff * lightColor;
+    vec4 diffuse = diff * lightColor;
         
-    vec3 result = (ambient + diffuse) * vec3(f_color);
-    gl_FragColor = vec4(result, 1.0);
+    vec4 result = (ambient + diffuse) * f_color;
+    gl_FragColor = vec4(result.xyz, 1.0);
 }
 )~~~";
         auto objects = {
-            ShaderObject{VERTEX_SHADER, ShaderObject::Vertex},
-            ShaderObject{FRAGMENT_SHADER, ShaderObject::Fragment}
+            ShaderObject { VERTEX_SHADER, ShaderObject::Vertex },
+            ShaderObject { FRAGMENT_SHADER, ShaderObject::Fragment }
         };
-        shader = std::make_unique<Shader>(objects, AttributeMapping{1,2,3,4});
+        shader = std::make_unique<Shader>(objects, AttributeMapping { 1, 2, 3, 4 });
     }
     return *shader;
 }

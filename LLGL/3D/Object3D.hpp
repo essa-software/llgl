@@ -1,5 +1,6 @@
 #pragma once
 
+#include "LLGL/OpenGL/Shader.hpp"
 #include <LLGL/Core/Vertex.hpp>
 #include <LLGL/OpenGL/VAO.hpp>
 #include <LLGL/Renderer/Renderable.hpp>
@@ -23,16 +24,16 @@ public:
     Transform& transform() { return m_transform; }
     Transform const& transform() const { return m_transform; }
 
-    RendererConfig& renderer_config() { return m_renderer_config; }
-    RendererConfig const& renderer_config() const { return m_renderer_config; }
- 
+    opengl::Shader& shader() const { return *m_shader; }
+    void set_shader(opengl::Shader& s) { m_shader = &s; }
+
 private:
     virtual void render(Renderer& renderer) const override;
 
     std::vector<Vertex> m_vertexes;
     std::vector<Vertex> m_normal_vertexes;
     Transform m_transform;
-    RendererConfig m_renderer_config;
+    opengl::Shader* m_shader = &opengl::shaders::basic_330_core();
     mutable opengl::VAO m_vao;
     mutable opengl::VAO m_normals_vao;
     mutable bool m_needs_update { true };

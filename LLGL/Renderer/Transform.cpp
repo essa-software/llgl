@@ -3,7 +3,7 @@
 namespace llgl
 {
 
-void Transform::move(Vector3f vector)
+void Transform::translate(Vector3f vector)
 {
     Matrix4x4f translation_matrix { { { 1, 0, 0, vector.x },
         { 0, 1, 0, vector.y },

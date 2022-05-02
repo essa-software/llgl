@@ -63,10 +63,10 @@ void Object3D::render(Renderer& renderer) const
         m_needs_update = false;
     }
     // TODO: Support custom config
-    m_vao.draw(renderer, { .primitive_type = opengl::PrimitiveType::Triangles, .shader = &opengl::shaders::basic_330_core(), .modelview_matrix = m_transform.matrix() });
+    m_vao.draw(renderer, { .primitive_type = opengl::PrimitiveType::Triangles, .shader = m_shader, .modelview_matrix = m_transform.matrix() });
 
     if constexpr (OBJECT3D_DEBUG)
-        m_normals_vao.draw(renderer, { .primitive_type = opengl::PrimitiveType::Lines, .shader = &opengl::shaders::basic_330_core(), .modelview_matrix = m_transform.matrix() });
+        m_normals_vao.draw(renderer, { .primitive_type = opengl::PrimitiveType::Lines, .shader = m_shader, .modelview_matrix = m_transform.matrix() });
 }
 
 }
