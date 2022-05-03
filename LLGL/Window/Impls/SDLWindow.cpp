@@ -1,5 +1,7 @@
 #include "SDLWindow.hpp"
 
+#include "../Event.hpp"
+
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_video.h>
 #include <iostream>
@@ -15,12 +17,12 @@ SDLWindowImpl::~SDLWindowImpl()
 void SDLWindowImpl::create(Vector2i size, std::u8string const& title, ContextSettings const& settings)
 {
     static bool initialized = false;
-    if(!initialized && SDL_Init(SDL_INIT_VIDEO) < 0)
+    if (!initialized && SDL_Init(SDL_INIT_VIDEO) < 0)
     {
         std::cout << "SDLWindow: Failed to initialize SDL: " << SDL_GetError() << std::endl;
         exit(1);
     }
-    if(SDL_GL_LoadLibrary(nullptr) < 0)
+    if (SDL_GL_LoadLibrary(nullptr) < 0)
     {
         std::cout << "SDLWindow: Failed to load GL library" << std::endl;
         exit(1);
@@ -41,7 +43,7 @@ void SDLWindowImpl::create(Vector2i size, std::u8string const& title, ContextSet
 
 void SDLWindowImpl::close()
 {
-    if(!m_window)
+    if (!m_window)
         return;
     SDL_DestroyWindow(m_window);
     SDL_GL_DeleteContext(m_context);
@@ -49,14 +51,14 @@ void SDLWindowImpl::close()
 
 void SDLWindowImpl::set_title(std::u8string const& title)
 {
-    if(!m_window)
+    if (!m_window)
         return;
     SDL_SetWindowTitle(m_window, (char*)title.c_str());
 }
 
 void SDLWindowImpl::set_size(Vector2i size)
 {
-    if(!m_window)
+    if (!m_window)
         return;
     SDL_SetWindowSize(m_window, size.x, size.y);
 }
@@ -68,39 +70,51 @@ void SDLWindowImpl::display()
 
 bool SDLWindowImpl::poll_event(Event& event)
 {
-    while(true)
+    while (true)
     {
         SDL_Event sdl_event;
         auto is_event = SDL_PollEvent(&sdl_event);
-        if(!is_event)
+        if (!is_event)
             return false;
-        if(sdl_event.type == SDL_QUIT)
+        if (sdl_event.type == SDL_QUIT)
         {
             // TODO: This is a hack to make Ctrl+C working. This should be
             // properly exposed to user.
             std::cout << "Exit requested" << std::endl;
             exit(0);
         }
-        else if(sdl_event.type == SDL_WINDOWEVENT)
+        else if (sdl_event.type == SDL_WINDOWEVENT)
         {
             // TODO: Proper multiple window support
-            if(sdl_event.window.windowID != SDL_GetWindowID(m_window))
+            if (sdl_event.window.windowID != SDL_GetWindowID(m_window))
                 continue;
-            switch(sdl_event.window.event)
+            switch (sdl_event.window.event)
             {
                 case SDL_WINDOWEVENT_RESIZED:
                     event.type = Event::Type::Resize;
-                    event.resize.size = Vector2i{sdl_event.window.data1, sdl_event.window.data2};
+                    event.resize.size = Vector2i { sdl_event.window.data1, sdl_event.window.data2 };
                     break;
                 default:
                     std::cout << "SDLWindow: Unhandled window event (type=" << (int)sdl_event.window.event << ")" << std::endl;
-                    return true;
+                    return false;
             }
+            return true;
+        }
+        else if (sdl_event.type == SDL_KEYDOWN)
+        {
+            event.type = Event::Type::KeyPress;
+            event.key.keycode = static_cast<KeyCode>(sdl_event.key.keysym.sym);
+            return true;
+        }
+        else if (sdl_event.type == SDL_KEYUP)
+        {
+            event.type = Event::Type::KeyRelease;
+            event.key.keycode = static_cast<KeyCode>(sdl_event.key.keysym.sym);
             return true;
         }
         // TODO
         std::cout << "SDLWindow: Unhandled event (type=" << sdl_event.type << ")" << std::endl;
-        return true;
+        return false;
     }
 }
 

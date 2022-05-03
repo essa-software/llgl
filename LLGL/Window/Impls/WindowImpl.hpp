@@ -1,13 +1,14 @@
 #pragma once
 
 #include "../ContextSettings.hpp"
-#include "../Event.hpp"
 
 #include <LLGL/Core/Vector2.hpp>
 #include <string>
 
 namespace llgl
 {
+
+class Event;
 
 class WindowImpl
 {

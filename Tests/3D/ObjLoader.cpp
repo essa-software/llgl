@@ -1,6 +1,7 @@
 #include "LLGL/Core/Color.hpp"
 #include "LLGL/OpenGL/Shaders/ShadeFlat.hpp"
 #include "LLGL/Renderer/Transform.hpp"
+#include "LLGL/Window/Keyboard.hpp"
 #include <LLGL/3D/ObjLoader.hpp>
 #include <LLGL/3D/Object3D.hpp>
 #include <LLGL/Core/Angle.hpp>
@@ -33,6 +34,11 @@ int main()
 
     double light_angle = 0;
 
+    bool a_pressed = false;
+    bool d_pressed = false;
+    bool w_pressed = false;
+    bool s_pressed = false;
+
     double yaw = 0;
     double pitch = 0;
 
@@ -41,6 +47,34 @@ int main()
         llgl::Event event;
         while (window.poll_event(event))
         {
+            std::cout << "POLL EVENT !!! " << std::endl;
+            switch (event.type)
+            {
+                case llgl::Event::Type::KeyPress:
+                    std::cout << "key press: " << llgl::to_string(event.key.keycode) << std::endl;
+                    if (event.key.keycode == llgl::KeyCode::A)
+                        a_pressed = true;
+                    else if (event.key.keycode == llgl::KeyCode::D)
+                        d_pressed = true;
+                    else if (event.key.keycode == llgl::KeyCode::W)
+                        w_pressed = true;
+                    else if (event.key.keycode == llgl::KeyCode::S)
+                        s_pressed = true;
+                    break;
+                case llgl::Event::Type::KeyRelease:
+                    std::cout << "key release: " << llgl::to_string(event.key.keycode) << std::endl;
+                    if (event.key.keycode == llgl::KeyCode::A)
+                        a_pressed = false;
+                    else if (event.key.keycode == llgl::KeyCode::D)
+                        d_pressed = false;
+                    else if (event.key.keycode == llgl::KeyCode::W)
+                        w_pressed = false;
+                    else if (event.key.keycode == llgl::KeyCode::S)
+                        s_pressed = false;
+                    break;
+                default:
+                    break;
+            }
         }
         llgl::opengl::clear(llgl::opengl::ClearMask::Color | llgl::opengl::ClearMask::Depth);
 
@@ -49,6 +83,15 @@ int main()
         view.set_perspective({ 1.22, window.aspect(), 0.1, 20 });
         window.renderer().apply_view(view);
         model_transform = model_transform.rotate_x(0.05);
+
+        if (a_pressed)
+            yaw -= 0.05;
+        if (d_pressed)
+            yaw += 0.05;
+        if (w_pressed)
+            pitch -= 0.05;
+        if (s_pressed)
+            pitch += 0.05;
         llgl::Transform view_transform;
         view_transform = view_transform.rotate_y(yaw).rotate_x(pitch).translate({0, 0, -10});
 
