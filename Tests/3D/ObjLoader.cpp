@@ -39,6 +39,7 @@ int main()
     bool w_pressed = false;
     bool s_pressed = false;
 
+    llgl::Vector3f camera_position;
     double yaw = 0;
     double pitch = 0;
 
@@ -47,7 +48,6 @@ int main()
         llgl::Event event;
         while (window.poll_event(event))
         {
-            std::cout << "POLL EVENT !!! " << std::endl;
             switch (event.type)
             {
                 case llgl::Event::Type::KeyPress:
@@ -72,6 +72,10 @@ int main()
                     else if (event.key.keycode == llgl::KeyCode::S)
                         s_pressed = false;
                     break;
+                case llgl::Event::Type::MouseMove:
+                    yaw += llgl::deg_to_rad<float>(event.mouse_move.relative.x);
+                    pitch += llgl::deg_to_rad<float>(event.mouse_move.relative.y);
+                    break;
                 default:
                     break;
             }
@@ -85,15 +89,15 @@ int main()
         model_transform = model_transform.rotate_x(0.05);
 
         if (a_pressed)
-            yaw -= 0.05;
+            camera_position.x += 0.1;
         if (d_pressed)
-            yaw += 0.05;
+            camera_position.x -= 0.1;
         if (w_pressed)
-            pitch -= 0.05;
+            camera_position.z += 0.1;
         if (s_pressed)
-            pitch += 0.05;
+            camera_position.z -= 0.1;
         llgl::Transform view_transform;
-        view_transform = view_transform.rotate_y(yaw).rotate_x(pitch).translate({0, 0, -10});
+        view_transform = view_transform.rotate_y(yaw).rotate_x(pitch).translate(camera_position);
 
         light_angle += 0.01;
         shader.set_light_position({ static_cast<float>(std::sin(light_angle)), 5, static_cast<float>(std::cos(light_angle)) });

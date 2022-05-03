@@ -3,6 +3,7 @@
 #include "../Event.hpp"
 
 #include <SDL2/SDL.h>
+#include <SDL2/SDL_events.h>
 #include <SDL2/SDL_video.h>
 #include <iostream>
 
@@ -110,6 +111,13 @@ bool SDLWindowImpl::poll_event(Event& event)
         {
             event.type = Event::Type::KeyRelease;
             event.key.keycode = static_cast<KeyCode>(sdl_event.key.keysym.sym);
+            return true;
+        }
+        else if (sdl_event.type == SDL_MOUSEMOTION)
+        {
+            event.type = Event::Type::MouseMove;
+            event.mouse_move.position = {sdl_event.motion.x, sdl_event.motion.y};
+            event.mouse_move.relative = {sdl_event.motion.xrel, sdl_event.motion.yrel};
             return true;
         }
         // TODO

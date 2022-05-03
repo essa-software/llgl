@@ -15,20 +15,27 @@ public:
         Resize,
         KeyPress,
         KeyRelease,
+        MouseMove,
     } type {};
 
     struct ResizeEvent
     {
         UninitializedVector2<int> size;
     };
-    struct KeyPress
+    struct KeyPressEvent
     {
         KeyCode keycode;
+    };
+    struct MouseMoveEvent
+    {
+        UninitializedVector2<int> position;
+        UninitializedVector2<int> relative;
     };
     union
     {
         ResizeEvent resize;
-        KeyPress key;
+        KeyPressEvent key;
+        MouseMoveEvent mouse_move;
     };
 };
 
