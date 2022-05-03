@@ -37,7 +37,7 @@ auto angle(Vector2 auto vector)
 
 auto perpendicular(Vector2 auto vector) -> decltype(vector)
 {
-    return {-vector.y, vector.x};
+    return { -vector.y, vector.x };
 }
 
 auto dot_product(Vector2 auto first, Vector2 auto second)
@@ -50,7 +50,7 @@ auto cross_product(Vector3 auto first, Vector3 auto second)
     auto x = first.y * second.z - first.z * second.y;
     auto y = first.z * second.x - first.x * second.z;
     auto z = first.x * second.y - first.y * second.x;
-    return decltype(first){x, y, z};
+    return decltype(first) { x, y, z };
 }
 
 bool is_normalized(Vector2 auto vec)
@@ -60,10 +60,10 @@ bool is_normalized(Vector2 auto vec)
 
 auto normalize(Vector2 auto vec) -> decltype(vec)
 {
-    if(is_normalized(vec))
+    if (is_normalized(vec))
         return vec;
     auto vec_length = std::sqrt(length(vec));
-    return {vec.x / vec_length, vec.y / vec_length};
+    return { vec.x / vec_length, vec.y / vec_length };
 }
 
 auto mirror(Vector2 auto vec, Vector2 auto axis)
@@ -71,24 +71,44 @@ auto mirror(Vector2 auto vec, Vector2 auto axis)
     return vec - (decltype(vec.x))2 * dot_product(vec, normalize(axis)) * axis;
 }
 
+auto rotate_y(Vector3 auto vec, double angle)
+{
+    auto sin = std::sin(angle);
+    auto cos = std::cos(angle);
+    return decltype(vec) { cos * vec.x - sin * vec.z, vec.y, sin * vec.x + cos * vec.z };
 }
 
-namespace {
+}
+
+namespace
+{
 
 using llgl::concepts::Vector2;
 using llgl::concepts::Vector3;
 
-auto operator+(Vector2 auto first, Vector2 auto second) { return decltype(first){first.x + second.x, first.y + second.y}; }
-auto operator-(Vector2 auto first, Vector2 auto second) { return decltype(first){first.x - second.x, first.y - second.y}; }
-auto operator*(Vector2 auto first, auto scalar) { return decltype(first){first.x * scalar, first.y * scalar}; }
-auto operator/(Vector2 auto first, auto scalar) { return decltype(first){first.x / scalar, first.y / scalar}; }
+auto operator+(Vector2 auto first, Vector2 auto second) { return decltype(first) { first.x + second.x, first.y + second.y }; }
+auto operator-(Vector2 auto first, Vector2 auto second) { return decltype(first) { first.x - second.x, first.y - second.y }; }
+auto operator*(Vector2 auto first, auto scalar) { return decltype(first) { first.x * scalar, first.y * scalar }; }
+auto operator/(Vector2 auto first, auto scalar) { return decltype(first) { first.x / scalar, first.y / scalar }; }
+
+auto operator+=(Vector2 auto& first, Vector2 auto second) { return first = first + second; }
+auto operator-=(Vector2 auto& first, Vector2 auto second) { return first = first - second; }
+auto operator*=(Vector2 auto& first, auto scalar) { return first = first * scalar; }
+auto operator/=(Vector2 auto& first, auto scalar) { return first = first / scalar; }
+
 auto operator==(Vector2 auto first, Vector2 auto second) { return first.x == second.x && first.y == second.y; }
 auto operator!=(Vector2 auto first, Vector2 auto second) { return !(first == second); }
 
-auto operator+(Vector3 auto first, Vector3 auto second) { return decltype(first){first.x + second.x, first.y + second.y, first.z + second.z}; }
-auto operator-(Vector3 auto first, Vector3 auto second) { return decltype(first){first.x - second.x, first.y - second.y, first.z - second.z}; }
-auto operator*(Vector3 auto first, auto scalar) { return decltype(first){first.x * scalar, first.y * scalar, first.z * scalar}; }
-auto operator/(Vector3 auto first, auto scalar) { return decltype(first){first.x / scalar, first.y / scalar, first.z / scalar}; }
+auto operator+(Vector3 auto first, Vector3 auto second) { return decltype(first) { first.x + second.x, first.y + second.y, first.z + second.z }; }
+auto operator-(Vector3 auto first, Vector3 auto second) { return decltype(first) { first.x - second.x, first.y - second.y, first.z - second.z }; }
+auto operator*(Vector3 auto first, auto scalar) { return decltype(first) { first.x * scalar, first.y * scalar, first.z * scalar }; }
+auto operator/(Vector3 auto first, auto scalar) { return decltype(first) { first.x / scalar, first.y / scalar, first.z / scalar }; }
+
+auto operator+=(Vector3 auto& first, Vector3 auto second) { return first = first + second; }
+auto operator-=(Vector3 auto& first, Vector3 auto second) { return first = first - second; }
+auto operator*=(Vector3 auto& first, auto scalar) { return first = first * scalar; }
+auto operator/=(Vector3 auto& first, auto scalar) { return first = first / scalar; }
+
 auto operator==(Vector3 auto first, Vector3 auto second) { return first.x == second.x && first.y == second.y && first.z == second.z; }
 auto operator!=(Vector3 auto first, Vector3 auto second) { return !(first == second); }
 
