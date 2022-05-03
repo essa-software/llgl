@@ -1,5 +1,6 @@
 set(SOURCES
     Impls/SDLWindow.cpp
+    Keyboard.cpp
     Window.cpp
 )
 add_llgl_library(Window window)

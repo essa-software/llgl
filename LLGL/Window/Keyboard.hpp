@@ -34,4 +34,6 @@ constexpr std::string_view to_string(KeyCode key)
     return "Unknown";
 }
 
+bool is_key_pressed(KeyCode key);
+
 }
