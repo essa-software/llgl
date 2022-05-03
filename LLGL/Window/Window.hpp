@@ -27,6 +27,7 @@ public:
 
     Renderer& renderer() { return *m_renderer; }
     Vector2i size() const { return m_size; }
+    Vector2f center() const { return Vector2f { m_size } / 2.f; }
     float aspect() const { return (float)m_size.x / m_size.y; }
 
 private:
