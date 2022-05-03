@@ -113,9 +113,10 @@ void VAO::draw(Renderer& renderer, RendererConfig const& config) const
 {
     assert(config.shader);
     opengl::ShaderScope scope { *config.shader };
+
+    // TODO: Move it to ShaderScope
     scope.set_uniform("projectionMatrix", renderer.view().matrix());
     scope.set_uniform("modelviewMatrix", config.modelview_matrix);
-
     DelayedInit<opengl::TextureBinder> binder;
     if (config.texture)
     {
@@ -125,6 +126,8 @@ void VAO::draw(Renderer& renderer, RendererConfig const& config) const
     }
     else
         scope.set_uniform("textureSet", false);
+    // END TODO
+
     draw(config.primitive_type);
 }
 

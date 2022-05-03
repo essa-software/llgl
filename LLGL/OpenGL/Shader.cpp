@@ -57,10 +57,9 @@ ShaderObject::~ShaderObject()
     handle_error();
 }
 
-Shader::Shader(std::span<ShaderObject const> shader_objects, AttributeMapping attribute_mapping)
-    : m_attribute_mapping(attribute_mapping)
+Program::Program(std::span<ShaderObject const> shader_objects)
 {
-    std::cout << "Shader: Linking " << shader_objects.size() << " shader objects" << std::endl;
+    std::cout << "Program: Linking " << shader_objects.size() << " shader objects" << std::endl;
     m_id = glCreateProgram();
     handle_error();
     for (auto& shader_object : shader_objects)
@@ -84,7 +83,7 @@ Shader::Shader(std::span<ShaderObject const> shader_objects, AttributeMapping at
         error_message.resize(max_length);
         glGetProgramInfoLog(m_id, max_length, &max_length, error_message.data());
         handle_error();
-        std::cout << "Shader: Failed to link shader program: " << error_message << std::endl;
+        std::cout << "Program: Failed to link shader program: " << error_message << std::endl;
         glDeleteProgram(m_id);
         handle_error();
         return;
@@ -99,9 +98,9 @@ Shader::Shader(std::span<ShaderObject const> shader_objects, AttributeMapping at
     m_valid = true;
 }
 
-static Shader const* s_current_shader = nullptr;
+static Program const* s_current_shader = nullptr;
 
-Shader::~Shader()
+Program::~Program()
 {
     glDeleteProgram(m_id);
     handle_error();
@@ -109,7 +108,7 @@ Shader::~Shader()
         s_current_shader = nullptr;
 }
 
-void Shader::bind() const
+void Program::bind() const
 {
     assert(valid());
     glUseProgram(id());
@@ -117,7 +116,7 @@ void Shader::bind() const
     handle_error();
 }
 
-Shader const* Shader::current()
+Program const* Program::current()
 {
     return s_current_shader;
 }
@@ -125,7 +124,7 @@ Shader const* Shader::current()
 int ShaderScope::uniform_location(std::string const& name)
 {
     ErrorHandler handler;
-    return glGetUniformLocation(m_shader.id(), name.c_str());
+    return glGetUniformLocation(m_shader.program().id(), name.c_str());
 }
 
 void ShaderScope::set_uniform(std::string const& name, Matrix4x4f matrix)
@@ -158,118 +157,10 @@ void ShaderScope::set_uniform(std::string const& name, Colorf color)
     glUniform4f(uniform_location(name), color.r, color.g, color.b, color.a);
 }
 
-namespace shaders
+void Shader::bind(ShaderScope& scope) const
 {
-
-Shader& basic_330_core()
-{
-    static std::unique_ptr<Shader> shader;
-    if (!shader)
-    {
-        static char const* VERTEX_SHADER = R"~~~(
-#version 410 core
-
-layout(location=1) in vec4 position;
-layout(location=2) in vec4 color;
-layout(location=3) in vec2 texCoord;
-layout(location=4) in vec3 normal;
-out vec4 f_color;
-uniform mat4 projectionMatrix;
-uniform mat4 modelviewMatrix;
-
-void main()
-{
-    mat4 matrix = projectionMatrix * modelviewMatrix;
-    f_color = color;
-    gl_Position = matrix * position;
-}
-)~~~";
-        static char const* FRAGMENT_SHADER = R"~~~(
-#version 410 core
-
-in vec4 f_color;
-
-void main()
-{
-    // TODO: Textures
-    gl_FragColor = f_color;
-}
-)~~~";
-        auto objects = {
-            ShaderObject { VERTEX_SHADER, ShaderObject::Vertex },
-            ShaderObject { FRAGMENT_SHADER, ShaderObject::Fragment }
-        };
-        shader = std::make_unique<Shader>(objects, AttributeMapping { 1, 2, 3, 4 });
-    }
-    return *shader;
-}
-
-Shader& shade_flat()
-{
-    static std::unique_ptr<Shader> shader;
-    if (!shader)
-    {
-        static char const* VERTEX_SHADER = R"~~~(
-#version 410 core
-layout(location=1) in vec4 position;
-layout(location=2) in vec4 color;
-layout(location=3) in vec2 texCoord;
-layout(location=4) in vec3 normal;
-out vec3 f_position;
-out vec4 f_color;
-out vec2 f_texCoord;
-out vec3 f_normal;
-uniform mat4 projectionMatrix;
-uniform mat4 modelviewMatrix;
-
-void main()
-{
-    mat4 matrix = projectionMatrix * modelviewMatrix;
-    f_position = vec3(position);
-    f_normal = normal;
-    f_color = color;
-    f_texCoord = texCoord;
-    
-    gl_Position = matrix * vec4(f_position, 1.0);
-}
-)~~~";
-        static char const* FRAGMENT_SHADER = R"~~~(
-#version 410 core
-in vec3 f_position;
-in vec4 f_color;
-in vec2 f_texCoord;
-in vec3 f_normal;
-uniform sampler2D texture;
-uniform bool textureSet;
-uniform mat4 modelviewMatrix;
-
-uniform vec3 lightPos;
-uniform vec4 lightColor;
-
-void main()
-{
-    vec3 lightPosVS = vec3(inverse(modelviewMatrix) * vec4(lightPos, 1));
-    float ambientStrength = 0.2; // TODO: Make it configurable
-    vec4 ambient = ambientStrength * lightColor;
-  	
-    // diffuse 
-    vec3 norm = normalize(f_normal);
-    vec3 lightDir = normalize(lightPosVS - f_position);
-    float diff = max(dot(norm, lightDir), 0.0);
-    vec4 diffuse = diff * lightColor;
-        
-    vec4 result = (ambient + diffuse) * f_color;
-    gl_FragColor = vec4(result.xyz, 1.0);
-}
-)~~~";
-        auto objects = {
-            ShaderObject { VERTEX_SHADER, ShaderObject::Vertex },
-            ShaderObject { FRAGMENT_SHADER, ShaderObject::Fragment }
-        };
-        shader = std::make_unique<Shader>(objects, AttributeMapping { 1, 2, 3, 4 });
-    }
-    return *shader;
-}
+    m_program.bind();
+    on_bind(scope);
 }
 
 }

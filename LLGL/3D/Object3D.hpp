@@ -33,7 +33,7 @@ private:
     std::vector<Vertex> m_vertexes;
     std::vector<Vertex> m_normal_vertexes;
     Transform m_transform;
-    opengl::Shader* m_shader = &opengl::shaders::basic_330_core();
+    opengl::Shader* m_shader = nullptr;
     mutable opengl::VAO m_vao;
     mutable opengl::VAO m_normals_vao;
     mutable bool m_needs_update { true };

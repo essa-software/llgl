@@ -8,13 +8,13 @@ namespace llgl
 
 void FFPRenderer::begin_draw(RendererConfig config)
 {
-    config.shader->bind();
+    opengl::ShaderScope scope(*config.shader);
     opengl::begin(config.primitive_type);
 }
 
 void FFPRenderer::add_vertexes(std::span<Vertex const> vertexes)
 {
-    for(auto const& vertex: vertexes)
+    for (auto const& vertex : vertexes)
     {
         opengl::set_vertex_color(vertex.color);
         opengl::set_texture_coordinate(vertex.tex_coord);
@@ -32,7 +32,7 @@ void FFPRenderer::apply_view(View const& view)
     opengl::set_matrix_mode(opengl::MatrixMode::Projection);
     opengl::load_identity();
     opengl::set_viewport(view.viewport());
-    switch(view.type())
+    switch (view.type())
     {
         case View::Type::Ortho:
             opengl::load_ortho(view.ortho_args());

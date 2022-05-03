@@ -48,27 +48,45 @@ struct AttributeMapping
     unsigned normal;
 };
 
-class Shader
+class Program
 {
 public:
-    ~Shader();
-    explicit Shader(std::span<ShaderObject const> shader_objects, AttributeMapping);
-    Shader(Shader const&) = delete;
-    Shader& operator=(Shader const&) = delete;
-    Shader(Shader&& other) = default;
-    Shader& operator=(Shader&&) = default;
+    ~Program();
+    explicit Program(std::span<ShaderObject const> shader_objects);
+    Program(Program const&) = delete;
+    Program& operator=(Program const&) = delete;
+    Program(Program&& Program) = default;
+    Program& operator=(Program&&) = default;
 
     void bind() const;
-    static Shader const* current();
+    static Program const* current();
 
     bool valid() const { return m_valid; }
     unsigned id() const { return m_id; }
-    AttributeMapping attribute_mapping() const { return m_attribute_mapping; }
 
 private:
     bool m_valid = false;
     unsigned m_id = 0;
-    AttributeMapping m_attribute_mapping;
+};
+
+class ShaderScope;
+
+// OpenGL program + data required to properly set up for rendering (attribute
+// mapping and uniform data).
+class Shader {
+public:
+    Shader(Program& program)
+    : m_program(program) {}
+
+    virtual AttributeMapping attribute_mapping() const = 0;
+
+    Program const& program() const { return m_program; }
+    void bind(ShaderScope&) const;
+
+private:
+    virtual void on_bind(ShaderScope&) const = 0;
+
+    Program& m_program;
 };
 
 class ShaderScope
@@ -77,7 +95,7 @@ public:
     ShaderScope(Shader const& shader)
         : m_shader(shader)
     {
-        shader.bind();
+        shader.bind(*this);
     }
     ~ShaderScope()
     { /*Not applicable since OpenGL 3.2*/
@@ -97,16 +115,5 @@ public:
 private:
     Shader const& m_shader;
 };
-
-namespace shaders
-{
-
-// Basic shader, with no lighting etc.
-Shader& basic_330_core();
-
-// Shade flat lighting (single light source)
-Shader& shade_flat();
-
-}
 
 }

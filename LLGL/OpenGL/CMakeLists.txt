@@ -9,6 +9,9 @@ set(SOURCES
     VAO.cpp
     Vertex.cpp
     View.cpp
+
+    Shaders/Basic330Core.cpp
+    Shaders/ShadeFlat.cpp
 )
 add_llgl_library(OpenGL opengl)
 target_link_libraries(OpenGL GL GLU GLEW)

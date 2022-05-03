@@ -25,12 +25,11 @@ void CoreRenderer::add_vertexes(std::span<Vertex const> vertexes)
 
 void CoreRenderer::end_draw()
 {
-    if(m_vertexes.empty())
+    if (m_vertexes.empty())
         return;
 
     // Shaders are required in core OpenGL
-    if(m_config.shader)
-        m_config.shader = &opengl::shaders::basic_330_core();
+    assert(m_config.shader);
 
     opengl::VAO vao;
     // Keep these indexes in sync with shader in Shader.cpp!

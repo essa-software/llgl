@@ -1,7 +1,10 @@
-#include "LLGL/Core/Angle.hpp"
-#include "LLGL/OpenGL/Shader.hpp"
+#include "LLGL/Core/Color.hpp"
+#include "LLGL/OpenGL/Shaders/ShadeFlat.hpp"
 #include <LLGL/3D/ObjLoader.hpp>
 #include <LLGL/3D/Object3D.hpp>
+#include <LLGL/Core/Angle.hpp>
+#include <LLGL/OpenGL/Shader.hpp>
+#include <LLGL/OpenGL/Shaders/Basic330Core.hpp>
 #include <LLGL/OpenGL/Utils.hpp>
 #include <LLGL/Renderer/BatchRenderer.hpp>
 #include <LLGL/Renderer/Renderer.hpp>
@@ -23,8 +26,10 @@ int main()
     }
     object.value().transform().translate({ -1.5, -1.5, -5 });
     object.value().transform().rotate_y(llgl::deg_to_rad(45));
-    auto& shader = llgl::opengl::shaders::shade_flat();
+    llgl::opengl::shaders::ShadeFlat shader;
     object.value().set_shader(shader);
+
+    double light_angle = 0;
 
     for (;;)
     {
@@ -40,18 +45,17 @@ int main()
         window.renderer().apply_view(view);
         object.value().transform().rotate_x(0.05);
 
+        light_angle += 0.01;
+        shader.set_light_position({ static_cast<float>(std::sin(light_angle)), 5, static_cast<float>(std::cos(light_angle)) });
+
         {
-            llgl::opengl::ShaderScope scope(shader);
-            scope.set_uniform("lightPos", llgl::Vector3f { 2, 4, 3 });
-            scope.set_uniform("lightColor", llgl::Colors::red);
+            shader.set_light_color(llgl::Colors::red * 0.8);
             window.renderer().render_object(object.value());
         }
 
         {
+            shader.set_light_color(llgl::Colors::green * 0.8);
             object->transform().translate({ 3, 0, 0 });
-            llgl::opengl::ShaderScope scope(shader);
-            scope.set_uniform("lightPos", llgl::Vector3f { 2, 4, 3 });
-            scope.set_uniform("lightColor", llgl::Colors::green);
             window.renderer().render_object(object.value());
             object->transform().translate({ -3, 0, 0 });
         }
