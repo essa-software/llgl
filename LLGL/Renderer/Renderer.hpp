@@ -22,7 +22,7 @@ public:
     {
     }
 
-    virtual void begin_draw(opengl::PrimitiveType, DrawState) = 0;
+    virtual void begin_draw(opengl::PrimitiveType, DrawState = {}) = 0;
     virtual void add_vertexes(std::span<Vertex const> vertexes) = 0;
     void add_vertexes(std::initializer_list<Vertex> vertexes)
     {
@@ -32,7 +32,7 @@ public:
     virtual void apply_view(View const&) = 0;
     virtual View view() const = 0;
 
-    void render_object(Renderable const&, DrawState);
+    void render_object(Renderable const&, DrawState = {});
     void draw_vao(opengl::VAO const&, opengl::PrimitiveType, DrawState const&);
     void add_triangle(Vertex _1, Vertex _2, Vertex _3);
 
