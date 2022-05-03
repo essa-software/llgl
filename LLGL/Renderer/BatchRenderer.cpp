@@ -2,14 +2,16 @@
 
 #include <LLGL/Core/DelayedInit.hpp>
 #include <LLGL/OpenGL/VAO.hpp>
+#include <LLGL/Renderer/StateScope.hpp>
 
 namespace llgl
 {
 
-void BatchRenderer::begin_draw(RendererConfig config)
+void BatchRenderer::begin_draw(opengl::PrimitiveType pt, DrawState state)
 {
-    m_current_config = std::move(config);
-    m_current_config.shader = nullptr;
+    m_current_primitive_type = pt;
+    m_current_state = std::move(state);
+    assert(m_current_state.shader);
     m_vertexes.clear();
 }
 
@@ -20,27 +22,15 @@ void BatchRenderer::add_vertexes(std::span<Vertex const> vertexes)
 
 void BatchRenderer::end_draw()
 {
-    m_commands.emplace_back(std::move(m_current_config), opengl::VAO { m_current_config.shader->attribute_mapping(), m_vertexes });
+    m_commands.emplace_back(m_current_primitive_type, std::move(m_current_state), opengl::VAO { m_current_state.shader->attribute_mapping(), m_vertexes });
     m_vertexes.clear();
 }
 
-void BatchRenderer::render(Renderer& renderer) const
+void BatchRenderer::render(Renderer& renderer, DrawState) const
 {
+    // TODO: Use given RendererConfig somehow (combine transforms etc).
     for (auto const& command : m_commands)
-    {
-        opengl::ShaderScope scope { *command.config.shader };
-        // TODO: Move it to ShaderScope
-        scope.set_uniform("projectionMatrix", renderer.view().matrix());
-
-        {
-            DelayedInit<opengl::TextureBinder> binder;
-            if (command.config.texture)
-                binder.construct(*command.config.texture);
-            scope.set_uniform("modelviewMatrix", command.config.modelview_matrix);
-            // END TODO
-            command.vao.draw(command.config.primitive_type);
-        };
-    }
+        renderer.draw_vao(command.vao, command.primitive_type, command.state);
 }
 
 }

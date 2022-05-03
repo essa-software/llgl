@@ -52,7 +52,7 @@ void Object3D::add_face(std::span<Vertex> face)
     m_needs_update = true;
 }
 
-void Object3D::render(Renderer& renderer) const
+void Object3D::render(Renderer& renderer, DrawState state) const
 {
     if (m_needs_update)
     {
@@ -62,11 +62,11 @@ void Object3D::render(Renderer& renderer) const
             m_normals_vao.load_vertexes(opengl::AttributeMapping { 1, 2, 3, 4 }, m_normal_vertexes);
         m_needs_update = false;
     }
-    // TODO: Support custom config
-    m_vao.draw(renderer, { .primitive_type = opengl::PrimitiveType::Triangles, .shader = m_shader, .modelview_matrix = m_transform.matrix() });
+
+    renderer.draw_vao(m_vao, opengl::PrimitiveType::Triangles, state);
 
     if constexpr (OBJECT3D_DEBUG)
-        m_normals_vao.draw(renderer, { .primitive_type = opengl::PrimitiveType::Lines, .shader = m_shader, .modelview_matrix = m_transform.matrix() });
+        renderer.draw_vao(m_normals_vao, opengl::PrimitiveType::Triangles, state);
 }
 
 }

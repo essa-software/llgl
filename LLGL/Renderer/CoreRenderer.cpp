@@ -11,15 +11,16 @@
 namespace llgl
 {
 
-void CoreRenderer::begin_draw(RendererConfig config)
+void CoreRenderer::begin_draw(opengl::PrimitiveType pt, DrawState state)
 {
-    m_config = std::move(config);
+    m_primitive_type = pt;
+    m_state = state;
     m_vertexes.clear();
 }
 
 void CoreRenderer::add_vertexes(std::span<Vertex const> vertexes)
 {
-    assert(m_config.primitive_type != opengl::PrimitiveType::Invalid);
+    assert(m_primitive_type != opengl::PrimitiveType::Invalid);
     m_vertexes.insert(m_vertexes.end(), vertexes.begin(), vertexes.end());
 }
 
@@ -29,13 +30,13 @@ void CoreRenderer::end_draw()
         return;
 
     // Shaders are required in core OpenGL
-    assert(m_config.shader);
+    assert(m_state.shader);
 
     opengl::VAO vao;
     // Keep these indexes in sync with shader in Shader.cpp!
-    vao.load_vertexes(m_config.shader->attribute_mapping(), m_vertexes);
-    vao.draw(*this, m_config);
-    m_config.primitive_type = opengl::PrimitiveType::Invalid;
+    vao.load_vertexes(m_state.shader->attribute_mapping(), m_vertexes);
+    draw_vao(vao, m_primitive_type, m_state);
+    m_primitive_type = opengl::PrimitiveType::Invalid;
 }
 
 void CoreRenderer::apply_view(View const& view)

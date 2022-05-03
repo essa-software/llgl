@@ -6,10 +6,10 @@
 namespace llgl
 {
 
-void FFPRenderer::begin_draw(RendererConfig config)
+void FFPRenderer::begin_draw(opengl::PrimitiveType primitive_type, DrawState state)
 {
-    opengl::ShaderScope scope(*config.shader);
-    opengl::begin(config.primitive_type);
+    opengl::ShaderScope scope(*state.shader);
+    opengl::begin(primitive_type);
 }
 
 void FFPRenderer::add_vertexes(std::span<Vertex const> vertexes)

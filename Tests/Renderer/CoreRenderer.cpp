@@ -1,3 +1,4 @@
+#include "LLGL/OpenGL/Shaders/Basic330Core.hpp"
 #include <LLGL/Core/Color.hpp>
 #include <LLGL/OpenGL/Blend.hpp>
 #include <LLGL/OpenGL/Transform.hpp>
@@ -34,8 +35,9 @@ int main()
     llgl::opengl::set_clear_color(llgl::Color { 255, 128, 128 });
     llgl::BatchRenderer batch_renderer { window };
 
+    llgl::opengl::shaders::Basic330Core shader;
     {
-        llgl::DrawScope scope { batch_renderer, { .primitive_type = llgl::opengl::PrimitiveType::Triangles, .texture = &texture } };
+        llgl::DrawScope scope { batch_renderer, llgl::opengl::PrimitiveType::Triangles, { .shader = &shader, .texture = &texture } };
         batch_renderer.add_triangle(
             { { -1.5, -1.5, -15 }, llgl::Colors::white, { 0, 0 } },
             { { 1.5, 1.5, -15 }, llgl::Colors::white, { 1, 1 } },
@@ -58,7 +60,7 @@ int main()
         view.set_viewport(llgl::Recti { 0, 0, window.size().x, window.size().y });
         view.set_perspective({ 1.22, window.aspect(), 0.1, 20 });
         window.renderer().apply_view(view);
-        window.renderer().render_object(batch_renderer);
+        window.renderer().render_object(batch_renderer, {});
         window.display();
     }
     return 0;

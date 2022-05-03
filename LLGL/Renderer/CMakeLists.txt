@@ -3,6 +3,7 @@ set(SOURCES
     CoreRenderer.cpp
     FFPRenderer.cpp
     Renderer.cpp
+    StateScope.cpp
     Transform.cpp
 )
 add_llgl_library(Renderer renderer)

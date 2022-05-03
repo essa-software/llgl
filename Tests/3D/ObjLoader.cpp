@@ -24,10 +24,12 @@ int main()
         std::cerr << "FAILED TO READ :((" << std::endl;
         return 1;
     }
-    object.value().transform().translate({ -1.5, -1.5, -5 });
-    object.value().transform().rotate_y(llgl::deg_to_rad(45));
+
+    llgl::Transform transform;
+    transform.translate({ -1.5, -1.5, -5 });
+    transform.rotate_y(llgl::deg_to_rad(45));
+
     llgl::opengl::shaders::ShadeFlat shader;
-    object.value().set_shader(shader);
 
     double light_angle = 0;
 
@@ -43,21 +45,21 @@ int main()
         view.set_viewport(llgl::Recti { 0, 0, window.size().x, window.size().y });
         view.set_perspective({ 1.22, window.aspect(), 0.1, 20 });
         window.renderer().apply_view(view);
-        object.value().transform().rotate_x(0.05);
+        transform.rotate_x(0.05);
 
         light_angle += 0.01;
         shader.set_light_position({ static_cast<float>(std::sin(light_angle)), 5, static_cast<float>(std::cos(light_angle)) });
 
         {
             shader.set_light_color(llgl::Colors::red * 0.8);
-            window.renderer().render_object(object.value());
+            window.renderer().render_object(object.value(), { .shader = &shader, .modelview_matrix = transform.matrix() });
         }
 
         {
             shader.set_light_color(llgl::Colors::green * 0.8);
-            object->transform().translate({ 3, 0, 0 });
-            window.renderer().render_object(object.value());
-            object->transform().translate({ -3, 0, 0 });
+            transform.translate({ 3, 0, 0 });
+            window.renderer().render_object(object.value(), { .shader = &shader, .modelview_matrix = transform.matrix() });
+            transform.translate({ -3, 0, 0 });
         }
 
         window.display();

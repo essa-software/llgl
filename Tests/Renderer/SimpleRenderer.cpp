@@ -25,7 +25,7 @@ int main()
 
         {
             llgl::opengl::set_scissor({ 0, 0, 200, 200 });
-            llgl::DrawScope scope { window.renderer(), { llgl::opengl::PrimitiveType::Triangles } };
+            llgl::DrawScope scope { window.renderer(), llgl::opengl::PrimitiveType::Triangles };
             scope.renderer().add_triangle(
                 { { 150, 100, 0 }, llgl::Colors::green },
                 { { 200, 200, 0 }, llgl::Colors::red },

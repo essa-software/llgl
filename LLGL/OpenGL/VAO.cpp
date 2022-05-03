@@ -109,26 +109,4 @@ void VAO::draw(PrimitiveType primitive_type) const
     handle_error();
 }
 
-void VAO::draw(Renderer& renderer, RendererConfig const& config) const
-{
-    assert(config.shader);
-    opengl::ShaderScope scope { *config.shader };
-
-    // TODO: Move it to ShaderScope
-    scope.set_uniform("projectionMatrix", renderer.view().matrix());
-    scope.set_uniform("modelviewMatrix", config.modelview_matrix);
-    DelayedInit<opengl::TextureBinder> binder;
-    if (config.texture)
-    {
-        binder.construct(*config.texture);
-        scope.set_uniform("texture", opengl::ShaderScope::CurrentTexture);
-        scope.set_uniform("textureSet", true);
-    }
-    else
-        scope.set_uniform("textureSet", false);
-    // END TODO
-
-    draw(config.primitive_type);
-}
-
 }

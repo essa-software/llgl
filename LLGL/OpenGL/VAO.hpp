@@ -1,10 +1,10 @@
 #pragma once
 
-#include "LLGL/Renderer/Renderer.hpp"
 #include "Shader.hpp"
 #include "Vertex.hpp"
 
 #include <LLGL/Core/Vertex.hpp>
+
 #include <span>
 
 namespace llgl::opengl
@@ -28,7 +28,6 @@ public:
 
     void bind() const;
     void draw(PrimitiveType) const;
-    void draw(Renderer& renderer, RendererConfig const&) const;
 
 private:
     unsigned m_vertex_array_id {};

@@ -13,7 +13,7 @@ public:
     FFPRenderer(Window& window)
     : Renderer(window) {}
 
-    virtual void begin_draw(RendererConfig) override;
+    virtual void begin_draw(opengl::PrimitiveType, DrawState) override;
     virtual void add_vertexes(std::span<Vertex const> vertexes) override;
     virtual void end_draw() override;
     virtual void apply_view(View const&) override;
