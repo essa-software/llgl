@@ -19,13 +19,15 @@ layout(location=2) in vec4 color;
 layout(location=3) in vec2 texCoord;
 layout(location=4) in vec3 normal;
 out vec4 f_color;
+out vec2 f_texCoord;
 uniform mat4 projectionMatrix;
 uniform mat4 modelviewMatrix;
 
 void main()
 {
     mat4 matrix = projectionMatrix * modelviewMatrix;
-    f_color = vec4(1,0,0,0);
+    f_color = color;
+    f_texCoord = texCoord;
     gl_Position = matrix * position;
 }
 )~~~";
@@ -33,11 +35,16 @@ void main()
 #version 410 core
 
 in vec4 f_color;
+in vec2 f_texCoord;
+uniform sampler2D texture;
+uniform bool textureSet;
 
 void main()
 {
-    // TODO: Textures
-    gl_FragColor = f_color;
+    vec4 color = f_color;
+    if (textureSet)
+        color *= texture2D(texture, f_texCoord);
+    gl_FragColor = color;
 }
 )~~~";
         auto objects = {
