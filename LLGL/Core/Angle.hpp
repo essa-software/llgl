@@ -12,8 +12,8 @@ constexpr auto rad_to_deg(auto radians) {
     return radians * degrees_in_radian<decltype(radians)>;
 }
 
-constexpr auto deg_to_rad(auto radians) {
-    return radians / degrees_in_radian<decltype(radians)>;
+constexpr auto deg_to_rad(auto degrees) {
+    return degrees / degrees_in_radian<decltype(degrees)>;
 }
 
 }
