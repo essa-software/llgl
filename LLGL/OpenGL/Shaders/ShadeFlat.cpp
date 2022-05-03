@@ -21,11 +21,12 @@ out vec4 f_color;
 out vec2 f_texCoord;
 out vec3 f_normal;
 uniform mat4 projectionMatrix;
-uniform mat4 modelviewMatrix;
+uniform mat4 modelMatrix;
+uniform mat4 viewMatrix;
 
 void main()
 {
-    mat4 matrix = projectionMatrix * modelviewMatrix;
+    mat4 matrix = projectionMatrix * viewMatrix * modelMatrix;
     f_position = vec3(position);
     f_normal = normal;
     f_color = color;
@@ -42,14 +43,15 @@ in vec2 f_texCoord;
 in vec3 f_normal;
 uniform sampler2D texture;
 uniform bool textureSet;
-uniform mat4 modelviewMatrix;
+uniform mat4 modelMatrix;
+uniform mat4 viewMatrix;
 
 uniform vec3 lightPos;
 uniform vec4 lightColor;
 
 void main()
 {
-    vec3 lightPosVS = vec3(inverse(modelviewMatrix) * vec4(lightPos, 1));
+    vec3 lightPosVS = vec3(inverse(viewMatrix * modelMatrix) * vec4(lightPos, 1));
     float ambientStrength = 0.2; // TODO: Make it configurable
     vec4 ambient = ambientStrength * lightColor;
   	

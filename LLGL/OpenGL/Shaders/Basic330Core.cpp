@@ -21,11 +21,12 @@ layout(location=4) in vec3 normal;
 out vec4 f_color;
 out vec2 f_texCoord;
 uniform mat4 projectionMatrix;
-uniform mat4 modelviewMatrix;
+uniform mat4 modelMatrix;
+uniform mat4 viewMatrix;
 
 void main()
 {
-    mat4 matrix = projectionMatrix * modelviewMatrix;
+    mat4 matrix = projectionMatrix * viewMatrix * modelMatrix;
     f_color = color;
     f_texCoord = texCoord;
     gl_Position = matrix * position;

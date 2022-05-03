@@ -39,7 +39,7 @@ std::optional<Object3D> ObjLoader::load()
             continue;
         }
 
-        std::cerr << command << std::endl;
+        //std::cerr << command << std::endl;
 
         if(command == "v")
         {
@@ -99,7 +99,7 @@ std::optional<Object3D> ObjLoader::load()
         }
         else
         {
-            std::cerr << "ObjLoader: Unknown command: " << command << std::endl;
+            //std::cerr << "ObjLoader: Unknown command: " << command << std::endl;
             std::string line;
             std::getline(m_in, line);
         }
