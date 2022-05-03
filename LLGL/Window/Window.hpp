@@ -6,8 +6,8 @@
 
 #include <LLGL/Core/Vector2.hpp>
 #include <LLGL/Renderer/Renderer.hpp>
-#include <string>
 #include <memory>
+#include <string>
 
 namespace llgl
 {
@@ -24,6 +24,7 @@ public:
     void set_size(Vector2i);
     void display();
     bool poll_event(Event&);
+    void set_mouse_position(Vector2i);
 
     Renderer& renderer() { return *m_renderer; }
     Vector2i size() const { return m_size; }

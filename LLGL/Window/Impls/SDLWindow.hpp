@@ -20,6 +20,7 @@ public:
     virtual void set_size(Vector2i) override;
     virtual void display() override;
     virtual bool poll_event(Event&) override;
+    virtual void set_mouse_position(Vector2i) override;
 
 private:
     SDL_Window* m_window;

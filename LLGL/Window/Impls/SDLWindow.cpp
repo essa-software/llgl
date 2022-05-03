@@ -4,6 +4,7 @@
 
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_events.h>
+#include <SDL2/SDL_mouse.h>
 #include <SDL2/SDL_video.h>
 #include <iostream>
 
@@ -116,14 +117,19 @@ bool SDLWindowImpl::poll_event(Event& event)
         else if (sdl_event.type == SDL_MOUSEMOTION)
         {
             event.type = Event::Type::MouseMove;
-            event.mouse_move.position = {sdl_event.motion.x, sdl_event.motion.y};
-            event.mouse_move.relative = {sdl_event.motion.xrel, sdl_event.motion.yrel};
+            event.mouse_move.position = { sdl_event.motion.x, sdl_event.motion.y };
+            event.mouse_move.relative = { sdl_event.motion.xrel, sdl_event.motion.yrel };
             return true;
         }
         // TODO
         std::cout << "SDLWindow: Unhandled event (type=" << sdl_event.type << ")" << std::endl;
         return false;
     }
+}
+
+void SDLWindowImpl::set_mouse_position(Vector2i pos)
+{
+    SDL_WarpMouseInWindow(m_window, pos.x, pos.y);
 }
 
 }

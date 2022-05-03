@@ -10,9 +10,9 @@ namespace llgl
 {
 
 Window::Window(Vector2i size, std::u8string const& title, ContextSettings const& settings)
-: m_impl{std::make_unique<SDLWindowImpl>()}
+    : m_impl { std::make_unique<SDLWindowImpl>() }
 {
-    if(settings.major_version == 3 && settings.minor_version >= 2 || settings.major_version > 3)
+    if (settings.major_version == 3 && settings.minor_version >= 2 || settings.major_version > 3)
         m_renderer = std::make_unique<CoreRenderer>(*this);
     else
         m_renderer = std::make_unique<FFPRenderer>(*this);
@@ -47,15 +47,20 @@ void Window::display()
 {
     m_impl->display();
 }
-   
+
 bool Window::poll_event(Event& event)
 {
     auto result = m_impl->poll_event(event);
-    if(!result)
+    if (!result)
         return false;
-    if(event.type == Event::Type::Resize)
+    if (event.type == Event::Type::Resize)
         m_size = event.resize.size;
     return true;
+}
+
+void Window::set_mouse_position(Vector2i pos)
+{
+    m_impl->set_mouse_position(pos);
 }
 
 }
