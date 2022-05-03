@@ -12,11 +12,11 @@ public:
     explicit Transform(Matrix4x4f matrix = Matrix4x4f::identity())
     : m_matrix(matrix) {}
 
-    void translate(Vector3f vector);
+    [[nodiscard]] Transform translate(Vector3f vector) const;
 
     // Angle is in radians.
-    void rotate_x(float angle);
-    void rotate_y(float angle);
+    [[nodiscard]] Transform rotate_x(float angle) const;
+    [[nodiscard]] Transform rotate_y(float angle) const;
 
     Matrix4x4f matrix() const { return m_matrix; }
 

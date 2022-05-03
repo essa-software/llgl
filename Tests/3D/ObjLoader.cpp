@@ -26,8 +26,7 @@ int main()
     }
 
     llgl::Transform transform;
-    transform.translate({ -1.5, -1.5, -5 });
-    transform.rotate_y(llgl::deg_to_rad(45));
+    transform = transform.translate({ -1.5, -1.5, -5 }).rotate_y(llgl::deg_to_rad(45));
 
     llgl::opengl::shaders::ShadeFlat shader;
 
@@ -45,7 +44,7 @@ int main()
         view.set_viewport(llgl::Recti { 0, 0, window.size().x, window.size().y });
         view.set_perspective({ 1.22, window.aspect(), 0.1, 20 });
         window.renderer().apply_view(view);
-        transform.rotate_x(0.05);
+        transform = transform.rotate_x(0.05);
 
         light_angle += 0.01;
         shader.set_light_position({ static_cast<float>(std::sin(light_angle)), 5, static_cast<float>(std::cos(light_angle)) });
@@ -57,9 +56,7 @@ int main()
 
         {
             shader.set_light_color(llgl::Colors::green * 0.8);
-            transform.translate({ 3, 0, 0 });
-            window.renderer().render_object(object.value(), { .shader = &shader, .modelview_matrix = transform.matrix() });
-            transform.translate({ -3, 0, 0 });
+            window.renderer().render_object(object.value(), { .shader = &shader, .modelview_matrix = transform.translate({ 3, 0, 0 }).matrix() });
         }
 
         window.display();
