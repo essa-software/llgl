@@ -1,5 +1,6 @@
 #pragma once
 
+#include <algorithm>
 #include <cmath>
 #include <cstdint>
 
@@ -10,9 +11,23 @@ class Color
 {
 public:
     uint8_t r {}, g {}, b {}, a { 255 };
+
+    constexpr Color operator+(Color const& right) const
+    {
+        return { static_cast<uint8_t>(std::clamp(r + right.r, 0, 255)),
+            static_cast<uint8_t>(std::clamp(g + right.g, 0, 255)),
+            static_cast<uint8_t>(std::clamp(b + right.b, 0, 255)) };
+    }
+
+    constexpr Color operator-(Color const& right) const
+    {
+        return { static_cast<uint8_t>(std::clamp(r - right.r, 0, 255)),
+            static_cast<uint8_t>(std::clamp(g - right.g, 0, 255)),
+            static_cast<uint8_t>(std::clamp(b - right.b, 0, 255)) };
+    }
 };
 
-Color operator*(Color const& left, auto fac)
+constexpr Color operator*(Color const& left, auto fac)
 {
     using Fac = decltype(fac);
     return { static_cast<uint8_t>(std::min<Fac>(255, left.r * fac)),
