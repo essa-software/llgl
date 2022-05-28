@@ -21,10 +21,12 @@ public:
     virtual void display() override;
     virtual bool poll_event(Event&) override;
     virtual void set_mouse_position(Vector2i) override;
+    virtual bool is_focused() const override;
 
 private:
-    SDL_Window* m_window;
+    SDL_Window* m_window {};
     SDL_GLContext m_context;
+    bool m_focused = false;
 };
 
 }

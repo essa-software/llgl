@@ -63,4 +63,9 @@ void Window::set_mouse_position(Vector2i pos)
     m_impl->set_mouse_position(pos);
 }
 
+bool Window::is_focused() const
+{
+    return m_impl->is_focused();
+}
+
 }

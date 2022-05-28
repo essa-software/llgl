@@ -96,6 +96,12 @@ bool SDLWindowImpl::poll_event(Event& event)
                     event.type = Event::Type::Resize;
                     event.resize.size = Vector2i { sdl_event.window.data1, sdl_event.window.data2 };
                     break;
+                case SDL_WINDOWEVENT_FOCUS_GAINED:
+                    m_focused = true;
+                    break;
+                case SDL_WINDOWEVENT_FOCUS_LOST:
+                    m_focused = false;
+                    break;
                 default:
                     std::cout << "SDLWindow: Unhandled window event (type=" << (int)sdl_event.window.event << ")" << std::endl;
                     return false;
@@ -116,6 +122,8 @@ bool SDLWindowImpl::poll_event(Event& event)
         }
         else if (sdl_event.type == SDL_MOUSEMOTION)
         {
+            if (sdl_event.motion.xrel == 0 && sdl_event.motion.yrel == 0)
+                continue;
             event.type = Event::Type::MouseMove;
             event.mouse_move.position = { sdl_event.motion.x, sdl_event.motion.y };
             event.mouse_move.relative = { sdl_event.motion.xrel, sdl_event.motion.yrel };
@@ -130,6 +138,11 @@ bool SDLWindowImpl::poll_event(Event& event)
 void SDLWindowImpl::set_mouse_position(Vector2i pos)
 {
     SDL_WarpMouseInWindow(m_window, pos.x, pos.y);
+}
+
+bool SDLWindowImpl::is_focused() const
+{
+    return m_focused;
 }
 
 }

@@ -25,6 +25,7 @@ public:
     void display();
     bool poll_event(Event&);
     void set_mouse_position(Vector2i);
+    bool is_focused() const;
 
     Renderer& renderer() { return *m_renderer; }
     Vector2i size() const { return m_size; }

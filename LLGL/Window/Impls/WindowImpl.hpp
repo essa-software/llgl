@@ -20,6 +20,7 @@ public:
     virtual void display() = 0;
     virtual bool poll_event(Event&) = 0;
     virtual void set_mouse_position(Vector2i) = 0;
+    virtual bool is_focused() const = 0;
 };
 
 }
