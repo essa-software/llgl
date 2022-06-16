@@ -43,21 +43,21 @@ template<class T>
 class Vector2
 {
 public:
-    Vector2() = default;
+    constexpr Vector2() = default;
 
-    Vector2(T x_, T y_)
+    constexpr Vector2(T x_, T y_)
         : x { x_ }
         , y { y_ }
     {
     }
 
-    explicit Vector2(concepts::Vector2 auto other)
+    constexpr explicit Vector2(concepts::Vector2 auto other)
         : x { static_cast<T>(other.x) }
         , y { static_cast<T>(other.y) }
     {
     }
 
-    Vector2& operator=(concepts::Vector2 auto other)
+    constexpr Vector2& operator=(concepts::Vector2 auto other)
     {
         if constexpr (std::is_same_v<decltype(&other), decltype(this)>)
         {
