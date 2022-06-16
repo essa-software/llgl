@@ -4,8 +4,7 @@
 
 #include <cmath>
 
-namespace llgl::vector
-{
+namespace llgl::vector {
 
 using llgl::concepts::Vector2;
 using llgl::concepts::Vector3;
@@ -80,8 +79,7 @@ auto rotate_y(Vector3 auto vec, double angle)
 
 }
 
-namespace
-{
+namespace {
 
 using llgl::concepts::Vector2;
 using llgl::concepts::Vector3;
@@ -90,6 +88,8 @@ auto operator+(Vector2 auto first, Vector2 auto second) { return decltype(first)
 auto operator-(Vector2 auto first, Vector2 auto second) { return decltype(first) { first.x - second.x, first.y - second.y }; }
 auto operator*(Vector2 auto first, auto scalar) { return decltype(first) { first.x * scalar, first.y * scalar }; }
 auto operator/(Vector2 auto first, auto scalar) { return decltype(first) { first.x / scalar, first.y / scalar }; }
+
+auto operator-(Vector2 auto vec) { return decltype(vec) { -vec.x, -vec.y }; }
 
 auto operator+=(Vector2 auto& first, Vector2 auto second) { return first = first + second; }
 auto operator-=(Vector2 auto& first, Vector2 auto second) { return first = first - second; }
@@ -103,6 +103,8 @@ auto operator+(Vector3 auto first, Vector3 auto second) { return decltype(first)
 auto operator-(Vector3 auto first, Vector3 auto second) { return decltype(first) { first.x - second.x, first.y - second.y, first.z - second.z }; }
 auto operator*(Vector3 auto first, auto scalar) { return decltype(first) { first.x * scalar, first.y * scalar, first.z * scalar }; }
 auto operator/(Vector3 auto first, auto scalar) { return decltype(first) { first.x / scalar, first.y / scalar, first.z / scalar }; }
+
+auto operator-(Vector3 auto vec) { return decltype(vec) { -vec.x, -vec.y, -vec.z }; }
 
 auto operator+=(Vector3 auto& first, Vector3 auto second) { return first = first + second; }
 auto operator-=(Vector3 auto& first, Vector3 auto second) { return first = first - second; }
