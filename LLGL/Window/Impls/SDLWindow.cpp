@@ -129,6 +129,20 @@ bool SDLWindowImpl::poll_event(Event& event)
             event.mouse_move.relative = { sdl_event.motion.xrel, sdl_event.motion.yrel };
             return true;
         }
+        else if (sdl_event.type == SDL_MOUSEBUTTONDOWN)
+        {
+            event.type = Event::Type::MouseButtonPress;
+            event.mouse_button.button = static_cast<MouseButton>(sdl_event.button.button);
+            event.mouse_move.position = { sdl_event.button.x, sdl_event.button.y };
+            return true;
+        }
+        else if (sdl_event.type == SDL_MOUSEBUTTONUP)
+        {
+            event.type = Event::Type::MouseButtonRelease;
+            event.mouse_button.button = static_cast<MouseButton>(sdl_event.button.button);
+            event.mouse_move.position = { sdl_event.button.x, sdl_event.button.y };
+            return true;
+        }
         // TODO
         std::cout << "SDLWindow: Unhandled event (type=" << sdl_event.type << ")" << std::endl;
         return false;

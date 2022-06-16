@@ -2,6 +2,7 @@
 
 #include <LLGL/Core/Vector2.hpp>
 #include <LLGL/Window/Keyboard.hpp>
+#include <LLGL/Window/Mouse.hpp>
 
 namespace llgl
 {
@@ -16,6 +17,8 @@ public:
         KeyPress,
         KeyRelease,
         MouseMove,
+        MouseButtonPress,
+        MouseButtonRelease,
     } type {};
 
     struct ResizeEvent
@@ -31,11 +34,17 @@ public:
         UninitializedVector2<int> position;
         UninitializedVector2<int> relative;
     };
+    struct MouseButtonEvent
+    {
+        UninitializedVector2<int> position;
+        MouseButton button;
+    };
     union
     {
         ResizeEvent resize;
         KeyPressEvent key;
         MouseMoveEvent mouse_move;
+        MouseButtonEvent mouse_button;
     };
 };
 
