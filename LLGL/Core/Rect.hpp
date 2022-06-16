@@ -19,7 +19,7 @@ public:
     Vector2<T> position() const { return { left, top }; }
     Vector2<T> size() const { return { width, height }; }
 
-    bool contains(Vector2<T> pos) const
+    bool contains(concepts::Vector2 auto pos) const
     {
         return pos.x >= left && pos.x <= left + width && pos.y >= top && pos.y <= top + height;
     }
