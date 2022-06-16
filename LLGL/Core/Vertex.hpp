@@ -11,8 +11,8 @@ struct Vertex
 {
     Vector3f position;
     Colorf color;
-    Vector2f tex_coord;
-    Vector3f normal;
+    Vector2f tex_coord {};
+    Vector3f normal {};
 };
 
 }
