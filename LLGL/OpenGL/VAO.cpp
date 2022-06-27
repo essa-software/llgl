@@ -10,8 +10,7 @@
 #include <iostream>
 #include <vector>
 
-namespace llgl::opengl
-{
+namespace llgl::opengl {
 
 VAO::VAO()
 {
@@ -43,13 +42,11 @@ VAO& VAO::operator=(VAO&& other)
 
 VAO::~VAO()
 {
-    if (m_vertex_buffer_id)
-    {
+    if (m_vertex_buffer_id) {
         glDeleteBuffers(1, &m_vertex_buffer_id);
         handle_error();
     }
-    if (m_vertex_array_id)
-    {
+    if (m_vertex_array_id) {
         glDeleteVertexArrays(1, &m_vertex_array_id);
         handle_error();
     }
@@ -57,14 +54,12 @@ VAO::~VAO()
 
 void VAO::load_vertexes(AttributeMapping attribute_mapping, std::span<Vertex const> vertexes)
 {
-    if (m_vertex_array_id == 0)
-    {
+    if (m_vertex_array_id == 0) {
         glGenVertexArrays(1, &m_vertex_array_id);
         handle_error();
     }
     bind();
-    if (!m_vertex_buffer_id)
-    {
+    if (!m_vertex_buffer_id) {
         glGenBuffers(1, &m_vertex_buffer_id);
         handle_error();
     }
@@ -106,6 +101,13 @@ void VAO::draw(PrimitiveType primitive_type) const
 {
     bind();
     glDrawArrays(static_cast<GLenum>(primitive_type), 0, m_size);
+    handle_error();
+}
+
+void VAO::draw_indexed(PrimitiveType primitive_type, std::span<unsigned const> indices) const
+{
+    bind();
+    glDrawElements(static_cast<GLenum>(primitive_type), indices.size(), GL_UNSIGNED_INT, indices.data());
     handle_error();
 }
 

@@ -8,14 +8,12 @@
 #include <LLGL/OpenGL/View.hpp>
 #include <span>
 
-namespace llgl
-{
+namespace llgl {
 
 class Renderable;
 class Window;
 
-class Renderer
-{
+class Renderer {
 public:
     Renderer(Window& window)
         : m_window(window)
@@ -34,14 +32,14 @@ public:
 
     void render_object(Renderable const&, DrawState = {});
     void draw_vao(opengl::VAO const&, opengl::PrimitiveType, DrawState const&);
+    void draw_vao_with_indices(opengl::VAO const&, opengl::PrimitiveType, DrawState const&, std::span<unsigned const> indices);
     void add_triangle(Vertex _1, Vertex _2, Vertex _3);
 
 protected:
     Window& m_window;
 };
 
-class DrawScope
-{
+class DrawScope {
 public:
     DrawScope(Renderer& renderer, opengl::PrimitiveType pt, DrawState state = {})
         : m_renderer(renderer)

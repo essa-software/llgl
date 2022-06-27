@@ -28,6 +28,7 @@ public:
 
     void bind() const;
     void draw(PrimitiveType) const;
+    void draw_indexed(PrimitiveType, std::span<unsigned const> indices) const;
 
 private:
     unsigned m_vertex_array_id {};
