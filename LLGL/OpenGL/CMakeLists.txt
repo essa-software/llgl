@@ -2,6 +2,7 @@ set(SOURCES
     Blend.cpp
     Error.cpp
     Extensions.cpp
+    FBO.cpp
     Shader.cpp
     Texture.cpp
     Transform.cpp
