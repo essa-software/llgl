@@ -10,7 +10,7 @@ namespace llgl
 struct Vertex
 {
     Vector3f position;
-    Colorf color;
+    Colorf color {};
     Vector2f tex_coord {};
     Vector3f normal {};
 };
