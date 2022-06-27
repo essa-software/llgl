@@ -18,6 +18,8 @@ public:
     [[nodiscard]] Transform rotate_x(float angle) const;
     [[nodiscard]] Transform rotate_y(float angle) const;
 
+    [[nodiscard]] Transform scale(float) const;
+
     Matrix4x4f matrix() const { return m_matrix; }
 
 private:

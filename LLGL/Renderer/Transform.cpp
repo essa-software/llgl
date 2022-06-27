@@ -1,7 +1,6 @@
 #include "Transform.hpp"
 
-namespace llgl
-{
+namespace llgl {
 
 Transform Transform::translate(Vector3f vector) const
 {
@@ -28,6 +27,17 @@ Transform Transform::rotate_y(float angle) const
         { -std::sin(angle), 0, std::cos(angle), 0 },
         { 0, 0, 0, 1 } } };
     return Transform { m_matrix * rotation_matrix };
+}
+
+Transform Transform::scale(float scale) const
+{
+    Matrix4x4f scale_matrix {
+        { { scale, 0, 0, 0 },
+            { 0, scale, 0, 0 },
+            { 0, 0, scale, 0 },
+            { 0, 0, 0, 1 } }
+    };
+    return Transform { m_matrix * scale_matrix };
 }
 
 }
