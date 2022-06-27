@@ -6,8 +6,7 @@
 #include <cassert>
 #include <iostream>
 
-namespace llgl::opengl
-{
+namespace llgl::opengl {
 
 Texture::Texture()
 {
@@ -16,8 +15,7 @@ Texture::Texture()
 Texture::~Texture()
 {
     std::cerr << "Texture::~Texture(" << m_id << ",owner=" << m_owner << ")" << std::endl;
-    if(m_owner && m_id != 0)
-    {
+    if (m_owner && m_id != 0) {
         glDeleteTextures(1, &m_id);
         handle_error();
     }
@@ -32,6 +30,7 @@ Texture Texture::create_from_color_array(Vector2u size, Colorf const* array)
 
 Texture Texture::create_empty(Vector2u size, Colorf init_color)
 {
+    (void)init_color;
     Texture texture;
     texture.m_size = size;
     glGenTextures(1, &texture.m_id);
@@ -43,22 +42,21 @@ Texture Texture::create_empty(Vector2u size, Colorf init_color)
 Texture Texture::create_from_id(int id)
 {
     Texture texture;
-    if(!glIsTexture(id))
-    {
+    if (!glIsTexture(id)) {
         std::cerr << id << " is not a texture" << std::endl;
         return {};
     }
     texture.m_id = id;
     int w, h;
     {
-        TextureBinder binder{texture};
+        TextureBinder binder { texture };
         glGetTexLevelParameteriv(GL_TEXTURE_2D, 0, GL_TEXTURE_WIDTH, &w);
         handle_error();
         glGetTexLevelParameteriv(GL_TEXTURE_2D, 0, GL_TEXTURE_HEIGHT, &h);
         handle_error();
         std::cout << w << "," << h << std::endl;
     }
-    texture.m_size = {static_cast<unsigned int>(w), static_cast<unsigned int>(h)};
+    texture.m_size = { static_cast<unsigned int>(w), static_cast<unsigned int>(h) };
     return texture;
 }
 
@@ -67,8 +65,7 @@ void Texture::update(Vector2u dst_pos, Vector2u src_size, Colorf const* array)
     assert(dst_pos.x + src_size.x <= m_size.x);
     assert(dst_pos.y + src_size.y <= m_size.y);
     TextureBinder binder(*this);
-    if(dst_pos == Vector2u{})
-    {
+    if (dst_pos == Vector2u {}) {
         std::cerr << "Texture::update dstPos=[0] srcSize=[" << src_size.x << "," << src_size.y << "] <- " << array << " id=" << m_id << std::endl;
         // Disable mipmaps for now
         // FIXME: Code dupe
@@ -80,11 +77,8 @@ void Texture::update(Vector2u dst_pos, Vector2u src_size, Colorf const* array)
         handle_error();
         m_initialized = true;
         return;
-    }
-    else 
-    {
-        if(!m_initialized)
-        {
+    } else {
+        if (!m_initialized) {
             // Disable mipmaps for now
             // FIXME: Code dupe
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);

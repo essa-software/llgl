@@ -20,6 +20,8 @@ public:
     {
     }
 
+    virtual ~Renderer() = default;
+
     virtual void begin_draw(opengl::PrimitiveType, DrawState = {}) = 0;
     virtual void add_vertexes(std::span<Vertex const> vertexes) = 0;
     void add_vertexes(std::initializer_list<Vertex> vertexes)

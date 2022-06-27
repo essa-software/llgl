@@ -5,14 +5,13 @@
 #include <LLGL/Core/Vector2.hpp>
 #include <string>
 
-namespace llgl
-{
+namespace llgl {
 
 class Event;
 
-class WindowImpl
-{
+class WindowImpl {
 public:
+    virtual ~WindowImpl() = default;
     virtual void create(Vector2i size, std::u8string const& title, ContextSettings const&) = 0;
     virtual void close() = 0;
     virtual void set_title(std::u8string const&) = 0;

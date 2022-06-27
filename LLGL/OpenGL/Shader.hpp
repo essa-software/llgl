@@ -78,6 +78,8 @@ public:
     Shader(Program& program)
     : m_program(program) {}
 
+    virtual ~Shader() = default;
+
     virtual AttributeMapping attribute_mapping() const = 0;
 
     Program const& program() const { return m_program; }
