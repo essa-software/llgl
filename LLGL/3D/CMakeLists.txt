@@ -1,6 +1,7 @@
 set(SOURCES
     ObjLoader.cpp
     Object3D.cpp
+    Sphere.cpp
 )
 add_llgl_library(3D 3d)
 target_link_libraries(3D Renderer)
