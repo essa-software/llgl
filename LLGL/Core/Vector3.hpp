@@ -5,12 +5,10 @@
 #include <concepts>
 #include <ostream>
 
-namespace llgl
-{
+namespace llgl {
 
 template<class T>
-struct UninitializedVector3
-{
+struct UninitializedVector3 {
     UninitializedVector3() = default;
 
     UninitializedVector3(T x_, T y_, T z_)
@@ -36,8 +34,7 @@ struct UninitializedVector3
 
     UninitializedVector3& operator=(concepts::Vector3 auto other)
     {
-        if constexpr (std::is_same_v<decltype(&other), decltype(this)>)
-        {
+        if constexpr (std::is_same_v<decltype(&other), decltype(this)>) {
             if (this == &other)
                 return *this;
         }
@@ -59,8 +56,7 @@ struct UninitializedVector3
 };
 
 template<class T>
-class Vector3
-{
+class Vector3 {
 public:
     Vector3() = default;
 
@@ -85,10 +81,18 @@ public:
     {
     }
 
+    constexpr static Vector3 create_spheric(double lat_radians, double lon_radians, double radius)
+    {
+        return {
+            static_cast<T>(radius * std::cos(lat_radians) * std::sin(lon_radians)),
+            static_cast<T>(radius * std::sin(lat_radians) * std::sin(lon_radians)),
+            static_cast<T>(radius * std::cos(lon_radians)),
+        };
+    }
+
     Vector3& operator=(concepts::Vector3 auto other)
     {
-        if constexpr (std::is_same_v<decltype(&other), decltype(this)>)
-        {
+        if constexpr (std::is_same_v<decltype(&other), decltype(this)>) {
             if (this == &other)
                 return *this;
         }

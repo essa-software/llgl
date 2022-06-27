@@ -57,6 +57,11 @@ public:
     {
     }
 
+    // Angle is CCW starting from positive X axis.
+    constexpr static Vector2 create_polar(double angle_radians, double length) {
+        return { std::sin(angle_radians) * length, std::cos(angle_radians) * length };
+    }
+
     constexpr Vector2& operator=(concepts::Vector2 auto other)
     {
         if constexpr (std::is_same_v<decltype(&other), decltype(this)>)
