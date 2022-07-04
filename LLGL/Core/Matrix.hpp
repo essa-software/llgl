@@ -20,6 +20,8 @@ struct Matrix {
             output.data[s][s] = 1;
         return output;
     }
+
+    bool operator==(Matrix<T, Size> const&) const = default;
 };
 
 using Matrix4x4f = Matrix<float, 4>;
