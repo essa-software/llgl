@@ -68,15 +68,15 @@ public:
     }
 
     explicit Vector3(concepts::Vector3 auto other)
-        : x { other.x }
-        , y { other.y }
-        , z { other.z }
+        : x { static_cast<T>(other.x) }
+        , y { static_cast<T>(other.y) }
+        , z { static_cast<T>(other.z) }
     {
     }
 
     explicit Vector3(concepts::Vector2 auto other)
-        : x { other.x }
-        , y { other.y }
+        : x { static_cast<T>(other.x) }
+        , y { static_cast<T>(other.y) }
         , z { 0 }
     {
     }
