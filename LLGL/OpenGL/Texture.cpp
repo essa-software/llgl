@@ -8,16 +8,25 @@
 
 namespace llgl::opengl {
 
-Texture::Texture()
+Texture& Texture::operator=(Texture&& other)
 {
+    if (this == &other)
+        return *this;
+    if (m_id != 0) {
+        // std::cout << "glDeleteTextures(" << m_id << ") in move=" << std::endl;
+        glDeleteTextures(1, &m_id);
+    }
+    m_id = std::exchange(other.m_id, 0);
+    m_size = std::exchange(other.m_size, {});
+    m_initialized = std::exchange(other.m_initialized, {});
+    return *this;
 }
 
 Texture::~Texture()
 {
-    std::cerr << "Texture::~Texture(" << m_id << ",owner=" << m_owner << ")" << std::endl;
-    if (m_owner && m_id != 0) {
+    if (m_id != 0) {
+        // std::cout << "glDeleteTextures(" << m_id << ")" << std::endl;
         glDeleteTextures(1, &m_id);
-        handle_error();
     }
 }
 
@@ -33,30 +42,8 @@ Texture Texture::create_empty(Vector2u size, Format format)
     Texture texture;
     texture.m_size = size;
     glGenTextures(1, &texture.m_id);
-    handle_error();
+    // std::cout << "glGenTextures() = " << texture.m_id << std::endl;
     texture.recreate(size, format);
-    texture.m_owner = true;
-    return texture;
-}
-
-Texture Texture::create_from_id(int id)
-{
-    Texture texture;
-    if (!glIsTexture(id)) {
-        std::cerr << id << " is not a texture" << std::endl;
-        return {};
-    }
-    texture.m_id = id;
-    int w, h;
-    {
-        TextureBinder binder { texture };
-        glGetTexLevelParameteriv(GL_TEXTURE_2D, 0, GL_TEXTURE_WIDTH, &w);
-        handle_error();
-        glGetTexLevelParameteriv(GL_TEXTURE_2D, 0, GL_TEXTURE_HEIGHT, &h);
-        handle_error();
-        std::cout << w << "," << h << std::endl;
-    }
-    texture.m_size = { static_cast<unsigned int>(w), static_cast<unsigned int>(h) };
     return texture;
 }
 

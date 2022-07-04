@@ -10,7 +10,7 @@ namespace llgl::opengl
 class Texture
 {
 public:
-    Texture();
+    Texture() = default;
     ~Texture();
     Texture(const Texture& other) = delete;
     Texture& operator=(const Texture& other) = delete;
@@ -20,16 +20,7 @@ public:
         *this = std::move(other);
     }
 
-    Texture& operator=(Texture&& other)
-    {
-        if(this == &other)
-            return *this;
-        m_id = std::exchange(other.m_id, 0);
-        m_size = std::exchange(other.m_size, {});
-        m_initialized = std::exchange(other.m_initialized, {});
-        m_owner = std::exchange(other.m_owner, {});
-        return *this;
-    }
+    Texture& operator=(Texture&& other);
 
     // TODO: createFromImage
     // TODO: Add some Image/Bitmap class
@@ -53,7 +44,6 @@ private:
     unsigned m_id { 0 };
     Vector2u m_size;
     bool m_initialized = false;
-    bool m_owner = false;
 };
 
 class TextureBinder
