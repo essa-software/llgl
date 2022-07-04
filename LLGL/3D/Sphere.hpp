@@ -19,7 +19,6 @@ private:
     void generate(opengl::AttributeMapping mapping);
     size_t vertex_index(unsigned stack, unsigned sector) const;
 
-    double m_radius {};
     opengl::VAO m_vao;
     std::vector<unsigned> m_indices;
 };
