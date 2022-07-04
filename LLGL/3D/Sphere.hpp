@@ -12,11 +12,11 @@ namespace llgl {
 
 class Sphere : public Renderable {
 public:
-    explicit Sphere(opengl::AttributeMapping mapping);
+    explicit Sphere();
     virtual void render(Renderer&, DrawState) const override;
 
 private:
-    void generate(opengl::AttributeMapping mapping);
+    void generate();
     size_t vertex_index(unsigned stack, unsigned sector) const;
 
     opengl::VAO m_vao;

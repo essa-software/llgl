@@ -5,16 +5,16 @@
 
 namespace llgl {
 
-Cube::Cube(opengl::AttributeMapping mapping)
+Cube::Cube()
 {
-    generate(mapping);
+    generate();
 }
 
-void Cube::generate(opengl::AttributeMapping mapping)
+void Cube::generate()
 {
     std::vector<Vertex> vertices;
     Shapes::add_cube(vertices);
-    m_vao.load_vertexes(mapping, vertices);
+    m_vao.load_vertexes(vertices);
 }
 
 void Cube::render(Renderer& renderer, DrawState state) const

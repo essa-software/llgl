@@ -31,11 +31,7 @@ void CoreRenderer::end_draw()
 
     // Shaders are required in core OpenGL
     assert(m_state.shader);
-
-    opengl::VAO vao;
-    // Keep these indexes in sync with shader in Shader.cpp!
-    vao.load_vertexes(m_state.shader->attribute_mapping(), m_vertexes);
-    draw_vao(vao, m_primitive_type, m_state);
+    draw_vao(opengl::VAO { m_vertexes }, m_primitive_type, m_state);
     m_primitive_type = opengl::PrimitiveType::Invalid;
 }
 

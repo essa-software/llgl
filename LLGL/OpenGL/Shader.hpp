@@ -7,14 +7,11 @@
 #include <span>
 #include <string>
 
-namespace llgl::opengl
-{
+namespace llgl::opengl {
 
-class ShaderObject
-{
+class ShaderObject {
 public:
-    enum Type
-    {
+    enum Type {
         Vertex = GL_VERTEX_SHADER,
         TessControl = GL_TESS_CONTROL_SHADER,
         TessEvaluation = GL_TESS_EVALUATION_SHADER,
@@ -40,16 +37,16 @@ private:
     unsigned m_id = 0;
 };
 
-struct AttributeMapping
-{
+struct AttributeMapping {
     unsigned position;
     unsigned color;
     unsigned tex_coord;
     unsigned normal;
+
+    bool operator==(AttributeMapping const&) const = default;
 };
 
-class Program
-{
+class Program {
 public:
     ~Program();
     explicit Program(std::span<ShaderObject const> shader_objects);
@@ -76,7 +73,9 @@ class ShaderScope;
 class Shader {
 public:
     Shader(Program& program)
-    : m_program(program) {}
+        : m_program(program)
+    {
+    }
 
     virtual ~Shader() = default;
 
@@ -91,8 +90,7 @@ private:
     Program& m_program;
 };
 
-class ShaderScope
-{
+class ShaderScope {
 public:
     ShaderScope(Shader const& shader)
         : m_shader(shader)
@@ -105,8 +103,7 @@ public:
 
     int uniform_location(std::string const&);
     void set_uniform(std::string const&, Matrix4x4f);
-    enum CurrentTextureTag
-    {
+    enum CurrentTextureTag {
         CurrentTexture
     };
     void set_uniform(std::string const&, CurrentTextureTag);

@@ -14,8 +14,8 @@ int main()
     llgl::opengl::set_clear_color(llgl::Color { 255, 128, 128 });
 
     llgl::opengl::shaders::ShadeFlat shader;
-    llgl::Sphere sphere { shader.attribute_mapping() };
-    llgl::Cube cube { shader.attribute_mapping() };
+    llgl::Sphere sphere;
+    llgl::Cube cube;
 
     double light_angle = 0;
     double shape_angle = 0;

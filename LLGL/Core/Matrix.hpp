@@ -10,8 +10,8 @@ template<class T, size_t Size>
 struct Matrix {
     T data[Size][Size] {};
 
-    T& element(size_t row, size_t column) { return data[row][column]; }
-    T const& element(size_t row, size_t column) const { return data[row][column]; }
+    T& element(size_t row, size_t column) { return data[column][row]; }
+    T const& element(size_t row, size_t column) const { return data[column][row]; }
 
     static constexpr Matrix identity()
     {

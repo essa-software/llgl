@@ -6,6 +6,6 @@
 
 namespace llgl::Shapes {
 
-void add_cube(std::vector<Vertex>& vertices, Transform const& transform = llgl::Transform {});
+void add_cube(std::vector<Vertex>& vertices, Transform const& transform = llgl::Transform {}, Color color = llgl::Colors::white);
 
 }

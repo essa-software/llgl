@@ -9,15 +9,15 @@
 
 namespace llgl {
 
-Sphere::Sphere(opengl::AttributeMapping mapping)
+Sphere::Sphere()
 {
-    generate(mapping);
+    generate();
 }
 
 constexpr auto Stacks = 36;
 constexpr auto Sectors = 36;
 
-void Sphere::generate(opengl::AttributeMapping mapping)
+void Sphere::generate()
 {
     float delta_stack_angle = M_PI / Stacks;
     float delta_sector_angle = 2 * M_PI / Sectors;
@@ -49,7 +49,7 @@ void Sphere::generate(opengl::AttributeMapping mapping)
     vertices.push_back(Vertex { .position { 0, 0, -1 }, .color = llgl::Colors::white, .normal = { 0, 0, -1 } });
     assert(vertices.size() == Sectors * Stacks + 1);
 
-    m_vao.load_vertexes(mapping, vertices);
+    m_vao.load_vertexes(vertices);
 
     // std::cout << "----------------------" << std::endl;
     // for (auto& i : m_indices)

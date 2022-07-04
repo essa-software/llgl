@@ -12,11 +12,11 @@ namespace llgl {
 
 class Cube : public Renderable {
 public:
-    explicit Cube(opengl::AttributeMapping mapping);
+    explicit Cube();
     virtual void render(Renderer&, DrawState) const override;
 
 private:
-    void generate(opengl::AttributeMapping mapping);
+    void generate();
 
     opengl::VAO m_vao;
 };
