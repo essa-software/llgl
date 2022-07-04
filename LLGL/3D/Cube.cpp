@@ -1,4 +1,5 @@
 #include "Cube.hpp"
+#include "LLGL/3D/Shapes.hpp"
 
 #include <LLGL/Renderer/Renderer.hpp>
 
@@ -12,55 +13,7 @@ Cube::Cube(opengl::AttributeMapping mapping)
 void Cube::generate(opengl::AttributeMapping mapping)
 {
     std::vector<Vertex> vertices;
-
-    // left
-    vertices.push_back(Vertex { .position = { -1, -1, -1 }, .color = llgl::Colors::white, .normal = { -1, 0, 0 } });
-    vertices.push_back(Vertex { .position = { -1, 1, -1 }, .color = llgl::Colors::white, .normal = { -1, 0, 0 } });
-    vertices.push_back(Vertex { .position = { -1, -1, 1 }, .color = llgl::Colors::white, .normal = { -1, 0, 0 } });
-    vertices.push_back(Vertex { .position = { -1, 1, -1 }, .color = llgl::Colors::white, .normal = { -1, 0, 0 } });
-    vertices.push_back(Vertex { .position = { -1, -1, 1 }, .color = llgl::Colors::white, .normal = { -1, 0, 0 } });
-    vertices.push_back(Vertex { .position = { -1, 1, 1 }, .color = llgl::Colors::white, .normal = { -1, 0, 0 } });
-
-    // right
-    vertices.push_back(Vertex { .position = { 1, -1, -1 }, .color = llgl::Colors::white, .normal = { 1, 0, 0 } });
-    vertices.push_back(Vertex { .position = { 1, 1, -1 }, .color = llgl::Colors::white, .normal = { 1, 0, 0 } });
-    vertices.push_back(Vertex { .position = { 1, -1, 1 }, .color = llgl::Colors::white, .normal = { 1, 0, 0 } });
-    vertices.push_back(Vertex { .position = { 1, 1, -1 }, .color = llgl::Colors::white, .normal = { 1, 0, 0 } });
-    vertices.push_back(Vertex { .position = { 1, -1, 1 }, .color = llgl::Colors::white, .normal = { 1, 0, 0 } });
-    vertices.push_back(Vertex { .position = { 1, 1, 1 }, .color = llgl::Colors::white, .normal = { 1, 0, 0 } });
-
-    // bottom
-    vertices.push_back(Vertex { .position = { -1, -1, -1 }, .color = llgl::Colors::white, .normal = { 0, -1, 0 } });
-    vertices.push_back(Vertex { .position = { 1, -1, -1 }, .color = llgl::Colors::white, .normal = { 0, -1, 0 } });
-    vertices.push_back(Vertex { .position = { -1, -1, 1 }, .color = llgl::Colors::white, .normal = { 0, -1, 0 } });
-    vertices.push_back(Vertex { .position = { 1, -1, -1 }, .color = llgl::Colors::white, .normal = { 0, -1, 0 } });
-    vertices.push_back(Vertex { .position = { -1, -1, 1 }, .color = llgl::Colors::white, .normal = { 0, -1, 0 } });
-    vertices.push_back(Vertex { .position = { 1, -1, 1 }, .color = llgl::Colors::white, .normal = { 0, -1, 0 } });
-
-    // top
-    vertices.push_back(Vertex { .position = { -1, 1, -1 }, .color = llgl::Colors::white, .normal = { 0, 1, 0 } });
-    vertices.push_back(Vertex { .position = { 1, 1, -1 }, .color = llgl::Colors::white, .normal = { 0, 1, 0 } });
-    vertices.push_back(Vertex { .position = { -1, 1, 1 }, .color = llgl::Colors::white, .normal = { 0, 1, 0 } });
-    vertices.push_back(Vertex { .position = { 1, 1, -1 }, .color = llgl::Colors::white, .normal = { 0, 1, 0 } });
-    vertices.push_back(Vertex { .position = { -1, 1, 1 }, .color = llgl::Colors::white, .normal = { 0, 1, 0 } });
-    vertices.push_back(Vertex { .position = { 1, 1, 1 }, .color = llgl::Colors::white, .normal = { 0, 1, 0 } });
-
-    // front
-    vertices.push_back(Vertex { .position = { -1, -1, -1 }, .color = llgl::Colors::white, .normal = { 0, 0, -1 } });
-    vertices.push_back(Vertex { .position = { 1, -1, -1 }, .color = llgl::Colors::white, .normal = { 0, 0, -1 } });
-    vertices.push_back(Vertex { .position = { -1, 1, -1 }, .color = llgl::Colors::white, .normal = { 0, 0, -1 } });
-    vertices.push_back(Vertex { .position = { 1, -1, -1 }, .color = llgl::Colors::white, .normal = { 0, 0, -1 } });
-    vertices.push_back(Vertex { .position = { -1, 1, -1 }, .color = llgl::Colors::white, .normal = { 0, 0, -1 } });
-    vertices.push_back(Vertex { .position = { 1, 1, -1 }, .color = llgl::Colors::white, .normal = { 0, 0, -1 } });
-
-    // back
-    vertices.push_back(Vertex { .position = { -1, -1, 1 }, .color = llgl::Colors::white, .normal = { 0, 0, 1 } });
-    vertices.push_back(Vertex { .position = { 1, -1, 1 }, .color = llgl::Colors::white, .normal = { 0, 0, 1 } });
-    vertices.push_back(Vertex { .position = { -1, 1, 1 }, .color = llgl::Colors::white, .normal = { 0, 0, 1 } });
-    vertices.push_back(Vertex { .position = { 1, -1, 1 }, .color = llgl::Colors::white, .normal = { 0, 0, 1 } });
-    vertices.push_back(Vertex { .position = { -1, 1, 1 }, .color = llgl::Colors::white, .normal = { 0, 0, 1 } });
-    vertices.push_back(Vertex { .position = { 1, 1, 1 }, .color = llgl::Colors::white, .normal = { 0, 0, 1 } });
-
+    Shapes::add_cube(vertices);
     m_vao.load_vertexes(mapping, vertices);
 }
 
