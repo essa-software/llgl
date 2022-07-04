@@ -14,7 +14,17 @@ auto length_squared(Vector2 auto vector)
     return vector.x * vector.x + vector.y * vector.y;
 }
 
+auto length_squared(Vector3 auto vector)
+{
+    return vector.x * vector.x + vector.y * vector.y + vector.z * vector.z;
+}
+
 auto length(Vector2 auto vector)
+{
+    return std::sqrt(length_squared(vector));
+}
+
+auto length(Vector3 auto vector)
 {
     return std::sqrt(length_squared(vector));
 }
@@ -57,12 +67,25 @@ bool is_normalized(Vector2 auto vec)
     return length_squared(vec) == 1;
 }
 
+bool is_normalized(Vector3 auto vec)
+{
+    return length_squared(vec) == 1;
+}
+
 auto normalize(Vector2 auto vec) -> decltype(vec)
 {
     if (is_normalized(vec))
         return vec;
-    auto vec_length = std::sqrt(length(vec));
+    auto vec_length = length(vec);
     return { vec.x / vec_length, vec.y / vec_length };
+}
+
+auto normalize(Vector3 auto vec) -> decltype(vec)
+{
+    if (is_normalized(vec))
+        return vec;
+    auto vec_length = length(vec);
+    return { vec.x / vec_length, vec.y / vec_length, vec.z / vec_length };
 }
 
 auto mirror(Vector2 auto vec, Vector2 auto axis)
