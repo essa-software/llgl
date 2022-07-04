@@ -4,8 +4,7 @@
 #include <GL/gl.h>
 #include <set>
 
-namespace llgl::opengl
-{
+namespace llgl::opengl {
 
 void set_clear_color(Color color)
 {
@@ -19,21 +18,32 @@ void clear(ClearMask mask)
     glClear(static_cast<GLbitfield>(mask));
 }
 
+static ClearMask s_buffers_to_clear = ClearMask::Color;
+
+void clear_enabled()
+{
+    clear(s_buffers_to_clear);
+}
+
 void enable(Feature feature)
 {
     ErrorHandler handler;
+    if (feature == Feature::DepthTest)
+        s_buffers_to_clear |= ClearMask::Depth;
     glEnable(static_cast<GLenum>(feature));
 }
 
 void disable(Feature feature)
 {
     ErrorHandler handler;
+    if (feature == Feature::DepthTest)
+        s_buffers_to_clear &= ~ClearMask::Depth;
     glDisable(static_cast<GLenum>(feature));
 }
 
 void ensure_enabled(Feature feature)
 {
-    if(is_enabled(feature))
+    if (is_enabled(feature))
         return;
     enable(feature);
 }

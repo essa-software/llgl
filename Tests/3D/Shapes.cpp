@@ -24,7 +24,8 @@ int main()
         llgl::Event event;
         while (window.poll_event(event)) {
         }
-        llgl::opengl::clear(llgl::opengl::ClearMask::Color | llgl::opengl::ClearMask::Depth);
+
+        window.renderer().clear();
 
         llgl::View view;
         view.set_viewport(llgl::Recti { 0, 0, window.size().x, window.size().y });

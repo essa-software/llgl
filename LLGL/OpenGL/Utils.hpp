@@ -17,6 +17,7 @@ enum class ClearMask
 };
 LLGL_ENUM_BITWISE_OPERATORS(ClearMask)
 void clear(ClearMask);
+void clear_enabled();
 
 enum class Feature
 {

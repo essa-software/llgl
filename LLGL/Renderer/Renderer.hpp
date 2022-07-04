@@ -6,6 +6,7 @@
 #include <LLGL/OpenGL/VAO.hpp>
 #include <LLGL/OpenGL/Vertex.hpp>
 #include <LLGL/OpenGL/View.hpp>
+#include <optional>
 #include <span>
 
 namespace llgl {
@@ -31,6 +32,8 @@ public:
     virtual void end_draw() = 0;
     virtual void apply_view(View const&) = 0;
     virtual View view() const = 0;
+
+    void clear(std::optional<llgl::Color> color = {});
 
     void render_object(Renderable const&, DrawState = {});
     void draw_vao(opengl::VAO const&, opengl::PrimitiveType, DrawState const&);
