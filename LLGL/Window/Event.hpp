@@ -28,6 +28,10 @@ public:
     struct KeyPressEvent
     {
         KeyCode keycode;
+        bool shift;
+        bool ctrl;
+        bool alt;
+        bool meta;
     };
     struct MouseMoveEvent
     {

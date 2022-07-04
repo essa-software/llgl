@@ -4,6 +4,7 @@
 
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_events.h>
+#include <SDL2/SDL_keycode.h>
 #include <SDL2/SDL_mouse.h>
 #include <SDL2/SDL_video.h>
 #include <iostream>
@@ -112,12 +113,20 @@ bool SDLWindowImpl::poll_event(Event& event)
         {
             event.type = Event::Type::KeyPress;
             event.key.keycode = static_cast<KeyCode>(sdl_event.key.keysym.sym);
+            event.key.shift = sdl_event.key.keysym.mod & SDL_Keymod::KMOD_SHIFT;
+            event.key.ctrl = sdl_event.key.keysym.mod & SDL_Keymod::KMOD_CTRL;
+            event.key.alt = sdl_event.key.keysym.mod & SDL_Keymod::KMOD_ALT;
+            event.key.meta = sdl_event.key.keysym.mod & SDL_Keymod::KMOD_GUI;
             return true;
         }
         else if (sdl_event.type == SDL_KEYUP)
         {
             event.type = Event::Type::KeyRelease;
             event.key.keycode = static_cast<KeyCode>(sdl_event.key.keysym.sym);
+            event.key.shift = sdl_event.key.keysym.mod & SDL_Keymod::KMOD_SHIFT;
+            event.key.ctrl = sdl_event.key.keysym.mod & SDL_Keymod::KMOD_CTRL;
+            event.key.alt = sdl_event.key.keysym.mod & SDL_Keymod::KMOD_ALT;
+            event.key.meta = sdl_event.key.keysym.mod & SDL_Keymod::KMOD_GUI;
             return true;
         }
         else if (sdl_event.type == SDL_MOUSEMOTION)
