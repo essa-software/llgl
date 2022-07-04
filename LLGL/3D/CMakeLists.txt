@@ -1,4 +1,5 @@
 set(SOURCES
+    Cube.cpp
     ObjLoader.cpp
     Object3D.cpp
     Sphere.cpp

@@ -1,0 +1,24 @@
+#pragma once
+
+#include <GL/glew.h>
+
+#include <LLGL/Core/Color.hpp>
+#include <LLGL/Core/Vector3.hpp>
+#include <LLGL/OpenGL/VAO.hpp>
+#include <LLGL/Renderer/Renderable.hpp>
+#include <vector>
+
+namespace llgl {
+
+class Cube : public Renderable {
+public:
+    explicit Cube(opengl::AttributeMapping mapping);
+    virtual void render(Renderer&, DrawState) const override;
+
+private:
+    void generate(opengl::AttributeMapping mapping);
+
+    opengl::VAO m_vao;
+};
+
+}
