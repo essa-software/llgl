@@ -145,6 +145,12 @@ void ShaderScope::set_uniform(std::string const& name, bool value)
     glUniform1i(uniform_location(name), value);
 }
 
+void ShaderScope::set_uniform(std::string const& name, Vector2f vec)
+{
+    ErrorHandler handler;
+    glUniform2f(uniform_location(name), vec.x, vec.y);
+}
+
 void ShaderScope::set_uniform(std::string const& name, Vector3f vec)
 {
     ErrorHandler handler;
