@@ -5,6 +5,8 @@
 namespace llgl::opengl
 {
 
+void enable_debug_output();
+
 void handle_error(std::source_location = std::source_location::current());
 class ErrorHandler
 {
