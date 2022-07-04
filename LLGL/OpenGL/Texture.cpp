@@ -21,20 +21,20 @@ Texture::~Texture()
     }
 }
 
-Texture Texture::create_from_color_array(Vector2u size, Colorf const* array)
+Texture Texture::create_from_color_array(Vector2u size, Colorf const* array, Format format)
 {
     Texture texture = create_empty(size);
-    texture.update({}, size, array);
+    texture.update({}, size, array, format);
     return texture;
 }
 
-Texture Texture::create_empty(Vector2u size, Colorf init_color)
+Texture Texture::create_empty(Vector2u size, Format format)
 {
-    (void)init_color;
     Texture texture;
     texture.m_size = size;
     glGenTextures(1, &texture.m_id);
     handle_error();
+    texture.recreate(size, format);
     texture.m_owner = true;
     return texture;
 }
@@ -60,10 +60,21 @@ Texture Texture::create_from_id(int id)
     return texture;
 }
 
-void Texture::update(Vector2u dst_pos, Vector2u src_size, Colorf const* array)
+void Texture::update(Vector2u dst_pos, Vector2u src_size, Colorf const* array, Format format)
 {
     assert(dst_pos.x + src_size.x <= m_size.x);
     assert(dst_pos.y + src_size.y <= m_size.y);
+
+    auto gl_format = [&]() {
+        switch (format) {
+            case Format::RGBA:
+                return GL_RGBA;
+            case Format::RGB:
+                return GL_RGB;
+        }
+        return 0;
+    }();
+
     TextureBinder binder(*this);
     if (dst_pos == Vector2u {}) {
         std::cerr << "Texture::update dstPos=[0] srcSize=[" << src_size.x << "," << src_size.y << "] <- " << array << " id=" << m_id << std::endl;
@@ -73,7 +84,7 @@ void Texture::update(Vector2u dst_pos, Vector2u src_size, Colorf const* array)
         handle_error();
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
         handle_error();
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, m_size.x, m_size.y, 0, GL_RGBA, GL_FLOAT, array);
+        glTexImage2D(GL_TEXTURE_2D, 0, gl_format, m_size.x, m_size.y, 0, gl_format, GL_FLOAT, array);
         handle_error();
         m_initialized = true;
         return;
@@ -85,12 +96,12 @@ void Texture::update(Vector2u dst_pos, Vector2u src_size, Colorf const* array)
             handle_error();
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
             handle_error();
-            glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, m_size.x, m_size.y, 0, GL_RGBA, GL_FLOAT, nullptr);
+            glTexImage2D(GL_TEXTURE_2D, 0, gl_format, m_size.x, m_size.y, 0, gl_format, GL_FLOAT, nullptr);
             handle_error();
             m_initialized = true;
         }
         std::cerr << "Texture::update dstPos=[" << dst_pos.x << "," << dst_pos.y << "] srcSize=[" << src_size.x << "," << src_size.y << "] <- " << array << " id=" << m_id << std::endl;
-        glTexSubImage2D(GL_TEXTURE_2D, 0, dst_pos.x, dst_pos.y, src_size.x, src_size.y, GL_RGBA8, GL_FLOAT, array);
+        glTexSubImage2D(GL_TEXTURE_2D, 0, dst_pos.x, dst_pos.y, src_size.x, src_size.y, gl_format, GL_FLOAT, array);
         handle_error();
     }
 }

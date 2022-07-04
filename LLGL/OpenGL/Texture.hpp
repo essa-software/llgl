@@ -33,11 +33,16 @@ public:
 
     // TODO: createFromImage
     // TODO: Add some Image/Bitmap class
-    static Texture create_from_color_array(Vector2u size, Colorf const* array);
-    static Texture create_empty(Vector2u size, Colorf init_color = {});
+    enum class Format {
+        RGBA,
+        RGB
+    };
+
+    static Texture create_from_color_array(Vector2u size, Colorf const* array, Format);
+    static Texture create_empty(Vector2u size, Format = Format::RGBA);
     static Texture create_from_id(int);
 
-    void update(Vector2u dst_pos, Vector2u src_size, Colorf const* array);
+    void update(Vector2u dst_pos, Vector2u src_size, Colorf const* array, Format);
 
     unsigned id() const { return m_id; }
     Vector2u size() const { return m_size; }
