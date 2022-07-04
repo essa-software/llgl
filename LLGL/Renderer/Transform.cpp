@@ -40,4 +40,11 @@ Transform Transform::scale(float scale) const
     return Transform { m_matrix * scale_matrix };
 }
 
+Vector3f Transform::transform_point(Vector3f const& vector) const
+{
+    auto result = m_matrix * Vector4f { vector };
+    result /= result.w;
+    return Vector3f { result };
+}
+
 }

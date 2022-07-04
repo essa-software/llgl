@@ -22,6 +22,8 @@ public:
 
     Matrix4x4f matrix() const { return m_matrix; }
 
+    Vector3f transform_point(Vector3f const&) const;
+
 private:
     Matrix4x4f m_matrix = Matrix4x4f::identity();
 };
