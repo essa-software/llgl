@@ -93,6 +93,12 @@ void Texture::update(Vector2u dst_pos, Vector2u src_size, Colorf const* array, F
     }
 }
 
+void Texture::recreate(Vector2u size, Format format)
+{
+    m_size = size;
+    update({}, size, nullptr, format);
+}
+
 void Texture::bind(Texture const* texture)
 {
     ErrorHandler handler;

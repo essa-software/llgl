@@ -34,6 +34,7 @@ public:
     static Texture create_from_id(int);
 
     void update(Vector2u dst_pos, Vector2u src_size, Colorf const* array, Format);
+    void recreate(Vector2u, Format);
 
     unsigned id() const { return m_id; }
     Vector2u size() const { return m_size; }
