@@ -9,11 +9,9 @@
 #include <memory>
 #include <string>
 
-namespace llgl
-{
+namespace llgl {
 
-class Window
-{
+class Window {
 public:
     Window(Vector2i size, std::u8string const& title, ContextSettings const& = {});
 
@@ -31,6 +29,7 @@ public:
     Vector2i size() const { return m_size; }
     Vector2f center() const { return Vector2f { m_size } / 2.f; }
     float aspect() const { return (float)m_size.x / m_size.y; }
+    Recti rect() const { return { 0, 0, size().x, size().y }; }
 
 private:
     std::unique_ptr<WindowImpl> m_impl;
