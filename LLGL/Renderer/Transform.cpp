@@ -1,4 +1,5 @@
 #include "Transform.hpp"
+#include <LLGL/Core/Matrix.hpp>
 
 namespace llgl {
 
@@ -42,6 +43,8 @@ Transform Transform::scale(float scale) const
 
 Vector3f Transform::transform_point(Vector3f const& vector) const
 {
+    if (m_matrix == Matrix4x4f::identity())
+        return vector;
     auto result = m_matrix * Vector4f { vector };
     result /= result.w;
     return Vector3f { result };
