@@ -18,12 +18,12 @@ VAO::VAO()
     ensure_glew();
 }
 
-VAO::VAO(std::span<Vertex const> vertexes)
+VAO::VAO(std::span<Vertex const> vertexes, Usage usage)
 {
     ensure_glew();
     glGenVertexArrays(1, &m_vertex_array_id);
     handle_error();
-    load_vertexes(vertexes);
+    load_vertexes(vertexes, usage);
 }
 
 VAO::VAO(VAO&& other)
@@ -53,9 +53,9 @@ VAO::~VAO()
     }
 }
 
-void VAO::load_vertexes(std::span<Vertex const> vertexes)
+void VAO::load_vertexes(std::span<Vertex const> vertexes, Usage usage)
 {
-    if (m_vertex_array_id == 0) {
+    if (!m_vertex_array_id) {
         glGenVertexArrays(1, &m_vertex_array_id);
         handle_error();
     }
@@ -68,7 +68,17 @@ void VAO::load_vertexes(std::span<Vertex const> vertexes)
     handle_error();
     std::cerr << "VAO: Loading " << vertexes.size() << " vertexes" << std::endl;
 
-    glBufferData(GL_ARRAY_BUFFER, vertexes.size() * sizeof(Vertex), vertexes.data(), GL_STATIC_DRAW);
+    auto usage_gl = [&]() {
+        switch (usage) {
+            case Usage::DynamicDraw:
+                return GL_DYNAMIC_DRAW;
+            case Usage::StaticDraw:
+                return GL_STATIC_DRAW;
+        }
+        return 0;
+    }();
+
+    glBufferData(GL_ARRAY_BUFFER, vertexes.size() * sizeof(Vertex), vertexes.data(), usage_gl);
     handle_error();
 
     m_size = vertexes.size();

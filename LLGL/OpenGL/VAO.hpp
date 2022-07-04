@@ -12,15 +12,20 @@ namespace llgl::opengl {
 
 class VAO {
 public:
+    enum class Usage {
+        StaticDraw,
+        DynamicDraw
+    };
+
     VAO();
-    explicit VAO(std::span<Vertex const> vertexes);
+    explicit VAO(std::span<Vertex const> vertexes, Usage usage = Usage::StaticDraw);
     VAO(VAO const&) = delete;
     VAO& operator=(VAO const&) = delete;
     VAO(VAO&&);
     VAO& operator=(VAO&&);
     ~VAO();
 
-    void load_vertexes(std::span<Vertex const> vertexes);
+    void load_vertexes(std::span<Vertex const> vertexes, Usage usage = Usage::StaticDraw);
 
     unsigned vertex_array_id() const { return m_vertex_array_id; }
     unsigned vertex_buffer_id() const { return m_vertex_buffer_id; }
