@@ -64,12 +64,14 @@ auto cross_product(Vector3 auto first, Vector3 auto second)
 
 bool is_normalized(Vector2 auto vec)
 {
-    return length_squared(vec) == 1;
+    auto length = length_squared(vec);
+    return length == 1 || length == 0;
 }
 
 bool is_normalized(Vector3 auto vec)
 {
-    return length_squared(vec) == 1;
+    auto length = length_squared(vec);
+    return length == 1 || length == 0;
 }
 
 auto normalize(Vector2 auto vec) -> decltype(vec)
