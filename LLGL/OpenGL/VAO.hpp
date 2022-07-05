@@ -20,6 +20,7 @@ public:
     VAO();
     explicit VAO(std::span<Vertex const> vertexes, Usage usage = Usage::StaticDraw);
     explicit VAO(std::span<Vertex const> vertexes, std::span<unsigned> indices, Usage usage = Usage::StaticDraw);
+
     VAO(VAO const&) = delete;
     VAO& operator=(VAO const&) = delete;
     VAO(VAO&&);

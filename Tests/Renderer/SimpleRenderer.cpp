@@ -13,6 +13,10 @@ int main()
 
     llgl::opengl::shaders::Basic330Core shader;
 
+    llgl::opengl::VAO vao { { { llgl::Vertex { { 150, 100, 0 }, llgl::Colors::green },
+        llgl::Vertex { { 200, 200, 0 }, llgl::Colors::red },
+        llgl::Vertex { { 100, 200, 0 }, llgl::Colors::blue } } } };
+
     for (;;) {
         llgl::Event event;
         while (window.poll_event(event)) {
@@ -27,15 +31,8 @@ int main()
         view.set_ortho(llgl::Rectd { 0, 0, static_cast<double>(window.size().x), static_cast<double>(window.size().y) });
         window.renderer().apply_view(view);
 
-        {
-            llgl::opengl::set_scissor({ 0, 0, 200, 200 });
-            llgl::DrawScope scope { window.renderer(), llgl::opengl::PrimitiveType::Triangles, { .shader = &shader } };
-            scope.renderer().add_triangle(
-                { { 150, 100, 0 }, llgl::Colors::green },
-                { { 200, 200, 0 }, llgl::Colors::red },
-                { { 100, 200, 0 }, llgl::Colors::blue });
-        }
-
+        llgl::opengl::set_scissor({ 0, 0, 200, 200 });
+        window.renderer().draw_vao(vao, llgl::opengl::PrimitiveType::Triangles, { .shader = &shader });
         window.display();
     }
     return 0;

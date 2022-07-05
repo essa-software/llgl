@@ -15,12 +15,9 @@ public:
     CoreRenderer(Window& window)
     : Renderer(window) {}
 
-    // This is for compatibility; should not be used
-    virtual void begin_draw(opengl::PrimitiveType, DrawState) override;
-    virtual void add_vertexes(std::span<Vertex const> vertexes) override;
-    virtual void end_draw() override;
     virtual void apply_view(View const&) override;
     virtual View view() const override;
+    virtual void draw_vao(opengl::VAO const&, opengl::PrimitiveType, DrawState const&) override;
 
 private:
     opengl::PrimitiveType m_primitive_type = opengl::PrimitiveType::Invalid;

@@ -20,12 +20,11 @@ public:
     {
     }
 
-    virtual void begin_draw(opengl::PrimitiveType, DrawState) override;
-    virtual void add_vertexes(std::span<Vertex const> vertexes) override;
-    virtual void end_draw() override;
     virtual void apply_view(View const&) override { }
     virtual void render(Renderer&, DrawState) const override;
     virtual View view() const override { return {}; } // TODO
+    virtual void draw_vao(opengl::VAO const&, opengl::PrimitiveType, DrawState const&) override {} // TODO until VAOs can be copied
+    void draw_vao(opengl::VAO&&, opengl::PrimitiveType, DrawState const&);
 
 private:
     opengl::PrimitiveType m_current_primitive_type {};

@@ -15,10 +15,8 @@ int main()
 
     std::vector<llgl::Colorf> color_array;
     color_array.resize(256 * 256);
-    for (size_t y = 0; y < 256; y++)
-    {
-        for (size_t x = 0; x < 256; x++)
-        {
+    for (size_t y = 0; y < 256; y++) {
+        for (size_t x = 0; x < 256; x++) {
             color_array[y * 256 + x] = llgl::Colorf {
                 static_cast<float>((double)rand() / RAND_MAX),
                 static_cast<float>((double)rand() / RAND_MAX),
@@ -36,23 +34,17 @@ int main()
     llgl::BatchRenderer batch_renderer { window };
 
     llgl::opengl::shaders::Basic330Core shader;
-    {
-        llgl::DrawScope scope { batch_renderer, llgl::opengl::PrimitiveType::Triangles, { .shader = &shader, .texture = &texture } };
-        batch_renderer.add_triangle(
-            { { -1.5, -1.5, -15 }, llgl::Colors::white, { 0, 0 } },
-            { { 1.5, 1.5, -15 }, llgl::Colors::white, { 1, 1 } },
-            { { 1.5, -1.5, -15 }, llgl::Colors::white, { 1, 0 } });
-        batch_renderer.add_triangle(
-            { { -1.5, -1.5, -10 }, llgl::Colors::white, { 0, 0 } },
-            { { 1.5, 1.5, -10 }, llgl::Colors::white, { 1, 1 } },
-            { { 1.5, -1.5, -10 }, llgl::Colors::white, { 1, 0 } });
-    }
+    batch_renderer.draw_vao(llgl::opengl::VAO { { { llgl::Vertex { { -1.5, -1.5, -15 }, llgl::Colors::white, { 0, 0 } },
+                                llgl::Vertex { { 1.5, 1.5, -15 }, llgl::Colors::white, { 1, 1 } },
+                                llgl::Vertex { { 1.5, -1.5, -15 }, llgl::Colors::white, { 1, 0 } },
+                                llgl::Vertex { { -1.5, -1.5, -10 }, llgl::Colors::white, { 0, 0 } },
+                                llgl::Vertex { { 1.5, 1.5, -10 }, llgl::Colors::white, { 1, 1 } },
+                                llgl::Vertex { { 1.5, -1.5, -10 }, llgl::Colors::white, { 1, 0 } } } } },
+        llgl::opengl::PrimitiveType::Triangles, { .shader = &shader, .texture = &texture });
 
-    for (;;)
-    {
+    for (;;) {
         llgl::Event event;
-        while (window.poll_event(event))
-        {
+        while (window.poll_event(event)) {
         }
         llgl::opengl::clear(llgl::opengl::ClearMask::Color | llgl::opengl::ClearMask::Depth);
 
