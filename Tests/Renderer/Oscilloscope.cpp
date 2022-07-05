@@ -1,3 +1,4 @@
+#include "LLGL/Renderer/RenderToTexture.hpp"
 #include <LLGL/Core/Color.hpp>
 #include <LLGL/Core/DelayedInit.hpp>
 #include <LLGL/Core/VectorUtils.hpp>
@@ -104,10 +105,10 @@ int main()
     llgl::opengl::shaders::Basic330Core basic_shader;
     BlurShader blur_shader;
 
-    llgl::opengl::FBO pass1_fbo { window.size() };
-    pass1_fbo.set_label("pass1_fbo");
-    llgl::opengl::FBO accum_fbo { window.size() };
-    accum_fbo.set_label("accum_fbo");
+    llgl::RenderToTexture pass1 { window };
+    pass1.set_label("pass1");
+    llgl::RenderToTexture accum { window };
+    accum.set_label("accum");
 
     llgl::opengl::VAO fullscreen_vao;
     fullscreen_vao.load_vertexes(
@@ -132,17 +133,14 @@ int main()
 
         llgl::View view;
         view.set_viewport(window.rect());
-        pass1_fbo.resize(window.size());
-        accum_fbo.resize(window.size());
         blur_shader.set_framebuffer_size(llgl::Vector2f { window.size() });
 
         {
             // Draw the first (non-blurred) pass
-            llgl::opengl::FBOScope scope { pass1_fbo };
-            renderer.clear(llgl::Color { 0, 0, 0 });
+            pass1.clear(llgl::Color { 0, 0, 0 });
 
             view.set_ortho({ { 0, 0, static_cast<double>(window.size().x), static_cast<double>(window.size().y) } });
-            renderer.apply_view(view);
+            pass1.apply_view(view);
 
             auto mouse_position = llgl::mouse_position();
 
@@ -161,22 +159,21 @@ int main()
                     llgl::Vertex { .position = llgl::Vector3f { llgl::Vector2f { old_mouse_position } + diff + cross }, .color = llgl::Colors::green } } }
             };
 
-            renderer.draw_vao(input_vao, llgl::opengl::PrimitiveType::TriangleStrip, { .shader = &basic_shader });
+            pass1.draw_vao(input_vao, llgl::opengl::PrimitiveType::TriangleStrip, { .shader = &basic_shader });
 
             old_mouse_position = mouse_position;
         }
 
         {
             // Blur the pass1 and blend with accum
-            llgl::opengl::FBOScope scope { accum_fbo };
             // Do not clear because we want previous frames
 
             // TODO: Implement this in LLGL
             glActiveTexture(GL_TEXTURE1);
-            glBindTexture(GL_TEXTURE_2D, pass1_fbo.color_texture().id());
+            glBindTexture(GL_TEXTURE_2D, pass1.texture().id());
             glActiveTexture(GL_TEXTURE0);
 
-            renderer.draw_vao(fullscreen_vao, llgl::opengl::PrimitiveType::TriangleStrip, { .shader = &blur_shader, .texture = &accum_fbo.color_texture() });
+            accum.draw_vao(fullscreen_vao, llgl::opengl::PrimitiveType::TriangleStrip, { .shader = &blur_shader, .texture = &accum.texture() });
         }
 
         // Draw the result to backbuffer
@@ -184,7 +181,7 @@ int main()
         no_transform_view.set_viewport(window.rect());
         no_transform_view.set_ortho({ { -1, -1, 2, 2 } });
         renderer.apply_view(no_transform_view);
-        renderer.draw_vao(fullscreen_vao, llgl::opengl::PrimitiveType::TriangleStrip, { .shader = &basic_shader, .texture = &accum_fbo.color_texture() });
+        renderer.draw_vao(fullscreen_vao, llgl::opengl::PrimitiveType::TriangleStrip, { .shader = &basic_shader, .texture = &accum.texture() });
         window.display();
     }
     return 0;

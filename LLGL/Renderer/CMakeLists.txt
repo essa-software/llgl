@@ -2,6 +2,7 @@ set(SOURCES
     BatchRenderer.cpp
     CoreRenderer.cpp
     Renderer.cpp
+    RenderToTexture.cpp
     StateScope.cpp
     Transform.cpp
 )
