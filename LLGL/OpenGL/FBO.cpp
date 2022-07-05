@@ -61,6 +61,7 @@ void FBO::resize(Vector2i size)
 void FBO::set_label(std::string const& str)
 {
     glObjectLabel(GL_FRAMEBUFFER, m_fbo, str.size(), str.data());
+    m_color_texture.set_label("FBO Texture: " + str);
 }
 
 FBOScope::FBOScope(FBO const& fbo, FBO::Target target)
