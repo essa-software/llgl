@@ -11,7 +11,7 @@ namespace llgl
 Window::Window(Vector2i size, std::u8string const& title, ContextSettings const& settings)
     : m_impl { std::make_unique<SDLWindowImpl>() }
 {
-    m_renderer = std::make_unique<CoreRenderer>(*this);
+    m_renderer = std::make_unique<CoreRenderer>();
     create(size, title, settings);
 }
 

@@ -31,7 +31,7 @@ int main()
     llgl::opengl::enable(llgl::opengl::Feature::DepthTest);
     llgl::opengl::set_blend_func(llgl::opengl::BlendFunc::SrcAlpha, llgl::opengl::BlendFunc::OneMinusSrcAlpha);
     llgl::opengl::set_clear_color(llgl::Color { 255, 128, 128 });
-    llgl::BatchRenderer batch_renderer { window };
+    llgl::BatchRenderer batch_renderer;
 
     llgl::opengl::shaders::Basic330Core shader;
     batch_renderer.draw_vao(llgl::opengl::VAO { { { llgl::Vertex { { -1.5, -1.5, -15 }, llgl::Colors::white, { 0, 0 } },

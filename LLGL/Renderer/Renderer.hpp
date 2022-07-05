@@ -16,11 +16,6 @@ class Window;
 
 class Renderer {
 public:
-    Renderer(Window& window)
-        : m_window(window)
-    {
-    }
-
     virtual ~Renderer() = default;
     virtual void apply_view(View const&) = 0;
     virtual View view() const = 0;
@@ -28,9 +23,6 @@ public:
 
     void clear(std::optional<llgl::Color> color = {});
     void render_object(Renderable const&, DrawState = {});
-
-protected:
-    Window& m_window;
 };
 
 }

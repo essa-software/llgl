@@ -15,11 +15,6 @@ class BatchRenderer : public Renderer
     , public Renderable
 {
 public:
-    BatchRenderer(Window& window)
-        : Renderer(window)
-    {
-    }
-
     virtual void apply_view(View const&) override { }
     virtual void render(Renderer&, DrawState) const override;
     virtual View view() const override { return {}; } // TODO

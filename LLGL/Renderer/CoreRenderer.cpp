@@ -24,7 +24,7 @@ View CoreRenderer::view() const
 
 void CoreRenderer::draw_vao(opengl::VAO const& vao, opengl::PrimitiveType primitive_type, DrawState const& state)
 {
-    StateScope scope(state, view());
+    StateScope scope(state, m_view);
     vao.draw(state.shader->attribute_mapping(), primitive_type);
 }
 
