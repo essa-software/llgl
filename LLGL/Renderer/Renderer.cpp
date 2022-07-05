@@ -32,10 +32,4 @@ void Renderer::draw_vao(opengl::VAO const& vao, opengl::PrimitiveType primitive_
     vao.draw(state.shader->attribute_mapping(), primitive_type);
 }
 
-void Renderer::draw_vao_with_indices(opengl::VAO const& vao, opengl::PrimitiveType primitive_type, DrawState const& state, std::span<unsigned const> indices)
-{
-    StateScope scope(state, view());
-    vao.draw_indexed(state.shader->attribute_mapping(), primitive_type, indices);
-}
-
 }

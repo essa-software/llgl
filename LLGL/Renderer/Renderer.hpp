@@ -37,7 +37,6 @@ public:
 
     void render_object(Renderable const&, DrawState = {});
     void draw_vao(opengl::VAO const&, opengl::PrimitiveType, DrawState const&);
-    void draw_vao_with_indices(opengl::VAO const&, opengl::PrimitiveType, DrawState const&, std::span<unsigned const> indices);
     void add_triangle(Vertex _1, Vertex _2, Vertex _3);
 
 protected:

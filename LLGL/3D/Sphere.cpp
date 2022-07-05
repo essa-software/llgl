@@ -23,7 +23,7 @@ void Sphere::generate()
     float delta_sector_angle = 2 * M_PI / Sectors;
 
     std::vector<Vertex> vertices;
-    std::vector<size_t> indices;
+    std::vector<unsigned> indices;
 
     for (unsigned stack = 0; stack < Stacks; stack++) {
         for (unsigned sector = 0; sector < Sectors; sector++) {
@@ -37,19 +37,19 @@ void Sphere::generate()
             // std::cout << "   --- " << std::sin(sector_angle) << ";" << std::cos(sector_angle) << " ;; " << std::sin(stack_angle) << ";" << std::cos(stack_angle) << std::endl;
             // std::cout << point_position.x << "," << point_position.y << "," << point_position.z << " @ " << stack_angle << "," << sector_angle << std::endl;
 
-            m_indices.push_back(vertex_index(stack, sector));
-            m_indices.push_back(vertex_index(stack, sector + 1));
-            m_indices.push_back(vertex_index(stack + 1, sector + 1));
+            indices.push_back(vertex_index(stack, sector));
+            indices.push_back(vertex_index(stack, sector + 1));
+            indices.push_back(vertex_index(stack + 1, sector + 1));
 
-            m_indices.push_back(vertex_index(stack + 1, sector + 1));
-            m_indices.push_back(vertex_index(stack + 1, sector));
-            m_indices.push_back(vertex_index(stack, sector));
+            indices.push_back(vertex_index(stack + 1, sector + 1));
+            indices.push_back(vertex_index(stack + 1, sector));
+            indices.push_back(vertex_index(stack, sector));
         }
     }
     vertices.push_back(Vertex { .position { 0, 0, -1 }, .color = llgl::Colors::white, .normal = { 0, 0, -1 } });
     assert(vertices.size() == Sectors * Stacks + 1);
 
-    m_vao.load_vertexes(vertices);
+    m_vao.load_vertexes(vertices, indices);
 
     // std::cout << "----------------------" << std::endl;
     // for (auto& i : m_indices)
@@ -66,7 +66,7 @@ size_t Sphere::vertex_index(unsigned stack, unsigned sector) const
 
 void Sphere::render(Renderer& renderer, DrawState state) const
 {
-    renderer.draw_vao_with_indices(m_vao, opengl::PrimitiveType::Triangles, state, m_indices);
+    renderer.draw_vao(m_vao, opengl::PrimitiveType::Triangles, state);
 }
 
 }
