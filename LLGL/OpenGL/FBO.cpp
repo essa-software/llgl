@@ -66,11 +66,15 @@ FBOScope::FBOScope(FBO const& fbo, FBO::Target target)
     : m_old_fbo(s_current_fbo)
     , m_target(target)
 {
+    if (s_current_fbo == fbo.id())
+        return;
     fbo.bind(m_target);
 }
 
 FBOScope::~FBOScope()
 {
+    if (s_current_fbo == m_old_fbo)
+        return;
     glBindFramebuffer(static_cast<GLenum>(m_target), m_old_fbo);
     s_current_fbo = m_old_fbo;
 }
