@@ -1,5 +1,6 @@
 #include <LLGL/Core/Color.hpp>
 #include <LLGL/Core/DelayedInit.hpp>
+#include <LLGL/Core/VectorUtils.hpp>
 #include <LLGL/OpenGL/Error.hpp>
 #include <LLGL/OpenGL/FBO.hpp>
 #include <LLGL/OpenGL/Shader.hpp>
@@ -103,13 +104,6 @@ int main()
     llgl::opengl::shaders::Basic330Core basic_shader;
     BlurShader blur_shader;
 
-    llgl::opengl::VAO input_vao;
-    input_vao.load_vertexes(
-        { { llgl::Vertex { .position = { -50, -50, 0 }, .color = llgl::Colors::green },
-            llgl::Vertex { .position = { 50, -50, 0 }, .color = llgl::Colors::green },
-            llgl::Vertex { .position = { -50, 50, 0 }, .color = llgl::Colors::green },
-            llgl::Vertex { .position = { 50, 50, 0 }, .color = llgl::Colors::green } } });
-
     llgl::opengl::FBO pass1_fbo { window.size() };
     pass1_fbo.set_label("pass1_fbo");
     llgl::opengl::FBO accum_fbo { window.size() };
@@ -121,6 +115,9 @@ int main()
             llgl::Vertex { .position = { 1, -1, 0 }, .color = llgl::Colors::white, .tex_coord = { 1, 1 } },
             llgl::Vertex { .position = { -1, 1, 0 }, .color = llgl::Colors::white, .tex_coord = { 0, 0 } },
             llgl::Vertex { .position = { 1, 1, 0 }, .color = llgl::Colors::white, .tex_coord = { 1, 0 } } } });
+
+    auto old_mouse_position = llgl::mouse_position();
+    ;
 
     for (;;) {
         llgl::Event event;
@@ -149,8 +146,24 @@ int main()
 
             auto mouse_position = llgl::mouse_position();
 
-            llgl::Transform model = llgl::Transform {}.translate(llgl::Vector3f { mouse_position });
-            renderer.draw_vao(input_vao, llgl::opengl::PrimitiveType::TriangleStrip, { .shader = &basic_shader, .model_matrix = model.matrix() });
+            constexpr float PointSize = 2;
+            auto diff = llgl::Vector2f { mouse_position - old_mouse_position };
+            if (llgl::vector::length_squared(diff) < PointSize * PointSize)
+                diff = { PointSize, 0 };
+            auto diff_norm = llgl::vector::normalize(diff);
+            auto main = diff_norm * PointSize;
+            auto cross = llgl::vector::perpendicular(diff_norm) * PointSize;
+
+            llgl::opengl::VAO input_vao {
+                { { llgl::Vertex { .position = llgl::Vector3f { llgl::Vector2f { old_mouse_position } - cross }, .color = llgl::Colors::green },
+                    llgl::Vertex { .position = llgl::Vector3f { llgl::Vector2f { old_mouse_position } + cross }, .color = llgl::Colors::green },
+                    llgl::Vertex { .position = llgl::Vector3f { llgl::Vector2f { old_mouse_position } + diff - cross }, .color = llgl::Colors::green },
+                    llgl::Vertex { .position = llgl::Vector3f { llgl::Vector2f { old_mouse_position } + diff + cross }, .color = llgl::Colors::green } } }
+            };
+
+            renderer.draw_vao(input_vao, llgl::opengl::PrimitiveType::TriangleStrip, { .shader = &basic_shader });
+
+            old_mouse_position = mouse_position;
         }
 
         {
