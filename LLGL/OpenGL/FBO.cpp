@@ -31,8 +31,11 @@ FBO::~FBO()
         glDeleteRenderbuffers(1, &m_depth_renderbuffer);
 }
 
+static unsigned s_current_fbo = 0;
+
 void FBO::bind(Target target) const
 {
+    s_current_fbo = m_fbo;
     glBindFramebuffer(static_cast<GLenum>(target), m_fbo);
 }
 
@@ -59,8 +62,6 @@ void FBO::set_label(std::string const& str)
 {
     glObjectLabel(GL_FRAMEBUFFER, m_fbo, str.size(), str.data());
 }
-
-static unsigned s_current_fbo = 0;
 
 FBOScope::FBOScope(FBO const& fbo, FBO::Target target)
     : m_old_fbo(s_current_fbo)
