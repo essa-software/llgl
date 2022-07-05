@@ -43,14 +43,21 @@ void main()
     vec4 color;
 
     // Box blur
-    for(int x = -3; x <= 3; x++) {
-        for(int y = -3; y <= 3; y++) {
+    for (int x = -3; x <= 3; x++) {
+        for (int y = -3; y <= 3; y++) {
             color += texture2D(pass1, fragPos + vec2(x/fbSize.x, y/fbSize.y)) / 49;
         }
     }
 
     // Motion blur
-    gl_FragColor = color * 0.2 + texture2D(accum, fragPos) * 0.8;
+    vec4 accumFactor = texture2D(accum, fragPos) * 0.9;
+    if (accumFactor.r < 0.05)
+        accumFactor.r = 0;
+    if (accumFactor.g < 0.05)
+        accumFactor.g = 0;
+    if (accumFactor.b < 0.05)
+        accumFactor.b = 0;
+    gl_FragColor = color + accumFactor;
 }
 )~~~";
         auto objects = {
