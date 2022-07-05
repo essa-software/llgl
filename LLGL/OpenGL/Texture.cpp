@@ -2,6 +2,8 @@
 
 #include "Error.hpp"
 
+#include <GL/glew.h>
+
 #include <GL/gl.h>
 #include <cassert>
 #include <iostream>
@@ -103,6 +105,11 @@ void Texture::bind(Texture const* texture)
 {
     ErrorHandler handler;
     glBindTexture(GL_TEXTURE_2D, texture ? texture->id() : 0);
+}
+
+void Texture::set_label(std::string const& label)
+{
+    glObjectLabel(GL_TEXTURE, m_id, label.size(), label.data());
 }
 
 }

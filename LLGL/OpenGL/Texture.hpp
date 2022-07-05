@@ -2,13 +2,12 @@
 
 #include <LLGL/Core/Color.hpp>
 #include <LLGL/Core/Vector2.hpp>
+#include <string>
 #include <utility>
 
-namespace llgl::opengl
-{
+namespace llgl::opengl {
 
-class Texture
-{
+class Texture {
 public:
     Texture() = default;
     ~Texture();
@@ -39,6 +38,8 @@ public:
     unsigned id() const { return m_id; }
     Vector2u size() const { return m_size; }
 
+    void set_label(std::string const&);
+
     static void bind(Texture const* texture);
 
 private:
@@ -47,8 +48,7 @@ private:
     bool m_initialized = false;
 };
 
-class TextureBinder
-{
+class TextureBinder {
 public:
     TextureBinder(Texture const& texture) { Texture::bind(&texture); }
     ~TextureBinder() { Texture::bind(nullptr); }
