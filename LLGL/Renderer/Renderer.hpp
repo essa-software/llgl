@@ -21,7 +21,7 @@ public:
     virtual View view() const = 0;
     virtual void draw_vao(opengl::VAO const&, opengl::PrimitiveType, DrawState const&) = 0;
 
-    void clear(std::optional<llgl::Color> color = {});
+    virtual void clear(std::optional<llgl::Color> color = {});
     void render_object(Renderable const&, DrawState = {});
 };
 
