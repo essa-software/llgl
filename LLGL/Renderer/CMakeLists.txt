@@ -1,7 +1,6 @@
 set(SOURCES
     BatchRenderer.cpp
     CoreRenderer.cpp
-    FFPRenderer.cpp
     Renderer.cpp
     StateScope.cpp
     Transform.cpp

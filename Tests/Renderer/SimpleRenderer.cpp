@@ -1,4 +1,5 @@
 #include <LLGL/Core/Color.hpp>
+#include <LLGL/OpenGL/Shaders/Basic330Core.hpp>
 #include <LLGL/OpenGL/Transform.hpp>
 #include <LLGL/OpenGL/Utils.hpp>
 #include <LLGL/OpenGL/Vertex.hpp>
@@ -8,15 +9,18 @@
 
 int main()
 {
-    llgl::Window window { { 500, 500 }, u8"simple renderer", { 2, 1 } };
-    llgl::opengl::set_clear_color(llgl::Color { 255, 128, 128 });
-    for (;;)
-    {
+    llgl::Window window { { 500, 500 }, u8"simple renderer" };
+
+    llgl::opengl::shaders::Basic330Core shader;
+
+    for (;;) {
         llgl::Event event;
-        while (window.poll_event(event))
-        {
+        while (window.poll_event(event)) {
         }
-        llgl::opengl::clear(llgl::opengl::ClearMask::Color);
+
+        llgl::opengl::disable(llgl::opengl::Feature::ScissorTest);
+        window.renderer().clear(llgl::Color { 255, 128, 128 });
+        llgl::opengl::enable(llgl::opengl::Feature::ScissorTest);
 
         llgl::View view;
         view.set_viewport(llgl::Recti { 0, 0, window.size().x, window.size().y });
@@ -25,7 +29,7 @@ int main()
 
         {
             llgl::opengl::set_scissor({ 0, 0, 200, 200 });
-            llgl::DrawScope scope { window.renderer(), llgl::opengl::PrimitiveType::Triangles };
+            llgl::DrawScope scope { window.renderer(), llgl::opengl::PrimitiveType::Triangles, { .shader = &shader } };
             scope.renderer().add_triangle(
                 { { 150, 100, 0 }, llgl::Colors::green },
                 { { 200, 200, 0 }, llgl::Colors::red },

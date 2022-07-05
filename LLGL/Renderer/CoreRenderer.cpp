@@ -1,15 +1,14 @@
 #include "CoreRenderer.hpp"
-#include "LLGL/OpenGL/Texture.hpp"
 
 #include <LLGL/Core/Matrix.hpp>
 #include <LLGL/OpenGL/Shader.hpp>
+#include <LLGL/OpenGL/Texture.hpp>
 #include <LLGL/OpenGL/Transform.hpp>
 #include <LLGL/OpenGL/VAO.hpp>
 #include <LLGL/OpenGL/Vertex.hpp>
 #include <iostream>
 
-namespace llgl
-{
+namespace llgl {
 
 void CoreRenderer::begin_draw(opengl::PrimitiveType pt, DrawState state)
 {
