@@ -97,7 +97,7 @@ private:
 
 int main()
 {
-    llgl::Window window({ 512, 512 }, u8"Shot2");
+    llgl::Window window({ 512, 512 }, u8"Oscilloscope");
     llgl::opengl::enable_debug_output();
 
     auto& renderer = window.renderer();
