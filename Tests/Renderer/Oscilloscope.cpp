@@ -1,4 +1,5 @@
 #include "LLGL/Renderer/RenderToTexture.hpp"
+#include "LLGL/Window/Mouse.hpp"
 #include <LLGL/Core/Color.hpp>
 #include <LLGL/Core/DelayedInit.hpp>
 #include <LLGL/Core/VectorUtils.hpp>
@@ -96,6 +97,14 @@ private:
     llgl::Vector2f m_framebuffer_size;
 };
 
+llgl::Vector2f next_oscilloscope_position()
+{
+    static float angle = 0;
+    angle += 0.7;
+    return llgl::Vector2f { std::sin(angle), std::cos(angle) } * 20
+        + llgl::Vector2f { llgl::mouse_position() };
+}
+
 int main()
 {
     llgl::Window window({ 512, 512 }, u8"Oscilloscope");
@@ -117,8 +126,7 @@ int main()
             llgl::Vertex { .position = { -1, 1, 0 }, .color = llgl::Colors::white, .tex_coord = { 0, 0 } },
             llgl::Vertex { .position = { 1, 1, 0 }, .color = llgl::Colors::white, .tex_coord = { 1, 0 } } } });
 
-    auto old_mouse_position = llgl::mouse_position();
-    ;
+    auto old_oscilloscope_position = next_oscilloscope_position();
 
     for (;;) {
         llgl::Event event;
@@ -142,10 +150,10 @@ int main()
             view.set_ortho({ { 0, 0, static_cast<double>(window.size().x), static_cast<double>(window.size().y) } });
             pass1.apply_view(view);
 
-            auto mouse_position = llgl::mouse_position();
+            auto oscilloscope_position = next_oscilloscope_position();
 
             constexpr float PointSize = 2;
-            auto diff = llgl::Vector2f { mouse_position - old_mouse_position };
+            auto diff = oscilloscope_position - old_oscilloscope_position;
             if (llgl::vector::length_squared(diff) < PointSize * PointSize)
                 diff = { PointSize, 0 };
             auto diff_norm = llgl::vector::normalize(diff);
@@ -153,15 +161,15 @@ int main()
             auto cross = llgl::vector::perpendicular(diff_norm) * PointSize;
 
             llgl::opengl::VAO input_vao {
-                { { llgl::Vertex { .position = llgl::Vector3f { llgl::Vector2f { old_mouse_position } - cross }, .color = llgl::Colors::green },
-                    llgl::Vertex { .position = llgl::Vector3f { llgl::Vector2f { old_mouse_position } + cross }, .color = llgl::Colors::green },
-                    llgl::Vertex { .position = llgl::Vector3f { llgl::Vector2f { old_mouse_position } + diff - cross }, .color = llgl::Colors::green },
-                    llgl::Vertex { .position = llgl::Vector3f { llgl::Vector2f { old_mouse_position } + diff + cross }, .color = llgl::Colors::green } } }
+                { { llgl::Vertex { .position = llgl::Vector3f { old_oscilloscope_position - cross }, .color = llgl::Colors::green },
+                    llgl::Vertex { .position = llgl::Vector3f { old_oscilloscope_position + cross }, .color = llgl::Colors::green },
+                    llgl::Vertex { .position = llgl::Vector3f { old_oscilloscope_position + diff - cross }, .color = llgl::Colors::green },
+                    llgl::Vertex { .position = llgl::Vector3f { old_oscilloscope_position + diff + cross }, .color = llgl::Colors::green } } }
             };
 
             pass1.draw_vao(input_vao, llgl::opengl::PrimitiveType::TriangleStrip, { .shader = &basic_shader });
 
-            old_mouse_position = mouse_position;
+            old_oscilloscope_position = oscilloscope_position;
         }
 
         {
