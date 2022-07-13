@@ -10,7 +10,7 @@ struct CubeProperties {
     Vector3f position {};
     Vector3f dimensions { 1, 1, 1 };
     Transform transform {}; // Is applied after position+dimensions
-    Color color = Colors::white;
+    Util::Color color = Util::Colors::white;
 };
 
 void add_cube(std::vector<Vertex>& vertices, CubeProperties properties = {});

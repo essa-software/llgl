@@ -10,7 +10,7 @@ public:
     explicit RenderToTexture(Window const&);
     explicit RenderToTexture(Vector2i size);
 
-    virtual void clear(std::optional<llgl::Color> color = {}) override;
+    virtual void clear(std::optional<Util::Color> color = {}) override;
     virtual void apply_view(View const&) override;
     virtual View view() const override;
     virtual void draw_vao(opengl::VAO const&, opengl::PrimitiveType, DrawState const&) override;

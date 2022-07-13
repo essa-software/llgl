@@ -1,4 +1,4 @@
-#include <LLGL/Core/Color.hpp>
+#include <EssaUtil/Color.hpp>
 #include <LLGL/OpenGL/Transform.hpp>
 #include <LLGL/OpenGL/Utils.hpp>
 #include <LLGL/OpenGL/Vertex.hpp>
@@ -7,7 +7,7 @@
 int main()
 {
     llgl::Window window{{500, 500}, u8"test"};
-    llgl::opengl::set_clear_color(llgl::Color{255, 128, 128});
+    llgl::opengl::set_clear_color(Util::Color{255, 128, 128});
     for(;;)
     {
         llgl::Event event;

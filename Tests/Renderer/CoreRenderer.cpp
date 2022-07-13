@@ -1,4 +1,4 @@
-#include <LLGL/Core/Color.hpp>
+#include <EssaUtil/Color.hpp>
 #include <LLGL/OpenGL/Blend.hpp>
 #include <LLGL/OpenGL/Shaders/Basic330Core.hpp>
 #include <LLGL/OpenGL/Transform.hpp>
@@ -13,11 +13,11 @@ int main()
 {
     llgl::Window window { { 500, 500 }, u8"core renderer", { 3, 2 } };
 
-    std::vector<llgl::Colorf> color_array;
+    std::vector<Util::Colorf> color_array;
     color_array.resize(256 * 256);
     for (size_t y = 0; y < 256; y++) {
         for (size_t x = 0; x < 256; x++) {
-            color_array[y * 256 + x] = llgl::Colorf {
+            color_array[y * 256 + x] = Util::Colorf {
                 static_cast<float>((double)rand() / RAND_MAX),
                 static_cast<float>((double)rand() / RAND_MAX),
                 static_cast<float>((double)rand() / RAND_MAX),
@@ -30,16 +30,16 @@ int main()
     llgl::opengl::enable(llgl::opengl::Feature::Blend);
     llgl::opengl::enable(llgl::opengl::Feature::DepthTest);
     llgl::opengl::set_blend_func(llgl::opengl::BlendFunc::SrcAlpha, llgl::opengl::BlendFunc::OneMinusSrcAlpha);
-    llgl::opengl::set_clear_color(llgl::Color { 255, 128, 128 });
+    llgl::opengl::set_clear_color(Util::Color { 255, 128, 128 });
     llgl::BatchRenderer batch_renderer;
 
     llgl::opengl::shaders::Basic330Core shader;
-    batch_renderer.draw_vao(llgl::opengl::VAO { { { llgl::Vertex { { -1.5, -1.5, -15 }, llgl::Colors::white, { 0, 0 } },
-                                llgl::Vertex { { 1.5, 1.5, -15 }, llgl::Colors::white, { 1, 1 } },
-                                llgl::Vertex { { 1.5, -1.5, -15 }, llgl::Colors::white, { 1, 0 } },
-                                llgl::Vertex { { -1.5, -1.5, -10 }, llgl::Colors::white, { 0, 0 } },
-                                llgl::Vertex { { 1.5, 1.5, -10 }, llgl::Colors::white, { 1, 1 } },
-                                llgl::Vertex { { 1.5, -1.5, -10 }, llgl::Colors::white, { 1, 0 } } } } },
+    batch_renderer.draw_vao(llgl::opengl::VAO { { { llgl::Vertex { { -1.5, -1.5, -15 }, Util::Colors::white, { 0, 0 } },
+                                llgl::Vertex { { 1.5, 1.5, -15 }, Util::Colors::white, { 1, 1 } },
+                                llgl::Vertex { { 1.5, -1.5, -15 }, Util::Colors::white, { 1, 0 } },
+                                llgl::Vertex { { -1.5, -1.5, -10 }, Util::Colors::white, { 0, 0 } },
+                                llgl::Vertex { { 1.5, 1.5, -10 }, Util::Colors::white, { 1, 1 } },
+                                llgl::Vertex { { 1.5, -1.5, -10 }, Util::Colors::white, { 1, 0 } } } } },
         llgl::opengl::PrimitiveType::Triangles, { .shader = &shader, .texture = &texture });
 
     for (;;) {

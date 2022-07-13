@@ -8,7 +8,7 @@
 
 namespace llgl {
 
-void Renderer::clear(std::optional<llgl::Color> color)
+void Renderer::clear(std::optional<Util::Color> color)
 {
     if (color)
         opengl::set_clear_color(*color);

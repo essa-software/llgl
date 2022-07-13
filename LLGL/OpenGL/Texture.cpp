@@ -32,7 +32,7 @@ Texture::~Texture()
     }
 }
 
-Texture Texture::create_from_color_array(Vector2u size, Colorf const* array, Format format)
+Texture Texture::create_from_color_array(Vector2u size, Util::Colorf const* array, Format format)
 {
     Texture texture = create_empty(size);
     texture.update({}, size, array, format);
@@ -49,7 +49,7 @@ Texture Texture::create_empty(Vector2u size, Format format)
     return texture;
 }
 
-void Texture::update(Vector2u dst_pos, Vector2u src_size, Colorf const* array, Format format)
+void Texture::update(Vector2u dst_pos, Vector2u src_size, Util::Colorf const* array, Format format)
 {
     assert(dst_pos.x + src_size.x <= m_size.x);
     assert(dst_pos.y + src_size.y <= m_size.y);

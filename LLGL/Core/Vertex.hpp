@@ -1,16 +1,14 @@
 #pragma once
 
-#include <LLGL/Core/Color.hpp>
+#include <EssaUtil/Color.hpp>
 #include <LLGL/Core/Vector2.hpp>
 #include <LLGL/Core/Vector3.hpp>
 
-namespace llgl
-{
+namespace llgl {
 
-struct Vertex
-{
+struct Vertex {
     Vector3f position;
-    Colorf color {};
+    Util::Colorf color {};
     Vector2f tex_coord {};
     Vector3f normal {};
 };

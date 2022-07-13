@@ -2,9 +2,9 @@
 
 #include <GL/glew.h>
 
+#include <EssaUtil/Color.hpp>
 #include <EssaUtil/EnumBits.hpp>
 #include <GL/gl.h>
-#include <LLGL/Core/Color.hpp>
 #include <LLGL/Core/Vector2.hpp>
 #include <LLGL/Core/Vector3.hpp>
 
@@ -27,7 +27,7 @@ public:
     ~DrawScope() { end(); }
 };
 
-void set_vertex_color(Colorf);
+void set_vertex_color(Util::Colorf);
 void set_texture_coordinate(Vector2f);
 void add_vertex(Vector3f);
 

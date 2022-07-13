@@ -2,7 +2,7 @@
 
 #include <GL/glew.h>
 
-#include <LLGL/Core/Color.hpp>
+#include <EssaUtil/Color.hpp>
 #include <LLGL/Core/Vector3.hpp>
 #include <LLGL/OpenGL/VAO.hpp>
 #include <LLGL/Renderer/Renderable.hpp>

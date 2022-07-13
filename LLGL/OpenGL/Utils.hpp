@@ -1,13 +1,13 @@
 #pragma once
 
+#include <EssaUtil/Color.hpp>
 #include <EssaUtil/EnumBits.hpp>
 #include <GL/gl.h>
-#include <LLGL/Core/Color.hpp>
 #include <LLGL/Core/Rect.hpp>
 
 namespace llgl::opengl {
 
-void set_clear_color(Color color = Colors::black);
+void set_clear_color(Util::Color color = Util::Colors::black);
 
 enum class ClearMask {
     Color = GL_COLOR_BUFFER_BIT,

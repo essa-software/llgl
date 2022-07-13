@@ -6,7 +6,7 @@
 
 namespace llgl::opengl {
 
-void set_clear_color(Color color)
+void set_clear_color(Util::Color color)
 {
     ErrorHandler handler;
     glClearColor(color.r / 255.f, color.g / 255.f, color.b / 255.f, color.a / 255.f);

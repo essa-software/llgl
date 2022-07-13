@@ -1,4 +1,4 @@
-#include <LLGL/Core/Color.hpp>
+#include <EssaUtil/Color.hpp>
 #include <LLGL/OpenGL/Shaders/Basic330Core.hpp>
 #include <LLGL/OpenGL/Transform.hpp>
 #include <LLGL/OpenGL/Utils.hpp>
@@ -13,9 +13,9 @@ int main()
 
     llgl::opengl::shaders::Basic330Core shader;
 
-    llgl::opengl::VAO vao { { { llgl::Vertex { { 150, 100, 0 }, llgl::Colors::green },
-        llgl::Vertex { { 200, 200, 0 }, llgl::Colors::red },
-        llgl::Vertex { { 100, 200, 0 }, llgl::Colors::blue } } } };
+    llgl::opengl::VAO vao { { { llgl::Vertex { { 150, 100, 0 }, Util::Colors::green },
+        llgl::Vertex { { 200, 200, 0 }, Util::Colors::red },
+        llgl::Vertex { { 100, 200, 0 }, Util::Colors::blue } } } };
 
     for (;;) {
         llgl::Event event;
@@ -23,7 +23,7 @@ int main()
         }
 
         llgl::opengl::disable(llgl::opengl::Feature::ScissorTest);
-        window.renderer().clear(llgl::Color { 255, 128, 128 });
+        window.renderer().clear(Util::Color { 255, 128, 128 });
         llgl::opengl::enable(llgl::opengl::Feature::ScissorTest);
 
         llgl::View view;

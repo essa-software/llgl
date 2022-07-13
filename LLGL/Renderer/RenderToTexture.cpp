@@ -16,7 +16,7 @@ RenderToTexture::RenderToTexture(Vector2i size)
 {
 }
 
-void RenderToTexture::clear(std::optional<llgl::Color> color)
+void RenderToTexture::clear(std::optional<Util::Color> color)
 {
     opengl::FBOScope fbo_scope(m_fbo);
     if (m_window)

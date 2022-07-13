@@ -152,7 +152,7 @@ void ShaderScope::set_uniform(std::string const& name, Vector3f vec)
     glUniform3f(uniform_location(name), vec.x, vec.y, vec.z);
 }
 
-void ShaderScope::set_uniform(std::string const& name, Colorf color)
+void ShaderScope::set_uniform(std::string const& name, Util::Colorf color)
 {
     ErrorHandler handler;
     glUniform4f(uniform_location(name), color.r, color.g, color.b, color.a);

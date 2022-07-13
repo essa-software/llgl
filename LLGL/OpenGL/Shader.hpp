@@ -2,8 +2,8 @@
 
 #include <GL/glew.h>
 
+#include <EssaUtil/Color.hpp>
 #include <EssaUtil/Matrix.hpp>
-#include <LLGL/Core/Color.hpp>
 #include <LLGL/Core/Vector2.hpp>
 #include <LLGL/Core/Vector3.hpp>
 #include <span>
@@ -112,7 +112,7 @@ public:
     void set_uniform(std::string const&, bool);
     void set_uniform(std::string const&, Vector2f);
     void set_uniform(std::string const&, Vector3f);
-    void set_uniform(std::string const&, Colorf);
+    void set_uniform(std::string const&, Util::Colorf);
 
 private:
     Shader const& m_shader;

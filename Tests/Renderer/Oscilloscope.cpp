@@ -1,5 +1,5 @@
 #include <EssaUtil/DelayedInit.hpp>
-#include <LLGL/Core/Color.hpp>
+#include <EssaUtil/Color.hpp>
 #include <LLGL/Core/VectorUtils.hpp>
 #include <LLGL/OpenGL/Error.hpp>
 #include <LLGL/OpenGL/FBO.hpp>
@@ -121,10 +121,10 @@ int main()
 
     llgl::opengl::VAO fullscreen_vao;
     fullscreen_vao.load_vertexes(
-        { { llgl::Vertex { .position = { -1, -1, 0 }, .color = llgl::Colors::white, .tex_coord = { 0, 1 } },
-            llgl::Vertex { .position = { 1, -1, 0 }, .color = llgl::Colors::white, .tex_coord = { 1, 1 } },
-            llgl::Vertex { .position = { -1, 1, 0 }, .color = llgl::Colors::white, .tex_coord = { 0, 0 } },
-            llgl::Vertex { .position = { 1, 1, 0 }, .color = llgl::Colors::white, .tex_coord = { 1, 0 } } } });
+        { { llgl::Vertex { .position = { -1, -1, 0 }, .color = Util::Colors::white, .tex_coord = { 0, 1 } },
+            llgl::Vertex { .position = { 1, -1, 0 }, .color = Util::Colors::white, .tex_coord = { 1, 1 } },
+            llgl::Vertex { .position = { -1, 1, 0 }, .color = Util::Colors::white, .tex_coord = { 0, 0 } },
+            llgl::Vertex { .position = { 1, 1, 0 }, .color = Util::Colors::white, .tex_coord = { 1, 0 } } } });
 
     auto old_oscilloscope_position = next_oscilloscope_position();
 
@@ -137,7 +137,7 @@ int main()
             }
         }
 
-        renderer.clear(llgl::Colors::black);
+        renderer.clear(Util::Colors::black);
 
         llgl::View view;
         view.set_viewport(window.rect());
@@ -145,7 +145,7 @@ int main()
 
         {
             // Draw the first (non-blurred) pass
-            pass1.clear(llgl::Color { 0, 0, 0 });
+            pass1.clear(Util::Color { 0, 0, 0 });
 
             view.set_ortho({ { 0, 0, static_cast<double>(window.size().x), static_cast<double>(window.size().y) } });
             pass1.apply_view(view);
@@ -161,10 +161,10 @@ int main()
             auto cross = llgl::vector::perpendicular(diff_norm) * PointSize;
 
             llgl::opengl::VAO input_vao {
-                { { llgl::Vertex { .position = llgl::Vector3f { old_oscilloscope_position - cross }, .color = llgl::Colors::green },
-                    llgl::Vertex { .position = llgl::Vector3f { old_oscilloscope_position + cross }, .color = llgl::Colors::green },
-                    llgl::Vertex { .position = llgl::Vector3f { old_oscilloscope_position + diff - cross }, .color = llgl::Colors::green },
-                    llgl::Vertex { .position = llgl::Vector3f { old_oscilloscope_position + diff + cross }, .color = llgl::Colors::green } } }
+                { { llgl::Vertex { .position = llgl::Vector3f { old_oscilloscope_position - cross }, .color = Util::Colors::green },
+                    llgl::Vertex { .position = llgl::Vector3f { old_oscilloscope_position + cross }, .color = Util::Colors::green },
+                    llgl::Vertex { .position = llgl::Vector3f { old_oscilloscope_position + diff - cross }, .color = Util::Colors::green },
+                    llgl::Vertex { .position = llgl::Vector3f { old_oscilloscope_position + diff + cross }, .color = Util::Colors::green } } }
             };
 
             pass1.draw_vao(input_vao, llgl::opengl::PrimitiveType::TriangleStrip, { .shader = &basic_shader });
