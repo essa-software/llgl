@@ -1,7 +1,7 @@
 #pragma once
 
 #include <EssaUtil/Matrix.hpp>
-#include <LLGL/Core/Vector3.hpp>
+#include <EssaUtil/Vector.hpp>
 
 namespace llgl {
 
@@ -12,7 +12,7 @@ public:
     {
     }
 
-    [[nodiscard]] Transform translate(Vector3f vector) const;
+    [[nodiscard]] Transform translate(Util::Vector3f vector) const;
 
     // Angle is in radians.
     [[nodiscard]] Transform rotate_x(float angle) const;
@@ -22,7 +22,7 @@ public:
 
     Util::Matrix4x4f matrix() const { return m_matrix; }
 
-    Vector3f transform_point(Vector3f const&) const;
+    Util::Vector3f transform_point(Util::Vector3f const&) const;
 
 private:
     Util::Matrix4x4f m_matrix = Util::Matrix4x4f::identity();

@@ -54,7 +54,7 @@ bool is_enabled(Feature feature)
     return glIsEnabled(static_cast<GLenum>(feature));
 }
 
-void set_scissor(Recti rect)
+void set_scissor(Util::Recti rect)
 {
     ensure_enabled(Feature::ScissorTest);
     ErrorHandler handler;

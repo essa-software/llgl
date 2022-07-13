@@ -1,18 +1,15 @@
 #pragma once
 
-#include <LLGL/Core/Vector2.hpp>
-
+#include <EssaUtil/Vector.hpp>
 #include <SDL2/SDL_mouse.h>
 #include <string_view>
 
-namespace llgl
-{
+namespace llgl {
 
 #define ENUMERATE_MOUSE_BUTTONS(K) \
     K(Left, SDL_BUTTON_LEFT)
 
-enum class MouseButton
-{
+enum class MouseButton {
 #define __ENUMERATE_BUTTON(key, value) key = value,
     ENUMERATE_MOUSE_BUTTONS(__ENUMERATE_BUTTON)
 #undef __ENUMERATE_BUTTON
@@ -20,8 +17,7 @@ enum class MouseButton
 
 constexpr std::string_view to_string(MouseButton key)
 {
-    switch (key)
-    {
+    switch (key) {
 #define __ENUMERATE_BUTTON(key, value) \
     case MouseButton::key:             \
         return #key;
@@ -31,6 +27,6 @@ constexpr std::string_view to_string(MouseButton key)
     return "Unknown";
 }
 
-Vector2i mouse_position();
+Util::Vector2i mouse_position();
 
 }

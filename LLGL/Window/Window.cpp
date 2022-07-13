@@ -8,14 +8,14 @@
 namespace llgl
 {
 
-Window::Window(Vector2i size, std::u8string const& title, ContextSettings const& settings)
+Window::Window(Util::Vector2i size, std::u8string const& title, ContextSettings const& settings)
     : m_impl { std::make_unique<SDLWindowImpl>() }
 {
     m_renderer = std::make_unique<CoreRenderer>();
     create(size, title, settings);
 }
 
-void Window::create(Vector2i size, std::u8string const& title, ContextSettings const& settings)
+void Window::create(Util::Vector2i size, std::u8string const& title, ContextSettings const& settings)
 {
     m_size = size;
     m_title = title;
@@ -33,7 +33,7 @@ void Window::set_title(std::u8string const& title)
     m_impl->set_title(title);
 }
 
-void Window::set_size(Vector2i size)
+void Window::set_size(Util::Vector2i size)
 {
     m_size = size;
     m_impl->set_size(size);
@@ -54,7 +54,7 @@ bool Window::poll_event(Event& event)
     return true;
 }
 
-void Window::set_mouse_position(Vector2i pos)
+void Window::set_mouse_position(Util::Vector2i pos)
 {
     m_impl->set_mouse_position(pos);
 }

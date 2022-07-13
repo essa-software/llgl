@@ -6,20 +6,18 @@
 #include <SDL2/SDL_video.h>
 #include <string>
 
-namespace llgl
-{
+namespace llgl {
 
-class SDLWindowImpl : public WindowImpl
-{
+class SDLWindowImpl : public WindowImpl {
 public:
     ~SDLWindowImpl();
-    virtual void create(Vector2i size, std::u8string const& title, ContextSettings const&) override;
+    virtual void create(Util::Vector2i size, std::u8string const& title, ContextSettings const&) override;
     virtual void close() override;
     virtual void set_title(std::u8string const&) override;
-    virtual void set_size(Vector2i) override;
+    virtual void set_size(Util::Vector2i) override;
     virtual void display() override;
     virtual bool poll_event(Event&) override;
-    virtual void set_mouse_position(Vector2i) override;
+    virtual void set_mouse_position(Util::Vector2i) override;
     virtual bool is_focused() const override;
 
 private:

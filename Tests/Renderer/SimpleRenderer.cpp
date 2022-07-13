@@ -27,8 +27,8 @@ int main()
         llgl::opengl::enable(llgl::opengl::Feature::ScissorTest);
 
         llgl::View view;
-        view.set_viewport(llgl::Recti { 0, 0, window.size().x, window.size().y });
-        view.set_ortho(llgl::Rectd { 0, 0, static_cast<double>(window.size().x), static_cast<double>(window.size().y) });
+        view.set_viewport(window.rect());
+        view.set_ortho(Util::Rectd { 0, 0, static_cast<double>(window.size().x()), static_cast<double>(window.size().y()) });
         window.renderer().apply_view(view);
 
         llgl::opengl::set_scissor({ 0, 0, 200, 200 });

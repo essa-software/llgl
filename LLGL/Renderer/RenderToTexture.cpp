@@ -11,7 +11,7 @@ RenderToTexture::RenderToTexture(Window const& window)
 {
 }
 
-RenderToTexture::RenderToTexture(Vector2i size)
+RenderToTexture::RenderToTexture(Util::Vector2i size)
     : m_fbo(size)
 {
 }

@@ -1,6 +1,6 @@
-#include <EssaUtil/DelayedInit.hpp>
 #include <EssaUtil/Color.hpp>
-#include <LLGL/Core/VectorUtils.hpp>
+#include <EssaUtil/DelayedInit.hpp>
+#include <EssaUtil/Vector.hpp>
 #include <LLGL/OpenGL/Error.hpp>
 #include <LLGL/OpenGL/FBO.hpp>
 #include <LLGL/OpenGL/Shader.hpp>
@@ -84,7 +84,7 @@ public:
         return { .position = 1 };
     }
 
-    void set_framebuffer_size(llgl::Vector2f size) { m_framebuffer_size = size; }
+    void set_framebuffer_size(Util::Vector2f size) { m_framebuffer_size = size; }
 
 private:
     virtual void on_bind(llgl::opengl::ShaderScope& scope) const override
@@ -94,15 +94,15 @@ private:
         scope.set_uniform("fbSize", m_framebuffer_size);
     }
 
-    llgl::Vector2f m_framebuffer_size;
+    Util::Vector2f m_framebuffer_size;
 };
 
-llgl::Vector2f next_oscilloscope_position()
+Util::Vector2f next_oscilloscope_position()
 {
     static float angle = 0;
     angle += 0.7;
-    return llgl::Vector2f { std::sin(angle), std::cos(angle) } * 20
-        + llgl::Vector2f { llgl::mouse_position() };
+    return Util::Vector2f { std::sin(angle), std::cos(angle) } * 20
+        + Util::Vector2f { llgl::mouse_position() };
 }
 
 int main()
@@ -141,30 +141,30 @@ int main()
 
         llgl::View view;
         view.set_viewport(window.rect());
-        blur_shader.set_framebuffer_size(llgl::Vector2f { window.size() });
+        blur_shader.set_framebuffer_size(Util::Vector2f { window.size() });
 
         {
             // Draw the first (non-blurred) pass
             pass1.clear(Util::Color { 0, 0, 0 });
 
-            view.set_ortho({ { 0, 0, static_cast<double>(window.size().x), static_cast<double>(window.size().y) } });
+            view.set_ortho({ { 0, 0, static_cast<double>(window.size().x()), static_cast<double>(window.size().y()) } });
             pass1.apply_view(view);
 
             auto oscilloscope_position = next_oscilloscope_position();
 
             constexpr float PointSize = 2;
             auto diff = oscilloscope_position - old_oscilloscope_position;
-            if (llgl::vector::length_squared(diff) < PointSize * PointSize)
+            if (diff.length_squared() < PointSize * PointSize)
                 diff = { PointSize, 0 };
-            auto diff_norm = llgl::vector::normalize(diff);
+            auto diff_norm = diff.normalized();
             auto main = diff_norm * PointSize;
-            auto cross = llgl::vector::perpendicular(diff_norm) * PointSize;
+            auto cross = diff_norm.perpendicular() * PointSize;
 
             llgl::opengl::VAO input_vao {
-                { { llgl::Vertex { .position = llgl::Vector3f { old_oscilloscope_position - cross }, .color = Util::Colors::green },
-                    llgl::Vertex { .position = llgl::Vector3f { old_oscilloscope_position + cross }, .color = Util::Colors::green },
-                    llgl::Vertex { .position = llgl::Vector3f { old_oscilloscope_position + diff - cross }, .color = Util::Colors::green },
-                    llgl::Vertex { .position = llgl::Vector3f { old_oscilloscope_position + diff + cross }, .color = Util::Colors::green } } }
+                { { llgl::Vertex { .position = Util::Vector3f { old_oscilloscope_position - cross, 0 }, .color = Util::Colors::green },
+                    llgl::Vertex { .position = Util::Vector3f { old_oscilloscope_position + cross, 0 }, .color = Util::Colors::green },
+                    llgl::Vertex { .position = Util::Vector3f { old_oscilloscope_position + diff - cross, 0 }, .color = Util::Colors::green },
+                    llgl::Vertex { .position = Util::Vector3f { old_oscilloscope_position + diff + cross, 0 }, .color = Util::Colors::green } } }
             };
 
             pass1.draw_vao(input_vao, llgl::opengl::PrimitiveType::TriangleStrip, { .shader = &basic_shader });

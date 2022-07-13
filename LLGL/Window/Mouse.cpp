@@ -5,7 +5,7 @@
 namespace llgl
 {
 
-Vector2i mouse_position()
+Util::Vector2i mouse_position()
 {
     int x;
     int y;

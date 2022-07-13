@@ -3,7 +3,7 @@
 #include <GL/glew.h>
 
 #include <EssaUtil/Color.hpp>
-#include <LLGL/Core/Vector3.hpp>
+#include <EssaUtil/Vector.hpp>
 #include <LLGL/OpenGL/VAO.hpp>
 #include <LLGL/Renderer/Renderable.hpp>
 #include <vector>

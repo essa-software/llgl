@@ -1,16 +1,16 @@
 #include "Transform.hpp"
 
 #include <EssaUtil/Matrix.hpp>
-#include <LLGL/Core/Vector4.hpp>
+#include <EssaUtil/Vector.hpp>
 
 namespace llgl {
 
-Transform Transform::translate(Vector3f vector) const
+Transform Transform::translate(Util::Vector3f vector) const
 {
     Util::Matrix4x4f translation_matrix {
-        1, 0, 0, vector.x,
-        0, 1, 0, vector.y,
-        0, 0, 1, vector.z,
+        1, 0, 0, vector.x(),
+        0, 1, 0, vector.y(),
+        0, 0, 1, vector.z(),
         0, 0, 0, 1
     };
     return Transform { m_matrix * translation_matrix };
@@ -49,13 +49,15 @@ Transform Transform::scale(float scale) const
     return Transform { m_matrix * scale_matrix };
 }
 
-Vector3f Transform::transform_point(Vector3f const& vector) const
+Util::Vector3f Transform::transform_point(Util::Vector3f const& vector) const
 {
+    // TODO: Improve this constructor so that you can say vec4f(vector, 1) or something like this
+    auto vector4 = Util::Vector4f { vector.x(), vector.y(), vector.z(), 1 };
     if (m_matrix == Util::Matrix4x4f::identity())
         return vector;
-    auto result = m_matrix * Util::Vector3 { vector.x, vector.y, vector.z };
-    result /= result.w;
-    return Vector3f { result };
+    auto result = m_matrix * vector4;
+    result /= result.w();
+    return Util::Vector3f { result.x(), result.y(), result.z() };
 }
 
 }

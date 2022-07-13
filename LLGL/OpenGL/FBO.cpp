@@ -6,7 +6,7 @@
 
 namespace llgl::opengl {
 
-FBO::FBO(Vector2i size)
+FBO::FBO(Util::Vector2i size)
 {
     glGenFramebuffers(1, &m_fbo);
 
@@ -39,21 +39,21 @@ void FBO::bind(Target target) const
     glBindFramebuffer(static_cast<GLenum>(target), m_fbo);
 }
 
-void FBO::resize(Vector2i size)
+void FBO::resize(Util::Vector2i size)
 {
     FBOScope scope { *this };
-    if (Vector2i { m_color_texture.size() } == size)
+    if (Util::Vector2i { m_color_texture.size() } == size)
         return;
     if (!m_color_texture.id())
-        m_color_texture = Texture::create_empty(Vector2u { size }, Texture::Format::RGBA);
+        m_color_texture = Texture::create_empty(Util::Vector2u { size }, Texture::Format::RGBA);
     else
-        m_color_texture.recreate(Vector2u { size }, Texture::Format::RGBA);
+        m_color_texture.recreate(Util::Vector2u { size }, Texture::Format::RGBA);
     glFramebufferTexture(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, m_color_texture.id(), 0);
     if (m_depth_renderbuffer)
         glDeleteRenderbuffers(1, &m_depth_renderbuffer);
     glGenRenderbuffers(1, &m_depth_renderbuffer);
     glBindRenderbuffer(GL_RENDERBUFFER, m_depth_renderbuffer);
-    glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT, size.x, size.y);
+    glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT, size.x(), size.y());
 
     // std::cout << "FBO: recreated with size " << size.x << "," << size.y << std::endl;
 }

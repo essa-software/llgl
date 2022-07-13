@@ -2,7 +2,7 @@
 
 #include "../ContextSettings.hpp"
 
-#include <LLGL/Core/Vector2.hpp>
+#include <EssaUtil/Vector.hpp>
 #include <string>
 
 namespace llgl {
@@ -12,13 +12,13 @@ class Event;
 class WindowImpl {
 public:
     virtual ~WindowImpl() = default;
-    virtual void create(Vector2i size, std::u8string const& title, ContextSettings const&) = 0;
+    virtual void create(Util::Vector2i size, std::u8string const& title, ContextSettings const&) = 0;
     virtual void close() = 0;
     virtual void set_title(std::u8string const&) = 0;
-    virtual void set_size(Vector2i) = 0;
+    virtual void set_size(Util::Vector2i) = 0;
     virtual void display() = 0;
     virtual bool poll_event(Event&) = 0;
-    virtual void set_mouse_position(Vector2i) = 0;
+    virtual void set_mouse_position(Util::Vector2i) = 0;
     virtual bool is_focused() const = 0;
 };
 

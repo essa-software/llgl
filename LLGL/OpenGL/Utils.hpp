@@ -2,8 +2,8 @@
 
 #include <EssaUtil/Color.hpp>
 #include <EssaUtil/EnumBits.hpp>
+#include <EssaUtil/Rect.hpp>
 #include <GL/gl.h>
-#include <LLGL/Core/Rect.hpp>
 
 namespace llgl::opengl {
 
@@ -42,6 +42,6 @@ private:
     Feature m_feature;
 };
 
-void set_scissor(Recti);
+void set_scissor(Util::Recti);
 
 }

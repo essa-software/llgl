@@ -29,7 +29,7 @@ void Sphere::generate()
         for (unsigned sector = 0; sector < Sectors; sector++) {
             auto stack_angle = stack * delta_stack_angle;
             auto sector_angle = sector * delta_sector_angle;
-            auto point_position = Vector3f::create_spheric(sector_angle, stack_angle, 1);
+            auto point_position = Util::Vector3f::create_spheric(sector_angle, stack_angle, 1);
             vertices.push_back(Vertex {
                 .position = point_position,
                 .color = Util::Colors::white,

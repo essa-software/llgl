@@ -1,6 +1,6 @@
 #include "Object3D.hpp"
 
-#include <LLGL/Core/VectorUtils.hpp>
+#include <EssaUtil/Vector.hpp>
 #include <LLGL/OpenGL/Shader.hpp>
 #include <LLGL/OpenGL/Vertex.hpp>
 #include <LLGL/Renderer/Renderer.hpp>

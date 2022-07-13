@@ -4,9 +4,8 @@
 
 #include <EssaUtil/Color.hpp>
 #include <EssaUtil/EnumBits.hpp>
+#include <EssaUtil/Vector.hpp>
 #include <GL/gl.h>
-#include <LLGL/Core/Vector2.hpp>
-#include <LLGL/Core/Vector3.hpp>
 
 namespace llgl::opengl {
 
@@ -28,7 +27,7 @@ public:
 };
 
 void set_vertex_color(Util::Colorf);
-void set_texture_coordinate(Vector2f);
-void add_vertex(Vector3f);
+void set_texture_coordinate(Util::Vector2f);
+void add_vertex(Util::Vector3f);
 
 }

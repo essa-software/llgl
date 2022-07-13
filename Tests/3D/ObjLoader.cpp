@@ -38,7 +38,7 @@ int main()
     bool w_pressed = false;
     bool s_pressed = false;
 
-    llgl::Vector3f camera_position;
+    Util::Vector3f camera_position;
     double yaw = 0;
     double pitch = 0;
 
@@ -79,19 +79,19 @@ int main()
         llgl::opengl::clear(llgl::opengl::ClearMask::Color | llgl::opengl::ClearMask::Depth);
 
         llgl::View view;
-        view.set_viewport(llgl::Recti { 0, 0, window.size().x, window.size().y });
+        view.set_viewport(window.rect());
         view.set_perspective({ 1.22, window.aspect(), 0.1, 20 });
         window.renderer().apply_view(view);
         model_transform = model_transform.rotate_x(0.05);
 
         if (a_pressed)
-            camera_position.x += 0.1;
+            camera_position.x() += 0.1;
         if (d_pressed)
-            camera_position.x -= 0.1;
+            camera_position.x() -= 0.1;
         if (w_pressed)
-            camera_position.z += 0.1;
+            camera_position.z() += 0.1;
         if (s_pressed)
-            camera_position.z -= 0.1;
+            camera_position.z() -= 0.1;
         llgl::Transform view_transform;
         view_transform = view_transform.rotate_y(yaw).rotate_x(pitch).translate(camera_position);
 

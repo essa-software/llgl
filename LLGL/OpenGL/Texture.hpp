@@ -1,7 +1,7 @@
 #pragma once
 
 #include <EssaUtil/Color.hpp>
-#include <LLGL/Core/Vector2.hpp>
+#include <EssaUtil/Rect.hpp>
 #include <string>
 #include <utility>
 
@@ -28,15 +28,15 @@ public:
         RGB
     };
 
-    static Texture create_from_color_array(Vector2u size, Util::Colorf const* array, Format);
-    static Texture create_empty(Vector2u size, Format = Format::RGBA);
+    static Texture create_from_color_array(Util::Vector2u size, Util::Colorf const* array, Format);
+    static Texture create_empty(Util::Vector2u size, Format = Format::RGBA);
     static Texture create_from_id(int);
 
-    void update(Vector2u dst_pos, Vector2u src_size, Util::Colorf const* array, Format);
-    void recreate(Vector2u, Format);
+    void update(Util::Vector2u dst_pos, Util::Vector2u src_size, Util::Colorf const* array, Format);
+    void recreate(Util::Vector2u, Format);
 
     unsigned id() const { return m_id; }
-    Vector2u size() const { return m_size; }
+    Util::Vector2u size() const { return m_size; }
 
     void set_label(std::string const&);
 
@@ -44,7 +44,7 @@ public:
 
 private:
     unsigned m_id { 0 };
-    Vector2u m_size;
+    Util::Vector2u m_size;
     bool m_initialized = false;
 };
 

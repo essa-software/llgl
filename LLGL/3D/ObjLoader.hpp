@@ -22,9 +22,9 @@ private:
     std::optional<Vertex> read_vertex(std::istream& in);
 
     std::istream& m_in;
-    std::vector<Vector3f> m_vertexes;
-    std::vector<Vector2f> m_tex_coords;
-    std::vector<Vector3f> m_normals;
+    std::vector<Util::Vector3f> m_vertexes;
+    std::vector<Util::Vector2f> m_tex_coords;
+    std::vector<Util::Vector3f> m_normals;
 };
 
 }

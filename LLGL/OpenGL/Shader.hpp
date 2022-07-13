@@ -4,8 +4,7 @@
 
 #include <EssaUtil/Color.hpp>
 #include <EssaUtil/Matrix.hpp>
-#include <LLGL/Core/Vector2.hpp>
-#include <LLGL/Core/Vector3.hpp>
+#include <EssaUtil/Vector.hpp>
 #include <span>
 #include <string>
 
@@ -110,8 +109,8 @@ public:
     };
     void set_uniform(std::string const&, CurrentTextureTag);
     void set_uniform(std::string const&, bool);
-    void set_uniform(std::string const&, Vector2f);
-    void set_uniform(std::string const&, Vector3f);
+    void set_uniform(std::string const&, Util::Vector2f);
+    void set_uniform(std::string const&, Util::Vector3f);
     void set_uniform(std::string const&, Util::Colorf);
 
 private:

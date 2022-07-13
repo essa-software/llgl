@@ -1,17 +1,14 @@
 #pragma once
 
-#include <LLGL/Core/Vector2.hpp>
+#include <EssaUtil/Vector.hpp>
 #include <LLGL/Window/Keyboard.hpp>
 #include <LLGL/Window/Mouse.hpp>
 
-namespace llgl
-{
+namespace llgl {
 
-class Event
-{
+class Event {
 public:
-    enum class Type
-    {
+    enum class Type {
         Unknown,
         Resize,
         KeyPress,
@@ -21,30 +18,33 @@ public:
         MouseButtonRelease,
     } type {};
 
-    struct ResizeEvent
-    {
-        UninitializedVector2<int> size;
+    struct UninitializedVector2 {
+        int x;
+        int y;
+        operator Util::Vector2i() const { return { x, y }; }
     };
-    struct KeyPressEvent
-    {
+
+    struct ResizeEvent {
+        UninitializedVector2 size;
+    };
+    struct KeyPressEvent {
         KeyCode keycode;
         bool shift;
         bool ctrl;
         bool alt;
         bool meta;
     };
-    struct MouseMoveEvent
-    {
-        UninitializedVector2<int> position;
-        UninitializedVector2<int> relative;
+    struct MouseMoveEvent {
+        UninitializedVector2 position;
+        UninitializedVector2 relative;
     };
-    struct MouseButtonEvent
-    {
-        UninitializedVector2<int> position;
+    struct MouseButtonEvent {
+        UninitializedVector2 position;
         MouseButton button;
     };
-    union
-    {
+
+    // TODO: Port this thing to something better than union.
+    union {
         ResizeEvent resize;
         KeyPressEvent key;
         MouseMoveEvent mouse_move;

@@ -8,7 +8,7 @@
 namespace llgl::opengl
 {
 
-void set_viewport(Recti rect)
+void set_viewport(Util::Recti rect)
 {
     ErrorHandler handler;
     glViewport(rect.left, rect.top, rect.width, rect.height);

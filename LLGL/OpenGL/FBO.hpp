@@ -2,8 +2,8 @@
 
 #include <GL/glew.h>
 
+#include <EssaUtil/Vector.hpp>
 #include <GL/gl.h>
-#include <LLGL/Core/Vector2.hpp>
 #include <LLGL/OpenGL/Texture.hpp>
 #include <string>
 
@@ -11,7 +11,7 @@ namespace llgl::opengl {
 
 class FBO {
 public:
-    explicit FBO(Vector2i size);
+    explicit FBO(Util::Vector2i size);
     ~FBO();
 
     enum class Target {
@@ -21,7 +21,7 @@ public:
     };
 
     void bind(Target = Target::Framebuffer) const;
-    void resize(Vector2i);
+    void resize(Util::Vector2i);
     Texture const& color_texture() const { return m_color_texture; }
     unsigned id() const { return m_fbo; }
 

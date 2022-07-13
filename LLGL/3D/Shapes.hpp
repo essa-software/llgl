@@ -7,8 +7,8 @@
 namespace llgl::Shapes {
 
 struct CubeProperties {
-    Vector3f position {};
-    Vector3f dimensions { 1, 1, 1 };
+    Util::Vector3f position {};
+    Util::Vector3f dimensions { 1, 1, 1 };
     Transform transform {}; // Is applied after position+dimensions
     Util::Color color = Util::Colors::white;
 };

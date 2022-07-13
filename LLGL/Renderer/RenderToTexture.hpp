@@ -8,7 +8,7 @@ namespace llgl {
 class RenderToTexture : public Renderer {
 public:
     explicit RenderToTexture(Window const&);
-    explicit RenderToTexture(Vector2i size);
+    explicit RenderToTexture(Util::Vector2i size);
 
     virtual void clear(std::optional<Util::Color> color = {}) override;
     virtual void apply_view(View const&) override;

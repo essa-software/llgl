@@ -49,7 +49,7 @@ int main()
         llgl::opengl::clear(llgl::opengl::ClearMask::Color | llgl::opengl::ClearMask::Depth);
 
         llgl::View view;
-        view.set_viewport(llgl::Recti { 0, 0, window.size().x, window.size().y });
+        view.set_viewport(window.rect());
         view.set_perspective({ 1.22, window.aspect(), 0.1, 20 });
         window.renderer().apply_view(view);
         window.renderer().render_object(batch_renderer, {});

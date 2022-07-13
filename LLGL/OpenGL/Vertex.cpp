@@ -23,14 +23,14 @@ void set_vertex_color(Util::Colorf color)
     glColor4f(color.r / 255.f, color.g / 255.f, color.b / 255.f, color.a / 255.f);
 }
 
-void set_texture_coordinate(Vector2f tex_coord)
+void set_texture_coordinate(Util::Vector2f tex_coord)
 {
-    glTexCoord2f(tex_coord.x, tex_coord.y);
+    glTexCoord2f(tex_coord.x(), tex_coord.y());
 }
 
-void add_vertex(Vector3f position)
+void add_vertex(Util::Vector3f position)
 {
-    glVertex3f(position.x, position.y, position.z);
+    glVertex3f(position.x(), position.y(), position.z());
 }
 
 }
