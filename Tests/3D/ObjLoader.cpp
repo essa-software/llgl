@@ -4,7 +4,7 @@
 #include "LLGL/Window/Keyboard.hpp"
 #include <LLGL/3D/ObjLoader.hpp>
 #include <LLGL/3D/Object3D.hpp>
-#include <LLGL/Core/Angle.hpp>
+#include <EssaUtil/Angle.hpp>
 #include <LLGL/OpenGL/Shader.hpp>
 #include <LLGL/OpenGL/Shaders/Basic330Core.hpp>
 #include <LLGL/OpenGL/Utils.hpp>
@@ -28,7 +28,7 @@ int main()
     }
 
     llgl::Transform model_transform;
-    model_transform = model_transform.translate({ -1.5, -1.5, -5 }).rotate_y(llgl::deg_to_rad(45));
+    model_transform = model_transform.translate({ -1.5, -1.5, -5 }).rotate_y(Util::deg_to_rad(45));
 
     llgl::opengl::shaders::ShadeFlat shader;
 
@@ -73,8 +73,8 @@ int main()
                         s_pressed = false;
                     break;
                 case llgl::Event::Type::MouseMove:
-                    yaw += llgl::deg_to_rad<float>(event.mouse_move.relative.x);
-                    pitch += llgl::deg_to_rad<float>(event.mouse_move.relative.y);
+                    yaw += Util::deg_to_rad<float>(event.mouse_move.relative.x);
+                    pitch += Util::deg_to_rad<float>(event.mouse_move.relative.y);
                     break;
                 default:
                     break;

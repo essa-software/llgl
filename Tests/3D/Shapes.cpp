@@ -1,6 +1,6 @@
 #include <LLGL/3D/Cube.hpp>
 #include <LLGL/3D/Sphere.hpp>
-#include <LLGL/Core/Angle.hpp>
+#include <EssaUtil/Angle.hpp>
 #include <LLGL/OpenGL/Shaders/ShadeFlat.hpp>
 #include <LLGL/OpenGL/Utils.hpp>
 #include <LLGL/Renderer/Transform.hpp>
@@ -61,7 +61,7 @@ int main()
             shader.set_light_color(llgl::Colors::blue * 0.8);
             window.renderer().render_object(cube, {
                                                       .shader = &shader,
-                                                      .model_matrix = llgl::Transform {}.scale(0.7).translate({ 0, 3.5, 0 }).rotate_x(shape_angle).rotate_y(llgl::deg_to_rad(45.0)).matrix(),
+                                                      .model_matrix = llgl::Transform {}.scale(0.7).translate({ 0, 3.5, 0 }).rotate_x(shape_angle).rotate_y(Util::deg_to_rad(45.0)).matrix(),
                                                       .view_matrix = view_transform.matrix(),
                                                   });
         }
