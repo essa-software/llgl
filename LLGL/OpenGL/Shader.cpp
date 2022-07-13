@@ -7,8 +7,7 @@
 #include <iostream>
 #include <memory>
 
-namespace llgl::opengl
-{
+namespace llgl::opengl {
 
 ShaderObject::ShaderObject(std::string const& source, Type type)
     : m_type(type)
@@ -33,8 +32,7 @@ ShaderObject::ShaderObject(std::string const& source, Type type)
     GLint success = 0;
     glGetShaderiv(m_id, GL_COMPILE_STATUS, &success);
     handle_error();
-    if (!success)
-    {
+    if (!success) {
         GLint max_length = 0;
         glGetShaderiv(m_id, GL_INFO_LOG_LENGTH, &max_length);
         handle_error();
@@ -62,8 +60,7 @@ Program::Program(std::span<ShaderObject const> shader_objects)
     std::cout << "Program: Linking " << shader_objects.size() << " shader objects" << std::endl;
     m_id = glCreateProgram();
     handle_error();
-    for (auto& shader_object : shader_objects)
-    {
+    for (auto& shader_object : shader_objects) {
         assert(shader_object.valid());
         glAttachShader(m_id, shader_object.id());
         handle_error();
@@ -74,8 +71,7 @@ Program::Program(std::span<ShaderObject const> shader_objects)
     handle_error();
     GLint success = 0;
     glGetProgramiv(m_id, GL_LINK_STATUS, &success);
-    if (!success)
-    {
+    if (!success) {
         GLint max_length = 0;
         glGetProgramiv(m_id, GL_INFO_LOG_LENGTH, &max_length);
         handle_error();
@@ -89,8 +85,7 @@ Program::Program(std::span<ShaderObject const> shader_objects)
         return;
     }
 
-    for (auto& shader_object : shader_objects)
-    {
+    for (auto& shader_object : shader_objects) {
         glDetachShader(m_id, shader_object.id());
         handle_error();
     }
@@ -127,10 +122,10 @@ int ShaderScope::uniform_location(std::string const& name)
     return glGetUniformLocation(m_shader.program().id(), name.c_str());
 }
 
-void ShaderScope::set_uniform(std::string const& name, Matrix4x4f matrix)
+void ShaderScope::set_uniform(std::string const& name, Util::Matrix4x4f matrix)
 {
     ErrorHandler handler;
-    glUniformMatrix4fv(uniform_location(name), 1, true, (float*)matrix.data);
+    glUniformMatrix4fv(uniform_location(name), 1, true, matrix.raw_data());
 }
 
 void ShaderScope::set_uniform(std::string const& name, CurrentTextureTag)

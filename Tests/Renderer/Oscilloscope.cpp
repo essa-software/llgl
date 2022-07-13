@@ -1,7 +1,5 @@
-#include "LLGL/Renderer/RenderToTexture.hpp"
-#include "LLGL/Window/Mouse.hpp"
+#include <EssaUtil/DelayedInit.hpp>
 #include <LLGL/Core/Color.hpp>
-#include <LLGL/Core/DelayedInit.hpp>
 #include <LLGL/Core/VectorUtils.hpp>
 #include <LLGL/OpenGL/Error.hpp>
 #include <LLGL/OpenGL/FBO.hpp>
@@ -9,14 +7,16 @@
 #include <LLGL/OpenGL/Shaders/Basic330Core.hpp>
 #include <LLGL/OpenGL/Utils.hpp>
 #include <LLGL/OpenGL/Vertex.hpp>
+#include <LLGL/Renderer/RenderToTexture.hpp>
 #include <LLGL/Renderer/Transform.hpp>
+#include <LLGL/Window/Mouse.hpp>
 #include <LLGL/Window/Window.hpp>
 #include <SDL2/SDL_video.h>
 #include <iostream>
 
 static llgl::opengl::Program& shader()
 {
-    static llgl::DelayedInit<llgl::opengl::Program> program;
+    static Util::DelayedInit<llgl::opengl::Program> program;
     if (!program.is_initialized()) {
         static char const* VERTEX_SHADER = R"~~~(
 #version 410 core

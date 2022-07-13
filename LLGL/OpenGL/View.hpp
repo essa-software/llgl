@@ -1,17 +1,14 @@
 #pragma once
 
-#include <LLGL/Core/Matrix.hpp>
+#include <EssaUtil/Matrix.hpp>
 #include <LLGL/OpenGL/Transform.hpp>
 #include <cassert>
 
-namespace llgl
-{
+namespace llgl {
 
-class View
-{
+class View {
 public:
-    enum class Type
-    {
+    enum class Type {
         Ortho,
         Perspective
     };
@@ -25,14 +22,13 @@ public:
     opengl::OrthoArgs ortho_args() const { return m_data.ortho; }
     opengl::PerspectiveArgs perspective_args() const { return m_data.perspective; }
 
-    Matrix4x4f matrix() const;
+    Util::Matrix4x4f matrix() const;
 
 private:
     Type m_type;
     Recti m_viewport;
 
-    union
-    {
+    union {
         opengl::OrthoArgs ortho;
         opengl::PerspectiveArgs perspective;
     } m_data;

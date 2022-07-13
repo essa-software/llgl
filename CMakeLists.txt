@@ -4,7 +4,7 @@ set(CMAKE_CXX_STANDARD 20)
 
 find_package(SDL2 REQUIRED)
 find_package(GLEW REQUIRED)
-message("found SDL2")
+find_package(EssaUtil REQUIRED)
 
 add_subdirectory(LLGL)
 

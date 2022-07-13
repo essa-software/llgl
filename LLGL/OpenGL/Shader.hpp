@@ -1,8 +1,9 @@
 #pragma once
 
 #include <GL/glew.h>
+
+#include <EssaUtil/Matrix.hpp>
 #include <LLGL/Core/Color.hpp>
-#include <LLGL/Core/Matrix.hpp>
 #include <LLGL/Core/Vector2.hpp>
 #include <LLGL/Core/Vector3.hpp>
 #include <span>
@@ -103,7 +104,7 @@ public:
     }
 
     int uniform_location(std::string const&);
-    void set_uniform(std::string const&, Matrix4x4f);
+    void set_uniform(std::string const&, Util::Matrix4x4f);
     enum CurrentTextureTag {
         CurrentTexture
     };

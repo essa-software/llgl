@@ -2,7 +2,6 @@
 
 #include "WindowImpl.hpp"
 
-#include <LLGL/Core/Size.hpp>
 #include <SDL2/SDL_surface.h>
 #include <SDL2/SDL_video.h>
 #include <string>

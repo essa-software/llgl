@@ -1,6 +1,6 @@
 #include "BatchRenderer.hpp"
 
-#include <LLGL/Core/DelayedInit.hpp>
+#include <EssaUtil/DelayedInit.hpp>
 #include <LLGL/OpenGL/VAO.hpp>
 #include <LLGL/Renderer/StateScope.hpp>
 

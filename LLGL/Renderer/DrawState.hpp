@@ -1,6 +1,6 @@
 #pragma once
 
-#include <LLGL/Core/Matrix.hpp>
+#include <EssaUtil/Matrix.hpp>
 
 namespace llgl
 {
@@ -17,8 +17,8 @@ struct DrawState
 {
     opengl::Shader* shader = nullptr;
     opengl::Texture const* texture = nullptr;
-    Matrix4x4f model_matrix = Matrix4x4f::identity();
-    Matrix4x4f view_matrix = Matrix4x4f::identity();
+    Util::Matrix4x4f model_matrix = Util::Matrix4x4f::identity();
+    Util::Matrix4x4f view_matrix = Util::Matrix4x4f::identity();
 };
 
 }

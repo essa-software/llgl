@@ -1,13 +1,13 @@
 #include "ShadeFlat.hpp"
 
-#include <LLGL/Core/DelayedInit.hpp>
+#include <EssaUtil/DelayedInit.hpp>
 
 namespace llgl::opengl::shaders
 {
 
 static Program& shade_flat()
 {
-    static DelayedInit<Program> shader;
+    static Util::DelayedInit<Program> shader;
     if (!shader.is_initialized())
     {
         static char const* VERTEX_SHADER = R"~~~(

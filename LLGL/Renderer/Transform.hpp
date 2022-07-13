@@ -1,16 +1,16 @@
 #pragma once
 
-#include <LLGL/Core/Matrix.hpp>
+#include <EssaUtil/Matrix.hpp>
 #include <LLGL/Core/Vector3.hpp>
 
-namespace llgl
-{
+namespace llgl {
 
-class Transform
-{
+class Transform {
 public:
-    explicit Transform(Matrix4x4f matrix = Matrix4x4f::identity())
-    : m_matrix(matrix) {}
+    explicit Transform(Util::Matrix4x4f matrix = Util::Matrix4x4f::identity())
+        : m_matrix(matrix)
+    {
+    }
 
     [[nodiscard]] Transform translate(Vector3f vector) const;
 
@@ -20,12 +20,12 @@ public:
 
     [[nodiscard]] Transform scale(float) const;
 
-    Matrix4x4f matrix() const { return m_matrix; }
+    Util::Matrix4x4f matrix() const { return m_matrix; }
 
     Vector3f transform_point(Vector3f const&) const;
 
 private:
-    Matrix4x4f m_matrix = Matrix4x4f::identity();
+    Util::Matrix4x4f m_matrix = Util::Matrix4x4f::identity();
 };
 
 }

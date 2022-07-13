@@ -2,7 +2,7 @@
 
 #include "Extensions.hpp"
 
-#include <LLGL/Core/DelayedInit.hpp>
+#include <EssaUtil/DelayedInit.hpp>
 #include <LLGL/OpenGL/Shader.hpp>
 #include <LLGL/Renderer/Renderer.hpp>
 

@@ -1,17 +1,16 @@
 #pragma once
 
+#include <GL/glew.h>
+
+#include <EssaUtil/EnumBits.hpp>
+#include <GL/gl.h>
 #include <LLGL/Core/Color.hpp>
-#include <LLGL/Core/EnumBits.hpp>
 #include <LLGL/Core/Vector2.hpp>
 #include <LLGL/Core/Vector3.hpp>
-#include <GL/glew.h>
-#include <GL/gl.h>
 
-namespace llgl::opengl
-{
+namespace llgl::opengl {
 
-enum class PrimitiveType
-{
+enum class PrimitiveType {
     Invalid = -1,
     Points = GL_POINTS,
     Lines = GL_LINES,
@@ -22,8 +21,7 @@ enum class PrimitiveType
 void begin(PrimitiveType);
 void end();
 
-class DrawScope
-{
+class DrawScope {
 public:
     DrawScope(PrimitiveType type) { begin(type); }
     ~DrawScope() { end(); }

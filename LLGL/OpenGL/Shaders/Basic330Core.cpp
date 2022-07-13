@@ -1,16 +1,14 @@
 #include "Basic330Core.hpp"
 #include "LLGL/OpenGL/Shader.hpp"
 
-#include <LLGL/Core/DelayedInit.hpp>
+#include <EssaUtil/DelayedInit.hpp>
 
-namespace llgl::opengl::shaders
-{
+namespace llgl::opengl::shaders {
 
 static Program& basic_330_core()
 {
-    static DelayedInit<Program> program;
-    if (!program.is_initialized())
-    {
+    static Util::DelayedInit<Program> program;
+    if (!program.is_initialized()) {
         static char const* VERTEX_SHADER = R"~~~(
 #version 410 core
 
