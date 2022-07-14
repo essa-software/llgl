@@ -23,7 +23,7 @@ VAO::VAO(std::span<Vertex const> vertexes, Usage usage)
     load_vertexes(vertexes, usage);
 }
 
-VAO::VAO(std::span<Vertex const> vertexes, std::span<unsigned> indices, Usage usage)
+VAO::VAO(std::span<Vertex const> vertexes, std::span<unsigned const> indices, Usage usage)
 {
     ensure_glew();
     load_vertexes(vertexes, indices, usage);
@@ -86,7 +86,7 @@ void VAO::load_vertexes(std::span<Vertex const> vertexes, Usage usage)
     m_vertex_count = vertexes.size();
 }
 
-void VAO::load_vertexes(std::span<Vertex const> vertexes, std::span<unsigned> indices, Usage usage)
+void VAO::load_vertexes(std::span<Vertex const> vertexes, std::span<unsigned const> indices, Usage usage)
 {
     load_vertexes(vertexes, usage);
 

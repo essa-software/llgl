@@ -19,7 +19,7 @@ public:
 
     VAO();
     explicit VAO(std::span<Vertex const> vertexes, Usage usage = Usage::StaticDraw);
-    explicit VAO(std::span<Vertex const> vertexes, std::span<unsigned> indices, Usage usage = Usage::StaticDraw);
+    explicit VAO(std::span<Vertex const> vertexes, std::span<unsigned const> indices, Usage usage = Usage::StaticDraw);
 
     VAO(VAO const&) = delete;
     VAO& operator=(VAO const&) = delete;
@@ -28,7 +28,7 @@ public:
     ~VAO();
 
     void load_vertexes(std::span<Vertex const> vertexes, Usage usage = Usage::StaticDraw);
-    void load_vertexes(std::span<Vertex const> vertexes, std::span<unsigned> indices, Usage usage = Usage::StaticDraw);
+    void load_vertexes(std::span<Vertex const> vertexes, std::span<unsigned const> indices, Usage usage = Usage::StaticDraw);
 
     unsigned vertex_array_id() const { return m_vertex_array_id; }
     unsigned vertex_buffer_id() const { return m_vertex_buffer_id; }
