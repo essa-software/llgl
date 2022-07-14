@@ -5,13 +5,12 @@
 #include <LLGL/Renderer/CoreRenderer.hpp>
 #include <iostream>
 
-namespace llgl
-{
+namespace llgl {
 
 Window::Window(Util::Vector2i size, std::u8string const& title, ContextSettings const& settings)
     : m_impl { std::make_unique<SDLWindowImpl>() }
 {
-    m_renderer = std::make_unique<CoreRenderer>();
+    m_renderer = std::make_unique<CoreRenderer>(*this);
     create(size, title, settings);
 }
 

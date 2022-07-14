@@ -7,6 +7,7 @@
 #include <LLGL/OpenGL/VAO.hpp>
 #include <LLGL/OpenGL/Vertex.hpp>
 #include <LLGL/Renderer/StateScope.hpp>
+#include <LLGL/Window/Window.hpp>
 #include <iostream>
 
 namespace llgl {
@@ -14,7 +15,9 @@ namespace llgl {
 void CoreRenderer::apply_view(View const& view)
 {
     m_view = view;
-    opengl::set_viewport(view.viewport());
+    auto viewport_rect = view.viewport();
+    viewport_rect.top = m_window.size().y() - (viewport_rect.top + viewport_rect.height);
+    opengl::set_viewport(viewport_rect);
 }
 
 View CoreRenderer::view() const
