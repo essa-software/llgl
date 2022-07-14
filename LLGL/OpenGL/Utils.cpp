@@ -8,13 +8,11 @@ namespace llgl::opengl {
 
 void set_clear_color(Util::Color color)
 {
-    ErrorHandler handler;
     glClearColor(color.r / 255.f, color.g / 255.f, color.b / 255.f, color.a / 255.f);
 }
 
 void clear(ClearMask mask)
 {
-    ErrorHandler handler;
     glClear(static_cast<GLbitfield>(mask));
 }
 
@@ -27,7 +25,6 @@ void clear_enabled()
 
 void enable(Feature feature)
 {
-    ErrorHandler handler;
     if (feature == Feature::DepthTest)
         s_buffers_to_clear |= ClearMask::Depth;
     glEnable(static_cast<GLenum>(feature));
@@ -35,7 +32,6 @@ void enable(Feature feature)
 
 void disable(Feature feature)
 {
-    ErrorHandler handler;
     if (feature == Feature::DepthTest)
         s_buffers_to_clear &= ~ClearMask::Depth;
     glDisable(static_cast<GLenum>(feature));
@@ -50,14 +46,12 @@ void ensure_enabled(Feature feature)
 
 bool is_enabled(Feature feature)
 {
-    ErrorHandler handler;
     return glIsEnabled(static_cast<GLenum>(feature));
 }
 
 void set_scissor(Util::Recti rect)
 {
     ensure_enabled(Feature::ScissorTest);
-    ErrorHandler handler;
     glScissor(rect.left, rect.top, rect.width, rect.height);
 }
 
