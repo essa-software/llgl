@@ -122,7 +122,6 @@ void Texture::set_filtering(Filtering filtering)
 
 void Texture::bind(Texture const* texture)
 {
-    std::cout << "bind " << (texture ? texture->id() : 0) << std::endl;
     glBindTexture(GL_TEXTURE_2D, texture ? texture->id() : 0);
 }
 
