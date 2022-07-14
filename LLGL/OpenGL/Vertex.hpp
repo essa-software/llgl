@@ -15,6 +15,7 @@ enum class PrimitiveType {
     Lines = GL_LINES,
     Triangles = GL_TRIANGLES,
     TriangleStrip = GL_TRIANGLE_STRIP,
+    TriangleFan = GL_TRIANGLE_FAN,
 };
 
 void begin(PrimitiveType);
