@@ -2,6 +2,7 @@
 
 #include <EssaUtil/Color.hpp>
 #include <EssaUtil/Rect.hpp>
+#include <span>
 #include <string>
 #include <utility>
 
@@ -28,12 +29,24 @@ public:
         RGB
     };
 
-    static Texture create_from_color_array(Util::Vector2u size, Util::Colorf const* array, Format);
+    template<class T>
+    static Texture create_from_color_array(Util::Vector2u size, std::span<T const> array, Format);
+
     static Texture create_empty(Util::Vector2u size, Format = Format::RGBA);
     static Texture create_from_id(int);
 
-    void update(Util::Vector2u dst_pos, Util::Vector2u src_size, Util::Colorf const* array, Format);
+    template<class T>
+    void update(Util::Vector2u dst_pos, Util::Vector2u src_size, std::span<T const> array, Format format);
+
     void recreate(Util::Vector2u, Format);
+    
+    enum class Filtering {
+        Nearest,
+        Linear
+        // TODO: Mipmap filtering
+    };
+
+    void set_filtering(Filtering);
 
     unsigned id() const { return m_id; }
     Util::Vector2u size() const { return m_size; }
@@ -43,9 +56,10 @@ public:
     static void bind(Texture const* texture);
 
 private:
+    void ensure_initialized(Format);
+
     unsigned m_id { 0 };
     Util::Vector2u m_size;
-    bool m_initialized = false;
 };
 
 class TextureBinder {

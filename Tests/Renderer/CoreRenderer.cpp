@@ -25,7 +25,7 @@ int main()
             };
         }
     }
-    llgl::opengl::Texture texture = llgl::opengl::Texture::create_from_color_array({ 256, 256 }, color_array.data(), llgl::opengl::Texture::Format::RGBA);
+    llgl::opengl::Texture texture = llgl::opengl::Texture::create_from_color_array({ 256, 256 }, std::span<Util::Colorf const> { color_array.data(), color_array.size() }, llgl::opengl::Texture::Format::RGBA);
 
     llgl::opengl::enable(llgl::opengl::Feature::Blend);
     llgl::opengl::enable(llgl::opengl::Feature::DepthTest);
