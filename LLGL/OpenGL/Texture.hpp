@@ -30,7 +30,7 @@ public:
     };
 
     template<class T>
-    static Texture create_from_color_array(Util::Vector2u size, std::span<T const> array, Format);
+    static Texture create_from_color_array(Util::Vector2u size, std::span<T const> array, Format = Format::RGBA);
 
     static Texture create_empty(Util::Vector2u size, Format = Format::RGBA);
     static Texture create_from_id(int);
