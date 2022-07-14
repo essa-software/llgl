@@ -1,6 +1,7 @@
 #include "SDLWindow.hpp"
 
 #include "../Event.hpp"
+#include "LLGL/Window/Mouse.hpp"
 
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_events.h>
@@ -132,6 +133,12 @@ bool SDLWindowImpl::poll_event(Event& event)
             event.type = Event::Type::MouseButtonRelease;
             event.mouse_button.button = static_cast<MouseButton>(sdl_event.button.button);
             event.mouse_move.position = { sdl_event.button.x, sdl_event.button.y };
+            return true;
+        } else if (sdl_event.type == SDL_MOUSEWHEEL) {
+            event.type = Event::Type::MouseScroll;
+            auto mouse = mouse_position();
+            event.mouse_scroll.position = { mouse.x(), mouse.y() };
+            event.mouse_scroll.delta = sdl_event.wheel.preciseY;
             return true;
         }
         // TODO

@@ -16,6 +16,7 @@ public:
         MouseMove,
         MouseButtonPress,
         MouseButtonRelease,
+        MouseScroll
     } type {};
 
     struct UninitializedVector2 {
@@ -42,6 +43,10 @@ public:
         UninitializedVector2 position;
         MouseButton button;
     };
+    struct MouseScrollEvent {
+        UninitializedVector2 position;
+        float delta;
+    };
 
     // TODO: Port this thing to something better than union.
     union {
@@ -49,6 +54,7 @@ public:
         KeyPressEvent key;
         MouseMoveEvent mouse_move;
         MouseButtonEvent mouse_button;
+        MouseScrollEvent mouse_scroll;
     };
 };
 
