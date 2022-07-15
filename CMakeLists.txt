@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.19)
 project(LLGL)
 set(CMAKE_CXX_STANDARD 20)
 
-find_package(SDL2 COMPONENTS SDL2 SDL2_video SDL2_image REQUIRED)
+find_package(SDL2 COMPONENTS SDL2 SDL2_video SDL2_image SDL2_ttf REQUIRED)
 find_package(GLEW REQUIRED)
 find_package(EssaUtil REQUIRED)
 
