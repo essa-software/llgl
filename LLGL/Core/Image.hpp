@@ -20,8 +20,10 @@ public:
     std::span<Util::Color const> pixels() const { return { m_pixels, pixel_count() }; }
     std::span<Util::Color> pixels() { return { m_pixels, pixel_count() }; }
 
-    Util::Color get_pixel(Util::Vector2u pos) { return m_pixels[pixel_index(pos)]; }
+    Util::Color get_pixel(Util::Vector2u pos) const { return m_pixels[pixel_index(pos)]; }
     void set_pixel(Util::Vector2u pos, Util::Color color) { m_pixels[pixel_index(pos)] = color; }
+
+    void insert_image_in_bounds(Image const& other, Util::Vector2u where);
 
     auto size() const { return m_size; }
     size_t pixel_count() const { return m_size.x() * m_size.y(); }
