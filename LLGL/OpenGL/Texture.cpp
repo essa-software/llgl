@@ -76,7 +76,7 @@ void Texture::ensure_initialized(Format format)
         set_filtering(Filtering::Nearest);
 
         TextureBinder binder(*this);
-        std::cout << "glTexImage2D(" << m_size << ")\n";
+        // std::cout << "glTexImage2D(" << m_size << ")\n";
         glTexImage2D(GL_TEXTURE_2D, 0, gl_format(format), m_size.x(), m_size.y(), 0, gl_format(format), GL_FLOAT, nullptr);
     }
 }
@@ -105,7 +105,7 @@ static void update_part_of_bound_texture(Util::Vector2u position, Util::Vector2u
         __builtin_unreachable();
     }();
 
-    std::cout << "glTexSubImage2D(" << position << "," << size << ")\n";
+    // std::cout << "glTexSubImage2D(" << position << "," << size << ")\n";
     glTexSubImage2D(GL_TEXTURE_2D, 0, position.x(), position.y(), size.x(), size.y(), gl_format(format), type, pixels.data());
 }
 
