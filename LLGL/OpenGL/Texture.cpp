@@ -84,6 +84,13 @@ void Texture::ensure_initialized(Format format)
 void Texture::recreate(Util::Vector2u size, Format format)
 {
     m_size = size;
+
+    if (m_id) {
+        TextureBinder binder(*this);
+        // std::cout << "glTexImage2D(" << m_size << ")\n";
+        glTexImage2D(GL_TEXTURE_2D, 0, gl_format(format), m_size.x(), m_size.y(), 0, gl_format(format), GL_FLOAT, nullptr);
+    }
+
     ensure_initialized(format);
 }
 
