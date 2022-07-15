@@ -38,6 +38,8 @@ namespace llgl {
     K(Left, SDLK_LEFT)                 \
     K(Right, SDLK_RIGHT)               \
     K(Enter, SDLK_RETURN)              \
+    K(Backspace, SDLK_BACKSPACE)       \
+    K(Delete, SDLK_DELETE)             \
     K(Space, SDLK_SPACE)               \
     K(Tab, SDLK_TAB)
 
