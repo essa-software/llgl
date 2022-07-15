@@ -15,4 +15,4 @@ set(SOURCES
     Shaders/ShadeFlat.cpp
 )
 add_llgl_library(OpenGL opengl)
-target_link_libraries(OpenGL GL GLU GLEW)
+target_link_libraries(OpenGL Core GL GLU GLEW)

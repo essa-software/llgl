@@ -31,6 +31,11 @@ Texture::~Texture()
     }
 }
 
+Texture Texture::create_from_image(Image const& image)
+{
+    return create_from_color_array(image.size(), image.pixels());
+}
+
 template<class T>
 Texture Texture::create_from_color_array(Util::Vector2u size, std::span<T const> array, Format format)
 {

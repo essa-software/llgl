@@ -2,6 +2,7 @@
 
 #include <EssaUtil/Color.hpp>
 #include <EssaUtil/Rect.hpp>
+#include <LLGL/Core/Image.hpp>
 #include <span>
 #include <string>
 #include <utility>
@@ -29,6 +30,8 @@ public:
         RGB
     };
 
+    static Texture create_from_image(Image const&);
+
     template<class T>
     static Texture create_from_color_array(Util::Vector2u size, std::span<T const> array, Format = Format::RGBA);
 
@@ -39,7 +42,7 @@ public:
     void update(Util::Vector2u dst_pos, Util::Vector2u src_size, std::span<T const> array, Format format);
 
     void recreate(Util::Vector2u, Format);
-    
+
     enum class Filtering {
         Nearest,
         Linear
