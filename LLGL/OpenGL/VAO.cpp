@@ -69,7 +69,7 @@ void VAO::load_vertexes(std::span<Vertex const> vertexes, Usage usage)
         glGenBuffers(1, &m_vertex_buffer_id);
     }
     glBindBuffer(GL_ARRAY_BUFFER, m_vertex_buffer_id);
-    std::cerr << "VAO: Loading " << vertexes.size() << " vertexes" << std::endl;
+    //std::cerr << "VAO: Loading " << vertexes.size() << " vertexes" << std::endl;
 
     auto usage_gl = [&]() {
         switch (usage) {
