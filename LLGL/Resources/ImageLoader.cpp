@@ -39,6 +39,13 @@ std::optional<Image> ImageLoader::load_from_file(std::string const& path)
     if (!surface)
         return {};
 
+    auto image = load_from_sdl_surface(surface);
+    SDL_FreeSurface(surface);
+    return image;
+}
+
+Image ImageLoader::load_from_sdl_surface(SDL_Surface* surface)
+{
     Image image = Image::create_uninitialized({ surface->w, surface->h });
     for (size_t x = 0; x < image.size().x(); x++) {
         for (size_t y = 0; y < image.size().y(); y++) {
@@ -47,8 +54,6 @@ std::optional<Image> ImageLoader::load_from_file(std::string const& path)
             image.set_pixel({ x, y }, color);
         }
     }
-
-    SDL_FreeSurface(surface);
     return image;
 }
 
