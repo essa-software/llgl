@@ -16,7 +16,8 @@ public:
         MouseMove,
         MouseButtonPress,
         MouseButtonRelease,
-        MouseScroll
+        MouseScroll,
+        TextInput
     } type {};
 
     struct UninitializedVector2 {
@@ -47,6 +48,9 @@ public:
         UninitializedVector2 position;
         float delta;
     };
+    struct TextInputEvent {
+        uint32_t codepoint;
+    };
 
     // TODO: Port this thing to something better than union.
     union {
@@ -55,6 +59,7 @@ public:
         MouseMoveEvent mouse_move;
         MouseButtonEvent mouse_button;
         MouseScrollEvent mouse_scroll;
+        TextInputEvent text_input;
     };
 };
 

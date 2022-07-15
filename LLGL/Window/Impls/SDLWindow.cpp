@@ -3,6 +3,7 @@
 #include "../Event.hpp"
 #include "LLGL/Window/Mouse.hpp"
 
+#include <EssaUtil/UString.hpp>
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_events.h>
 #include <SDL2/SDL_keycode.h>
@@ -139,6 +140,13 @@ bool SDLWindowImpl::poll_event(Event& event)
             auto mouse = mouse_position();
             event.mouse_scroll.position = { mouse.x(), mouse.y() };
             event.mouse_scroll.delta = sdl_event.wheel.preciseY;
+            return true;
+        } else if (sdl_event.type == SDL_TEXTINPUT) {
+            event.type = Event::Type::TextInput;
+            Util::UString input_string { { sdl_event.text.text, strlen(sdl_event.text.text) } };
+            if (input_string.is_empty())
+                return false;
+            event.text_input.codepoint = input_string.at(0);
             return true;
         }
         // TODO
