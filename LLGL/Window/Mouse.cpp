@@ -13,4 +13,12 @@ Util::Vector2i mouse_position()
     return { x, y };
 }
 
+bool is_mouse_button_pressed(MouseButton button)
+{
+    int x;
+    int y;
+    int buttons = SDL_GetMouseState(&x, &y);
+    return buttons & SDL_BUTTON(static_cast<int>(button));
+}
+
 }

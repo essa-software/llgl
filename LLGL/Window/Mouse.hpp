@@ -30,5 +30,6 @@ constexpr std::string_view to_string(MouseButton key)
 }
 
 Util::Vector2i mouse_position();
+bool is_mouse_button_pressed(MouseButton);
 
 }
