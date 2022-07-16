@@ -41,7 +41,8 @@ namespace llgl {
     K(Backspace, SDLK_BACKSPACE)       \
     K(Delete, SDLK_DELETE)             \
     K(Space, SDLK_SPACE)               \
-    K(Tab, SDLK_TAB)
+    K(Tab, SDLK_TAB)                   \
+    K(Tilde, SDLK_BACKQUOTE)
 
 enum class KeyCode {
 #define __ENUMERATE_KEY(key, value) key = value,
