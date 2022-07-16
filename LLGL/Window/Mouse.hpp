@@ -7,7 +7,9 @@
 namespace llgl {
 
 #define ENUMERATE_MOUSE_BUTTONS(K) \
-    K(Left, SDL_BUTTON_LEFT)
+    K(Left, SDL_BUTTON_LEFT)       \
+    K(Middle, SDL_BUTTON_MIDDLE)   \
+    K(Right, SDL_BUTTON_RIGHT)
 
 enum class MouseButton {
 #define __ENUMERATE_BUTTON(key, value) key = value,
