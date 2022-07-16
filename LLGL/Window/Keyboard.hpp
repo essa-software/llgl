@@ -37,9 +37,10 @@ namespace llgl {
     K(Down, SDLK_DOWN)                 \
     K(Left, SDLK_LEFT)                 \
     K(Right, SDLK_RIGHT)               \
-    K(Enter, SDLK_RETURN)              \
     K(Backspace, SDLK_BACKSPACE)       \
     K(Delete, SDLK_DELETE)             \
+    K(Escape, SDLK_ESCAPE)             \
+    K(Enter, SDLK_RETURN)              \
     K(Space, SDLK_SPACE)               \
     K(Tab, SDLK_TAB)                   \
     K(Tilde, SDLK_BACKQUOTE)
