@@ -52,7 +52,7 @@ Transform Transform::scale(float scale) const
 Util::Vector3f Transform::transform_point(Util::Vector3f const& vector) const
 {
     // TODO: Improve this constructor so that you can say vec4f(vector, 1) or something like this
-    auto vector4 = Util::Vector4f { vector.x(), vector.y(), vector.z(), 1 };
+    auto vector4 = Util::Vector4f { vector, 1 };
     if (m_matrix == Util::Matrix4x4f::identity())
         return vector;
     auto result = m_matrix * vector4;
