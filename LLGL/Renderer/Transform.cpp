@@ -18,10 +18,11 @@ Transform Transform::translate(Util::Vector3f vector) const
 
 Transform Transform::rotate_x(float angle) const
 {
+    // https://ksuweb.kennesaw.edu/~plaval/math4490/rotgen.pdf
     Util::Matrix4x4f rotation_matrix {
         1, 0, 0, 0,
-        0, std::cos(angle), -std::sin(angle), 0,
-        0, std::sin(angle), std::cos(angle), 0,
+        0, std::cos(angle), std::sin(angle), 0,
+        0, -std::sin(angle), std::cos(angle), 0,
         0, 0, 0, 1
     };
     return Transform { m_matrix * rotation_matrix };
@@ -29,6 +30,7 @@ Transform Transform::rotate_x(float angle) const
 
 Transform Transform::rotate_y(float angle) const
 {
+    // https://ksuweb.kennesaw.edu/~plaval/math4490/rotgen.pdf
     Util::Matrix4x4f rotation_matrix {
         std::cos(angle), 0, std::sin(angle), 0,
         0, 1, 0, 0,
