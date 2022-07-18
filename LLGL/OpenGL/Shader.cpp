@@ -119,6 +119,16 @@ void ShaderScope::set_uniform(std::string const& name, bool value)
     glUniform1i(uniform_location(name), value);
 }
 
+void ShaderScope::set_uniform(std::string const& name, int value)
+{
+    glUniform1i(uniform_location(name), value);
+}
+
+void ShaderScope::set_uniform(std::string const& name, float value)
+{
+    glUniform1f(uniform_location(name), value);
+}
+
 void ShaderScope::set_uniform(std::string const& name, Util::Vector2f vec)
 {
     glUniform2f(uniform_location(name), vec.x(), vec.y());

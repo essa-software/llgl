@@ -109,6 +109,8 @@ public:
     };
     void set_uniform(std::string const&, CurrentTextureTag);
     void set_uniform(std::string const&, bool);
+    void set_uniform(std::string const&, int);
+    void set_uniform(std::string const&, float);
     void set_uniform(std::string const&, Util::Vector2f);
     void set_uniform(std::string const&, Util::Vector3f);
     void set_uniform(std::string const&, Util::Colorf);
