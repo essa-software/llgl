@@ -17,6 +17,7 @@ public:
     // Angle is in radians.
     [[nodiscard]] Transform rotate_x(float angle) const;
     [[nodiscard]] Transform rotate_y(float angle) const;
+    [[nodiscard]] Transform rotate_z(float angle) const;
 
     [[nodiscard]] Transform scale(float) const;
 
