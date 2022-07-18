@@ -5,8 +5,7 @@
 #include <GL/glu.h>
 #include <iostream>
 
-namespace llgl::opengl
-{
+namespace llgl::opengl {
 
 void set_viewport(Util::Recti rect)
 {
