@@ -9,7 +9,7 @@
 
 int main()
 {
-    llgl::Window window { { 500, 500 }, u8"simple renderer" };
+    llgl::Window window { { 500, 500 }, "simple renderer" };
 
     llgl::opengl::shaders::Basic330Core shader;
 

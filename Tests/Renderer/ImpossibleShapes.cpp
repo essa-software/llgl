@@ -12,7 +12,7 @@ int main()
     int const edges = 13;
     float const radius = 400;
     float const width = 50;
-    llgl::Window window { { 500, 500 }, u8"impossible shapes", { 3, 2 } };
+    llgl::Window window { { 500, 500 }, "impossible shapes", { 3, 2 } };
     llgl::BatchRenderer batch_renderer { window };
 
     {

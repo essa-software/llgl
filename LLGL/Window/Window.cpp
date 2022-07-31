@@ -7,18 +7,17 @@
 
 namespace llgl {
 
-Window::Window(Util::Vector2i size, std::u8string const& title, ContextSettings const& settings)
+Window::Window(Util::Vector2i size, Util::UString const& title, ContextSettings const& settings)
     : m_impl { std::make_unique<SDLWindowImpl>() }
 {
     m_renderer = std::make_unique<CoreRenderer>(*this);
     create(size, title, settings);
 }
 
-void Window::create(Util::Vector2i size, std::u8string const& title, ContextSettings const& settings)
+void Window::create(Util::Vector2i size, Util::UString const& title, ContextSettings const& settings)
 {
     m_size = size;
-    m_title = title;
-    m_impl->create(size, title, settings);
+    m_impl->create(size, std::move(title), settings);
 }
 
 void Window::close()
@@ -26,9 +25,8 @@ void Window::close()
     m_impl->close();
 }
 
-void Window::set_title(std::u8string const& title)
+void Window::set_title(Util::UString const& title)
 {
-    m_title = title;
     m_impl->set_title(title);
 }
 

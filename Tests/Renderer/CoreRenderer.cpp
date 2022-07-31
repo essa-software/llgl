@@ -11,7 +11,7 @@
 
 int main()
 {
-    llgl::Window window { { 500, 500 }, u8"core renderer", { 3, 2 } };
+    llgl::Window window { { 500, 500 }, "core renderer", { 3, 2 } };
 
     std::vector<Util::Colorf> color_array;
     color_array.resize(256 * 256);

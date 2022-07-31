@@ -107,7 +107,7 @@ Util::Vector2f next_oscilloscope_position()
 
 int main()
 {
-    llgl::Window window({ 512, 512 }, u8"Oscilloscope");
+    llgl::Window window({ 512, 512 }, "Oscilloscope");
     llgl::opengl::enable_debug_output();
 
     auto& renderer = window.renderer();

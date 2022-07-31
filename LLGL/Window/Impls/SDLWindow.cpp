@@ -18,7 +18,7 @@ SDLWindowImpl::~SDLWindowImpl()
     close();
 }
 
-void SDLWindowImpl::create(Util::Vector2i size, std::u8string const& title, ContextSettings const& settings)
+void SDLWindowImpl::create(Util::Vector2i size, Util::UString const& title, ContextSettings const& settings)
 {
     static bool initialized = false;
     if (!initialized && SDL_Init(SDL_INIT_VIDEO) < 0) {
@@ -35,7 +35,7 @@ void SDLWindowImpl::create(Util::Vector2i size, std::u8string const& title, Cont
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, settings.major_version);
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, settings.minor_version);
     SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 24);
-    m_window = SDL_CreateWindow((char*)title.c_str(), 0, 0, size.x(), size.y(), SDL_WINDOW_SHOWN | SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE);
+    m_window = SDL_CreateWindow((char*)title.encode().c_str(), 0, 0, size.x(), size.y(), SDL_WINDOW_SHOWN | SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE);
     int major, minor;
     SDL_GL_GetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, &major);
     SDL_GL_GetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, &minor);
@@ -51,11 +51,11 @@ void SDLWindowImpl::close()
     SDL_GL_DeleteContext(m_context);
 }
 
-void SDLWindowImpl::set_title(std::u8string const& title)
+void SDLWindowImpl::set_title(Util::UString const& title)
 {
     if (!m_window)
         return;
-    SDL_SetWindowTitle(m_window, (char*)title.c_str());
+    SDL_SetWindowTitle(m_window, (char*)title.encode().c_str());
 }
 
 void SDLWindowImpl::set_size(Util::Vector2i size)

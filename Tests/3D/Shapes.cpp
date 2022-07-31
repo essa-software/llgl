@@ -8,7 +8,7 @@
 
 int main()
 {
-    llgl::Window window { { 500, 500 }, u8"Primitive Shapes", { 3, 2 } };
+    llgl::Window window { { 500, 500 }, "Primitive Shapes", { 3, 2 } };
 
     llgl::opengl::enable(llgl::opengl::Feature::DepthTest);
     llgl::opengl::set_clear_color(Util::Color { 255, 128, 128 });

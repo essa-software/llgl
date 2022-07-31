@@ -15,7 +15,7 @@
 
 int main()
 {
-    llgl::Window window { { 500, 500 }, u8"OBJ loader", { 3, 2 } };
+    llgl::Window window { { 500, 500 }, "OBJ loader", { 3, 2 } };
 
     llgl::opengl::enable(llgl::opengl::Feature::DepthTest);
     llgl::opengl::set_clear_color(Util::Color { 255, 128, 128 });

@@ -6,7 +6,7 @@
 
 int main()
 {
-    llgl::Window window{{500, 500}, u8"test"};
+    llgl::Window window{{500, 500}, "test"};
     llgl::opengl::set_clear_color(Util::Color{255, 128, 128});
     for(;;)
     {
