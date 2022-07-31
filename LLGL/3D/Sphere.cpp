@@ -32,7 +32,7 @@ void Sphere::generate()
             auto point_position = Util::Vector3f::create_spheric(sector_angle, stack_angle, 1);
             vertices.push_back(Vertex {
                 .position = point_position,
-                .color = Util::Colors::white,
+                .color = Util::Colors::White,
                 .normal = point_position });
             // std::cout << "   --- " << std::sin(sector_angle) << ";" << std::cos(sector_angle) << " ;; " << std::sin(stack_angle) << ";" << std::cos(stack_angle) << std::endl;
             // std::cout << point_position.x << "," << point_position.y << "," << point_position.z << " @ " << stack_angle << "," << sector_angle << std::endl;
@@ -46,7 +46,7 @@ void Sphere::generate()
             indices.push_back(vertex_index(stack, sector));
         }
     }
-    vertices.push_back(Vertex { .position { 0, 0, -1 }, .color = Util::Colors::white, .normal = { 0, 0, -1 } });
+    vertices.push_back(Vertex { .position { 0, 0, -1 }, .color = Util::Colors::White, .normal = { 0, 0, -1 } });
     assert(vertices.size() == Sectors * Stacks + 1);
 
     m_vao.load_vertexes(vertices, indices);

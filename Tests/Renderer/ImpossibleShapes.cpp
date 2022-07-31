@@ -45,12 +45,12 @@ int main()
             auto end_point2 = end_point1 + (calculate_point_1(-edges / 6) - calculate_point_2(-edges / 6));
 
             batch_renderer.add_vertexes(std::initializer_list<llgl::Vertex> {
-                { start_point1, Util::Colors::green },
-                { start_point2, Util::Colors::green },
-                { mid_point2 - (start_point2 - start_point1), Util::Colors::blue },
-                { mid_point2, Util::Colors::green },
-                { end_point2, Util::Colors::red },
-                { end_point1, Util::Colors::green },
+                { start_point1, Util::Colors::Green },
+                { start_point2, Util::Colors::Green },
+                { mid_point2 - (start_point2 - start_point1), Util::Colors::Blue },
+                { mid_point2, Util::Colors::Green },
+                { end_point2, Util::Colors::Red },
+                { end_point1, Util::Colors::Green },
             });
         }
     }

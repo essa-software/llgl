@@ -104,20 +104,20 @@ std::optional<Vertex> ObjLoader::read_vertex(std::istream& in)
     }
 
     if (in.get() != '/')
-        return Vertex { m_vertexes[vertex - 1], Util::Colors::white };
+        return Vertex { m_vertexes[vertex - 1], Util::Colors::White };
     if (!(in >> tex_coord) || tex_coord > m_tex_coords.size()) {
         error("invalid tex coord index");
         return {};
     }
 
     if (in.get() != '/')
-        return Vertex { m_vertexes[vertex - 1], Util::Colors::white, m_tex_coords[tex_coord - 1] };
+        return Vertex { m_vertexes[vertex - 1], Util::Colors::White, m_tex_coords[tex_coord - 1] };
     if (!(in >> normal) || normal > m_normals.size()) {
         error("invalid normal index");
         return {};
     }
     // TODO: Store normals in Vertex
-    return Vertex { m_vertexes[vertex - 1], Util::Colors::white, m_tex_coords[tex_coord - 1], m_normals[normal - 1] };
+    return Vertex { m_vertexes[vertex - 1], Util::Colors::White, m_tex_coords[tex_coord - 1], m_normals[normal - 1] };
 }
 
 }

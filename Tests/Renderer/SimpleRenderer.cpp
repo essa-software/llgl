@@ -13,9 +13,9 @@ int main()
 
     llgl::opengl::shaders::Basic330Core shader;
 
-    llgl::opengl::VAO vao { { { llgl::Vertex { { 150, 100, 0 }, Util::Colors::green },
-        llgl::Vertex { { 200, 200, 0 }, Util::Colors::red },
-        llgl::Vertex { { 100, 200, 0 }, Util::Colors::blue } } } };
+    llgl::opengl::VAO vao { { { llgl::Vertex { { 150, 100, 0 }, Util::Colors::Green },
+        llgl::Vertex { { 200, 200, 0 }, Util::Colors::Red },
+        llgl::Vertex { { 100, 200, 0 }, Util::Colors::Blue } } } };
 
     for (;;) {
         llgl::Event event;

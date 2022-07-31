@@ -7,7 +7,7 @@
 
 namespace llgl::opengl {
 
-void set_clear_color(Util::Color color = Util::Colors::black);
+void set_clear_color(Util::Color color = Util::Colors::Black);
 
 enum class ClearMask {
     Color = GL_COLOR_BUFFER_BIT,

@@ -40,7 +40,7 @@ int main()
         shader.set_light_position({ static_cast<float>(std::sin(light_angle)), 5, static_cast<float>(std::cos(light_angle)) });
 
         {
-            shader.set_light_color(Util::Colors::red * 0.8);
+            shader.set_light_color(Util::Colors::Red * 0.8);
             window.renderer().render_object(sphere, {
                                                         .shader = &shader,
                                                         .model_matrix = llgl::Transform {}.translate({ -1.5, 0, 0 }).rotate_x(shape_angle).matrix(),
@@ -49,7 +49,7 @@ int main()
         }
 
         {
-            shader.set_light_color(Util::Colors::green * 0.8);
+            shader.set_light_color(Util::Colors::Green * 0.8);
             window.renderer().render_object(sphere, {
                                                         .shader = &shader,
                                                         .model_matrix = llgl::Transform {}.translate({ 1.5, 0, 0 }).rotate_x(shape_angle).matrix(),
@@ -58,7 +58,7 @@ int main()
         }
 
         {
-            shader.set_light_color(Util::Colors::blue * 0.8);
+            shader.set_light_color(Util::Colors::Blue * 0.8);
             window.renderer().render_object(cube, {
                                                       .shader = &shader,
                                                       .model_matrix = llgl::Transform {}.scale(0.7).translate({ 0, 3.5, 0 }).rotate_x(shape_angle).rotate_y(Util::deg_to_rad(45.0)).matrix(),

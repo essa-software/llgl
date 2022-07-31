@@ -99,7 +99,7 @@ int main()
         shader.set_light_position({ static_cast<float>(std::sin(light_angle)), 5, static_cast<float>(std::cos(light_angle)) });
 
         {
-            shader.set_light_color(Util::Colors::red * 0.8);
+            shader.set_light_color(Util::Colors::Red * 0.8);
             window.renderer().render_object(object.value(), {
                                                                 .shader = &shader,
                                                                 .model_matrix = model_transform.matrix(),
@@ -108,7 +108,7 @@ int main()
         }
 
         {
-            shader.set_light_color(Util::Colors::green * 0.8);
+            shader.set_light_color(Util::Colors::Green * 0.8);
             window.renderer().render_object(object.value(), {
                                                                 .shader = &shader,
                                                                 .model_matrix = model_transform.translate({ 3, 0, 0 }).matrix(),

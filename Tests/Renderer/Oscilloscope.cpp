@@ -121,10 +121,10 @@ int main()
 
     llgl::opengl::VAO fullscreen_vao;
     fullscreen_vao.load_vertexes(
-        { { llgl::Vertex { .position = { -1, -1, 0 }, .color = Util::Colors::white, .tex_coord = { 0, 1 } },
-            llgl::Vertex { .position = { 1, -1, 0 }, .color = Util::Colors::white, .tex_coord = { 1, 1 } },
-            llgl::Vertex { .position = { -1, 1, 0 }, .color = Util::Colors::white, .tex_coord = { 0, 0 } },
-            llgl::Vertex { .position = { 1, 1, 0 }, .color = Util::Colors::white, .tex_coord = { 1, 0 } } } });
+        { { llgl::Vertex { .position = { -1, -1, 0 }, .color = Util::Colors::White, .tex_coord = { 0, 1 } },
+            llgl::Vertex { .position = { 1, -1, 0 }, .color = Util::Colors::White, .tex_coord = { 1, 1 } },
+            llgl::Vertex { .position = { -1, 1, 0 }, .color = Util::Colors::White, .tex_coord = { 0, 0 } },
+            llgl::Vertex { .position = { 1, 1, 0 }, .color = Util::Colors::White, .tex_coord = { 1, 0 } } } });
 
     auto old_oscilloscope_position = next_oscilloscope_position();
 
@@ -137,7 +137,7 @@ int main()
             }
         }
 
-        renderer.clear(Util::Colors::black);
+        renderer.clear(Util::Colors::Black);
 
         llgl::View view;
         view.set_viewport(window.rect());
@@ -161,10 +161,10 @@ int main()
             auto cross = diff_norm.perpendicular() * PointSize;
 
             llgl::opengl::VAO input_vao {
-                { { llgl::Vertex { .position = Util::Vector3f { old_oscilloscope_position - cross, 0 }, .color = Util::Colors::green },
-                    llgl::Vertex { .position = Util::Vector3f { old_oscilloscope_position + cross, 0 }, .color = Util::Colors::green },
-                    llgl::Vertex { .position = Util::Vector3f { old_oscilloscope_position + diff - cross, 0 }, .color = Util::Colors::green },
-                    llgl::Vertex { .position = Util::Vector3f { old_oscilloscope_position + diff + cross, 0 }, .color = Util::Colors::green } } }
+                { { llgl::Vertex { .position = Util::Vector3f { old_oscilloscope_position - cross, 0 }, .color = Util::Colors::Green },
+                    llgl::Vertex { .position = Util::Vector3f { old_oscilloscope_position + cross, 0 }, .color = Util::Colors::Green },
+                    llgl::Vertex { .position = Util::Vector3f { old_oscilloscope_position + diff - cross, 0 }, .color = Util::Colors::Green },
+                    llgl::Vertex { .position = Util::Vector3f { old_oscilloscope_position + diff + cross, 0 }, .color = Util::Colors::Green } } }
             };
 
             pass1.draw_vao(input_vao, llgl::opengl::PrimitiveType::TriangleStrip, { .shader = &basic_shader });

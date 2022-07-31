@@ -34,12 +34,12 @@ int main()
     llgl::BatchRenderer batch_renderer;
 
     llgl::opengl::shaders::Basic330Core shader;
-    batch_renderer.draw_vao(llgl::opengl::VAO { { { llgl::Vertex { { -1.5, -1.5, -15 }, Util::Colors::white, { 0, 0 } },
-                                llgl::Vertex { { 1.5, 1.5, -15 }, Util::Colors::white, { 1, 1 } },
-                                llgl::Vertex { { 1.5, -1.5, -15 }, Util::Colors::white, { 1, 0 } },
-                                llgl::Vertex { { -1.5, -1.5, -10 }, Util::Colors::white, { 0, 0 } },
-                                llgl::Vertex { { 1.5, 1.5, -10 }, Util::Colors::white, { 1, 1 } },
-                                llgl::Vertex { { 1.5, -1.5, -10 }, Util::Colors::white, { 1, 0 } } } } },
+    batch_renderer.draw_vao(llgl::opengl::VAO { { { llgl::Vertex { { -1.5, -1.5, -15 }, Util::Colors::White, { 0, 0 } },
+                                llgl::Vertex { { 1.5, 1.5, -15 }, Util::Colors::White, { 1, 1 } },
+                                llgl::Vertex { { 1.5, -1.5, -15 }, Util::Colors::White, { 1, 0 } },
+                                llgl::Vertex { { -1.5, -1.5, -10 }, Util::Colors::White, { 0, 0 } },
+                                llgl::Vertex { { 1.5, 1.5, -10 }, Util::Colors::White, { 1, 1 } },
+                                llgl::Vertex { { 1.5, -1.5, -10 }, Util::Colors::White, { 1, 0 } } } } },
         llgl::opengl::PrimitiveType::Triangles, { .shader = &shader, .texture = &texture });
 
     for (;;) {
